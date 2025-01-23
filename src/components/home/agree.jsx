@@ -78,10 +78,10 @@ const Agree = () => {
 
       <div className="justify-center items-center flex mb-[15%]">
         <a href="/agreement">
-          <div className="flex box-btn items-center text-white text-sm py-4 px-8 rounded-[100px] bg-[#84c2f513] backdrop-filter backdrop-blur-[10px] hover:bg-[#209af1] transition-colors duration-300 ease-in-out">
+          <div className="flex box-btn remove-safari-border-color items-center text-white text-sm py-4 px-8 rounded-[100px] bg-[#84c2f513] backdrop-filter backdrop-blur-[10px] hover:bg-[#209af1] transition-colors duration-300 ease-in-out">
             <div className="sh-btn"></div>
             Launch Dapps
-            <FaLongArrowAltRight className="ml-2" />
+            <FaLongArrowAltRight className="ml-2"/>
             {/* <Image src="./launchPadButton.png" alt="Zoom Image" /> */}
           </div>
           {/* <button className="relative max-w-sm br text-white p-3 shadow-lg transform hover:scale-105 transition-transform duration-300 border-gradient bg-opacity-50 mb-5 backdrop-filter backdrop-blur-lg flex items-center justify-center overflow-clip">
@@ -149,7 +149,7 @@ const Agree = () => {
       </FadeInSection>
 
       <FadeInSection>
-        <div className="flex items-center justify-center bg-gradient-to-r from-[#EAF9FF] to-[#8E9A9A] bg-clip-text text-transparent">
+        <div className="flex items-center border-none flex-col justify-center bg-gradient-to-r from-[#EAF9FF] to-[#8E9A9A] bg-clip-text  text-transparent">
           <div className="text-center p-8 bg-transparent rounded shadow-lg my-20">
             <p className=" md:text-[50px] text-[30px] mb-4">Crime recorder</p>
             <div className="md:hidden">

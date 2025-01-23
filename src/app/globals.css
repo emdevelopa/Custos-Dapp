@@ -154,7 +154,6 @@
   background: linear-gradient(90deg, #0094ff 0%, #a02294 100%);
   -webkit-mask: linear-gradient(#0C1215 0 0) content-box, linear-gradient(#0C1215 0 0);
   mask: linear-gradient(#0C1215 0 0) content-box, linear-gradient(#0C1215 0 0);
-  -webkit-mask-composite: destination-out; /* For Safari */
   mask-composite: destination-out; /* For other browsers */
 }
 .border-gradient2 {
@@ -423,7 +422,7 @@ button .text-transparent {
   position: absolute;
   padding: 2px;
   inset: calc(0px - 0px - 0px);
-  border: calc(0px + 1px + 0px) solid #1f85ad;
+  border-style: calc(0px + 1px + 0px) solid #1f85ad;
   border-radius: 100px;
   -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
   -webkit-mask-composite: xor;
@@ -477,4 +476,22 @@ button .text-transparent {
 .scrollbar-hide {
   -ms-overflow-style: none; /* for Internet Explorer, Edge */
   scrollbar-width: none; /* for Firefox */
+}
+
+@supports (-webkit-appearance: none) {
+    border:none,
+  * {
+    border-radius: 12px !important; 
+  }
+}
+
+.remove-safari-border-color{
+  @supports (-webkit-appearance: none) {
+
+    border-width:1;
+    border-color: conic-gradient(from 90deg at 40% -25%, #a0229369, #0095ff60);
+  * {
+    border-radius: 12px !important; 
+  }
+}
 }
