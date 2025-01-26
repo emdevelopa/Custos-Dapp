@@ -31,14 +31,23 @@ function ConnectButtonComponent() {
     disconnectWallet();
   };
 
-  const handleStarknetSelect = (selectedWallet) => {
-    connectStarknetWallet(selectedWallet.id);
-    setShowModal(false);
+  const handleStarknetSelect = async (selectedWallet) => {
+    console.log("Handling Starknet wallet selection:", selectedWallet);
+    try {
+      await connectStarknetWallet(selectedWallet.id);
+      setShowModal(false);
+    } catch (error) {
+      console.error("Error in Starknet selection:", error);
+    }
   };
 
-  const handleEthereumConnect = (walletType) => {
-    connectEthereumWallet(walletType);
-    setShowModal(false);
+  const handleEthereumConnect = async (walletType) => {
+    try {
+      await connectEthereumWallet(walletType);
+      setShowModal(false);
+    } catch (error) {
+      console.error("Error in Ethereum connection:", error);
+    }
   };
 
   return (

@@ -48,20 +48,31 @@ export const WalletProvider = ({ children }) => {
   const { openNotification } = useNotification();
   const [walletType, setWalletType] = useState(null);
 
+  // Inside WalletProvider
   const connectStarknetWallet = async (walletId) => {
     try {
-      // Create a single connector based on the selected wallet
-      const connector = new InjectedConnector({
-        options: {
-          id: walletId,
-        },
+      console.log("Attempting to connect to wallet:", walletId);
+
+      // Initialize the connector based on wallet type
+      let selectedConnector;
+      if (walletId === "argentX") {
+        selectedConnector = new InjectedConnector({
+          options: { id: "argentX" },
+        });
+      } else if (walletId === "braavos") {
+        selectedConnector = new InjectedConnector({
+          options: { id: "braavos" },
+        });
+      }
+
+      console.log("Created connector:", selectedConnector);
+
+      const result = await connect({
+        connectors: [selectedConnector],
+        // Remove modalMode to let starknetkit handle the flow
       });
 
-      // Connect using only the selected connector
-      const result = await connect({
-        connectors: [connector],
-        modalMode: "neverAsk",
-      });
+      console.log("Connection result:", result);
 
       if (result?.wallet?.isConnected) {
         setWallet(result.wallet);
@@ -75,11 +86,23 @@ export const WalletProvider = ({ children }) => {
         openNotification(
           "success",
           "Wallet Connected",
-          "Your Starknet wallet has been connected successfully!"
+          `Connected to ${walletId} successfully!`
         );
+
+        console.log("Wallet connected successfully:", {
+          address: cleanedAddress,
+          wallet: result.wallet,
+        });
+      } else {
+        console.log("No wallet connection in result:", result);
       }
     } catch (error) {
-      console.error("Starknet connection error:", error);
+      console.error("Detailed Starknet connection error:", {
+        error,
+        message: error.message,
+        stack: error.stack,
+      });
+
       openNotification(
         "error",
         "Connection Failed",
