@@ -1,10 +1,10 @@
-import SideBar from '@/components/vidandimage_storage/SideBar';
+import SideBar from '@/app/vidandimage_storage/SideBar';
 import React from 'react';
-import Header from '@/components/vidandimage_storage/Header';
-import UploadOrRecord from '@/components/vidandimage_storage/UploadOrRecord';
+import Header from '@/app/vidandimage_storage/Header';
+import Recorder from '@/app/vidandimage_storage/videorecorder/page';
 import BackNavigation from './BackNavigation';
 
-const Main = () => {
+const VidRecorder = () => {
   return (
     <div
       className="flex flex-col lg:flex-row h-auto lg:h-screen text-white font-sans bg-inherit"
@@ -24,7 +24,7 @@ const Main = () => {
         <div className="mt-4">
           <BackNavigation />
           <div className="mt-6">
-            <UploadOrRecord />
+            <Recorder />
           </div>
         </div>
       </div>
@@ -32,4 +32,4 @@ const Main = () => {
   );
 };
 
-export default Main;
+export default VidRecorder;
