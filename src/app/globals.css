@@ -539,9 +539,9 @@ button .text-transparent {
 
 @media not all and (min-resolution: 0.001dpcm){
   @supports(-webkit-appearance:none){
-    .remove-border{
-      border:none;
-      outline:none;
+    .box-btn, .sh-btn{
+      border:2px;
+      border-color:linear-gradient(90deg, #0094ff 0%, #a02294 100%);
     }
   }
 }
@@ -549,11 +549,27 @@ button .text-transparent {
 
 @media not all and (min-resolution: 0.001dpcm) {
   @supports (-webkit-appearance: none) {
-    .box-btn .sh-btn {
+  .box-btn .sh-btn {
   content: "";
   border-radius: none; /* Match the border radius of the card */
   padding: 0px; /* Adjust the width of the border */
   background: linear-gradient(90deg, #0094ff 0%, #a02294 100%);
+  -webkit-mask: linear-gradient(#0C1215 0 0) content-box, linear-gradient(#0C1215 0 0);
+  mask: linear-gradient(#0C1215 0 0) content-box, linear-gradient(#0C1215 0 0);
+  mask-composite: destination-out; /* For other browsers */
+    } 
+  }
+}
+
+
+@media not all and (min-resolution: 0.001dpcm) {
+  @supports (-webkit-appearance: none) {
+.sh-btn{
+  content: "";
+  border-radius: none; /* Match the border radius of the card */
+  padding: 0px;
+  border-width: 2px !important;
+  border-color: linear-gradient(90deg, #0094ff 0%, #a02294 100%) !important;
   -webkit-mask: linear-gradient(#0C1215 0 0) content-box, linear-gradient(#0C1215 0 0);
   mask: linear-gradient(#0C1215 0 0) content-box, linear-gradient(#0C1215 0 0);
   mask-composite: destination-out; /* For other browsers */

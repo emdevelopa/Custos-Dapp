@@ -186,12 +186,12 @@ const Agree = () => {
           </div>
         </div>
 
-        <div className="justify-center items-center flex mb-[15%] ">
+        <div className="justify-center items-center flex mb-[15%]">
           <a href="/crimerecorder">
-            <div className=" flex box-btn justify-between  items-center text-white text-sm py-4 px-8 rounded-[100px] bg-[#84c2f513] backdrop-filter backdrop-blur-[10px] hover:bg-[#209af1] transition-colors duration-300 ease-in-out">
+            <div className="flex box-btn flex-row items-center text-white text-sm py-4 px-8 rounded-[100px] bg-[#84c2f513] backdrop-filter backdrop-blur-[10px] hover:bg-[#209af1] transition-colors duration-300 ease-in-out">
               <div className="sh-btn"></div>
               Launch Dapps
-              <FaLongArrowAltRight className="ml-2" />
+              <FaLongArrowAltRight className="ml-2"/>
             </div>
             {/* <button className="relative max-w-sm br text-white p-3 shadow-lg transform hover:scale-105 transition-transform duration-300 border-gradient bg-opacity-50 mb-5 backdrop-filter backdrop-blur-lg flex items-center justify-center overflow-clip">
             <span className="flex items-center">Launch Dapp</span>
