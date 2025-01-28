@@ -62,11 +62,10 @@ const AgreementModal = () => {
     marginRight: "100px",
   });
 
-
   const handleAgreementSelection = (agreement) => {
-    setSelectedAgreement(agreement); 
+    setSelectedAgreement(agreement);
   };
-  
+
   // Fetch country list from API
   useEffect(() => {
     const fetchCountries = async () => {
@@ -491,23 +490,24 @@ const AgreementModal = () => {
         return null;
     }
   };
- 
+
   // Stepper Component
   const Stepper = () => {
     const [margins, setMargins] = useState({ marginLeft: 0, marginRight: 0 });
 
     // Ref to hold references to each step circle element
     const stepRef = useRef([]);
-  
+
     useEffect(() => {
       // Ensure the step elements are rendered before trying to get their widths
       if (stepRef.current.length > 0) {
         setMargins({
           marginLeft: stepRef.current[0].offsetWidth / 2, // Margin based on first step's width
-          marginRight: stepRef.current[stepperConfig.length - 1].offsetWidth / 2, // Margin based on last step's width
+          marginRight:
+            stepRef.current[stepperConfig.length - 1].offsetWidth / 2, // Margin based on last step's width
         });
       }
-    }, [stepperConfig]); 
+    }, [stepperConfig]);
     return (
       <div className="relative w-full md:w-[55%] flex justify-between items-center mb-5">
         {/* Circles */}
@@ -570,147 +570,173 @@ const AgreementModal = () => {
   return (
     <>
       <div className="w-full px-4 flex flex-col gap-8 overflow-clip  justify-center items-center h-auto">
-            {/* Agreement Selection Section */}
-      {!selectedAgreement && (
-        <div className="w-full flex flex-row md:flex-col justify-center items-center text-center">
-          <h2 className="text-[#EAFBFF] text-[24px]">Choose the Best Way to Create Your Agreement</h2>
-          <div className="space-x-4 mt-8 flex">
-  <div
-    onClick={() => handleAgreementSelection("A")}
-    className="cursor-pointer"
-  >
-    <div className="w-[268px] h-[360px] bg-[radial-gradient(13.75%_27.94%_at_50%_50%,_rgba(39,_73,_98,_0.1)_0%,_rgba(45,_72,_92,_0.2)_100%)] 
+        {/* Agreement Selection Section */}
+        {!selectedAgreement && (
+          <div className="w-full flex flex-row md:flex-col justify-center items-center text-center">
+            <h2 className="text-[#EAFBFF] text-[24px]">
+              Choose the Best Way to Create Your Agreement
+            </h2>
+            <div className="space-x-4 mt-8 flex">
+              <div
+                onClick={() => handleAgreementSelection("A")}
+                className="cursor-pointer"
+              >
+                <div
+                  className="w-[268px] h-[360px] bg-[radial-gradient(13.75%_27.94%_at_50%_50%,_rgba(39,_73,_98,_0.1)_0%,_rgba(45,_72,_92,_0.2)_100%)] 
                 rounded-[20px] flex flex-col items-center justify-center p-4 
                 border-[2px] border-[transparent] 
-                group transition-all duration-300 ease-in-out relative">
-      <div className="w-[80px] h-[80px] z-30">
-        <Image src="/template.svg" width={400} height={400} className="w-full h-full object-cover rounded-t-[20px]"/>
-      </div>
-      <div className="flex z-20 flex-col justify-center items-center w-full h-[50%]  rounded-b-[20px] p-4">
-      <p className="text-[#EAFBFF] text-[20px] font-[500] mb-2 mt-12">Your Icon Title</p>
-      <p className="text-[#EAFBFF] text-[14px] font-[400]">Your description text goes here. This can be a short paragraph explaining the content or purpose of the icon above.</p>
-      </div>
-      <div className="group-hover:bg-[radial-gradient(13.75%_27.94%_at_50%_50%,_rgba(39,_73,_98,_0.2)_0%,_rgba(45,_72,_92,_0.4)_100%)] w-full h-full absolute inset-0 rounded-[20px] transition-all duration-300 ease-in-out">
-      </div>
-    </div>
-  
-
-
-  </div>
-  
-  <div
-    onClick={() => handleAgreementSelection("B")}
-    className="cursor-pointer"
-  >
-     <div className="w-[268px] h-[360px] bg-[radial-gradient(13.75%_27.94%_at_50%_50%,_rgba(39,_73,_98,_0.1)_0%,_rgba(45,_72,_92,_0.2)_100%)] 
-                rounded-[20px] flex flex-col items-center justify-center p-4 
-                border-[2px] border-[transparent] 
-                group transition-all duration-300 ease-in-out relative">
-      <div className="w-[80px] h-[80px] z-30">
-        <Image src="/Notepen.svg" width={400} height={400} className="w-full h-full object-cover rounded-t-[20px]"/>
-      </div>
-      <div className="flex z-20 flex-col justify-center items-center w-full h-[50%]  rounded-b-[20px] p-4">
-      <p className="text-[#EAFBFF] text-[20px] font-[500] mt-12 mb-2">Your Icon Title</p>
-      <p className="text-[#EAFBFF] text-[14px] font-[400]">Your description text goes here. This can be a short paragraph explaining the content or purpose of the icon above.</p>
-      </div>
-      <div className="group-hover:bg-[radial-gradient(13.75%_27.94%_at_50%_50%,_rgba(39,_73,_98,_0.2)_0%,_rgba(45,_72,_92,_0.4)_100%)] w-full h-full absolute inset-0 rounded-[20px] transition-all duration-300 ease-in-out">
-      </div>
-    </div>
-  
-
-  </div>
-</div>
-        </div>
-      )}
-
-{selectedAgreement === "A" && (
-        <div className="w-full flex flex-col justify-center items-center text-center">
-          <h2 className="text-[#EAFBFF]">Agreement A is Not Ready</h2>
-          <p className="text-white">You cannot proceed with this agreement at the moment.</p>
-        </div>
-      )}
-
-
-{selectedAgreement === "B" && ( 
-        <><Stepper /><div className="rounded-2xl box border-gradien  p-6">
-            <div className="sh"></div>
-            <form className=" w-full space-y-5" onSubmit={handleSubmit}>
-              {modalStep > 1 && (
-                <button
-                  type="button"
-                  onClick={() => setModalStep(modalStep - 1)}
-                  className="w-fit rounded-[2em] hover:text-[#A02294] items-center text-white font-bold justify-center flex"
-                  disabled={modalStep === 1}
+                group transition-all duration-300 ease-in-out relative"
                 >
-                  <FaArrowLeft className="mr-2" /> <p className="">Previous</p>
-                </button>
-              )}
-              <div className="w-full flex-col flex gap-4">
-                {errors.general && (
-                  <span className="text-red-500">{errors.general}</span>
-                )}
-                {errors.second_party_address && (
-                  <span className="text-red-500">
-                    {"second_party_address: " + errors.second_party_address[0]}
-                  </span>
-                )}
-                {errors.first_party_id_type && (
-                  <span className="text-red-500">
-                    {"first_party_id_type: " + errors.first_party_id_type[0]}
-                  </span>
-                )}
-                {errors.country && (
-                  <span className="text-red-500">
-                    {"country: " + errors.country[0]}
-                  </span>
-                )}
-                {errors.content && (
-                  <span className="text-red-500">
-                    {"content: " + errors.content[0]}
-                  </span>
-                )}
-                {errors.agreementTitle && (
-                  <span className="text-red-500">
-                    {"agreement Title: " + errors.agreementTitle[0]}
-                  </span>
-                )}
-                {errors.agreementType && (
-                  <span className="text-red-500">
-                    {"Agreement Type: " + errors.agreementType[0]}
-                  </span>
-                )}
+                  <div className="w-[80px] h-[80px] z-30">
+                    <Image
+                      src="/template.svg"
+                      width={400}
+                      height={400}
+                      className="w-full h-full object-cover rounded-t-[20px]"
+                    />
+                  </div>
+                  <div className="flex z-20 flex-col justify-center items-center w-full h-[50%]  rounded-b-[20px] p-4">
+                    <p className="text-[#EAFBFF] text-[20px] font-[500] mb-2 mt-12">
+                      Start with a ready template
+                    </p>
+                    <p className="text-[#EAFBFF] text-[14px] font-[400]">
+                      Save time by customizing one of our ready-to-use agreement
+                      templates.
+                    </p>
+                  </div>
+                  <div className="group-hover:bg-[radial-gradient(13.75%_27.94%_at_50%_50%,_rgba(39,_73,_98,_0.2)_0%,_rgba(45,_72,_92,_0.4)_100%)] w-full h-full absolute inset-0 rounded-[20px] transition-all duration-300 ease-in-out"></div>
+                </div>
               </div>
-              {renderStep()}
-              <div className="flex justify-between flex-row-reverse gap-8">
-                {modalStep !== 3 && (
+
+              <div
+                onClick={() => handleAgreementSelection("B")}
+                className="cursor-pointer"
+              >
+                <div
+                  className="w-[268px] h-[360px] bg-[radial-gradient(13.75%_27.94%_at_50%_50%,_rgba(39,_73,_98,_0.1)_0%,_rgba(45,_72,_92,_0.2)_100%)] 
+                rounded-[20px] flex flex-col items-center justify-center p-4 
+                border-[2px] border-[transparent] 
+                group transition-all duration-300 ease-in-out relative"
+                >
+                  <div className="w-[80px] h-[80px] z-30">
+                    <Image
+                      src="/Notepen.svg"
+                      width={400}
+                      height={400}
+                      className="w-full h-full object-cover rounded-t-[20px]"
+                    />
+                  </div>
+                  <div className="flex z-20 flex-col justify-center items-center w-full h-[50%]  rounded-b-[20px] p-4">
+                    <p className="text-[#EAFBFF] text-[20px] font-[500] mt-12 mb-2">
+                      Build your agreement from scratch
+                    </p>
+                    <p className="text-[#EAFBFF] text-[14px] font-[400]">
+                      {" "}
+                      Create and customize every detail for a unique, tailored
+                      agreement
+                    </p>
+                  </div>
+                  <div className="group-hover:bg-[radial-gradient(13.75%_27.94%_at_50%_50%,_rgba(39,_73,_98,_0.2)_0%,_rgba(45,_72,_92,_0.4)_100%)] w-full h-full absolute inset-0 rounded-[20px] transition-all duration-300 ease-in-out"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {selectedAgreement === "A" && (
+          <div className="w-full flex flex-col justify-center items-center text-center">
+            <h2 className="text-[#EAFBFF]">Agreement A is Not Ready</h2>
+            <p className="text-white">
+              You cannot proceed with this agreement at the moment.
+            </p>
+          </div>
+        )}
+
+        {selectedAgreement === "B" && (
+          <>
+            <Stepper />
+            <div className="rounded-2xl box border-gradien  p-6">
+              <div className="sh"></div>
+              <form className=" w-full space-y-5" onSubmit={handleSubmit}>
+                {modalStep > 1 && (
                   <button
                     type="button"
-                    onClick={() => setModalStep(modalStep + 1)}
-                    className="bg-gradient-to-r from-[#19B1D2] to-[#0094FF] sm:w-[156px] w-full rounded-[2em] text-white font-bold py-2 px-4 border-gradient shadow-[0_0_0_1px_#0094FF,0_0_0_3px_rgba(28,167,214,0.41)] transition-transform transform hover:scale-105 active:shadow-none border-gradient"
+                    onClick={() => setModalStep(modalStep - 1)}
+                    className="w-fit rounded-[2em] hover:text-[#A02294] items-center text-white font-bold justify-center flex"
+                    disabled={modalStep === 1}
                   >
-                    Continue
+                    <FaArrowLeft className="mr-2" />{" "}
+                    <p className="">Previous</p>
                   </button>
                 )}
+                <div className="w-full flex-col flex gap-4">
+                  {errors.general && (
+                    <span className="text-red-500">{errors.general}</span>
+                  )}
+                  {errors.second_party_address && (
+                    <span className="text-red-500">
+                      {"second_party_address: " +
+                        errors.second_party_address[0]}
+                    </span>
+                  )}
+                  {errors.first_party_id_type && (
+                    <span className="text-red-500">
+                      {"first_party_id_type: " + errors.first_party_id_type[0]}
+                    </span>
+                  )}
+                  {errors.country && (
+                    <span className="text-red-500">
+                      {"country: " + errors.country[0]}
+                    </span>
+                  )}
+                  {errors.content && (
+                    <span className="text-red-500">
+                      {"content: " + errors.content[0]}
+                    </span>
+                  )}
+                  {errors.agreementTitle && (
+                    <span className="text-red-500">
+                      {"agreement Title: " + errors.agreementTitle[0]}
+                    </span>
+                  )}
+                  {errors.agreementType && (
+                    <span className="text-red-500">
+                      {"Agreement Type: " + errors.agreementType[0]}
+                    </span>
+                  )}
+                </div>
+                {renderStep()}
+                <div className="flex justify-between flex-row-reverse gap-8">
+                  {modalStep !== 3 && (
+                    <button
+                      type="button"
+                      onClick={() => setModalStep(modalStep + 1)}
+                      className="bg-gradient-to-r from-[#19B1D2] to-[#0094FF] sm:w-[156px] w-full rounded-[2em] text-white font-bold py-2 px-4 border-gradient shadow-[0_0_0_1px_#0094FF,0_0_0_3px_rgba(28,167,214,0.41)] transition-transform transform hover:scale-105 active:shadow-none border-gradient"
+                    >
+                      Continue
+                    </button>
+                  )}
 
-                {modalStep == 3 && (
+                  {modalStep == 3 && (
+                    <button
+                      type="submit"
+                      className="bg-gradient-to-r from-[#19B1D2] to-[#0094FF] sm:w-[156px] w-full rounded-[2em] text-white font-bold py-2 px-4 border-gradient shadow-[0_0_0_1px_#0094FF,0_0_0_3px_rgba(28,167,214,0.41)] transition-transform transform hover:scale-105 active:shadow-none border-gradient"
+                    >
+                      {initCreationLoad ? "Creating" : "Create"}
+                    </button>
+                  )}
                   <button
-                    type="submit"
-                    className="bg-gradient-to-r from-[#19B1D2] to-[#0094FF] sm:w-[156px] w-full rounded-[2em] text-white font-bold py-2 px-4 border-gradient shadow-[0_0_0_1px_#0094FF,0_0_0_3px_rgba(28,167,214,0.41)] transition-transform transform hover:scale-105 active:shadow-none border-gradient"
+                    type="button"
+                    onClick={() => window.history.back()}
+                    className="w-full rounded-[2em] sm:w-[156px] text-white font-bold py-2 px-6 border-[#9B9292] border bg-gradient-to-b from-[#04080C] to-[#09131A] shadow-[0_0_6px_1px_rgba(132,129,129,0.21),0_0_0_2px_rgba(132,129,129,0.16)] transition-transform transform hover:scale-105"
                   >
-                    {initCreationLoad ? "Creating" : "Create"}
+                    Cancel
                   </button>
-                )}
-                <button
-                  type="button"
-                  onClick={() => window.history.back()}
-                  className="w-full rounded-[2em] sm:w-[156px] text-white font-bold py-2 px-6 border-[#9B9292] border bg-gradient-to-b from-[#04080C] to-[#09131A] shadow-[0_0_6px_1px_rgba(132,129,129,0.21),0_0_0_2px_rgba(132,129,129,0.16)] transition-transform transform hover:scale-105"
-                >
-                  Cancel
-                </button>
-              </div>
-            </form>
-          </div></>
-)}
+                </div>
+              </form>
+            </div>
+          </>
+        )}
         <Modal
           isOpen={isModalOpen}
           onRequestClose={() => setIsModalOpen(false)}
