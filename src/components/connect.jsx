@@ -6,10 +6,12 @@ import { padAddress, truncAddress } from "@/utils/serializer";
 import Image from "next/image";
 import { WalletContext } from "./walletprovider";
 import WalletModal from "./WalletModal";
+import DisconnectModal from "./DisconnectModal";
 
 function ConnectButtonComponent() {
   const [connected, setConnected] = useState(false);
-  const [showModal, setShowModal] = useState(false);
+  const [showConnectModal, setShowConnectModal] = useState(false);
+  const [showDisconnectModal, setShowDisconnectModal] = useState(false);
   const {
     wallet,
     connectStarknetWallet,
@@ -24,18 +26,17 @@ function ConnectButtonComponent() {
   }, [address, wallet]);
 
   const handleConnect = () => {
-    setShowModal(true);
+    setShowConnectModal(true);
   };
 
-  const handleDisconnect = () => {
-    disconnectWallet();
+  const handleDisconnectClick = () => {
+    setShowDisconnectModal(true);
   };
 
   const handleStarknetSelect = async (selectedWallet) => {
-    console.log("Handling Starknet wallet selection:", selectedWallet);
     try {
       await connectStarknetWallet(selectedWallet.id);
-      setShowModal(false);
+      setShowConnectModal(false);
     } catch (error) {
       console.error("Error in Starknet selection:", error);
     }
@@ -44,7 +45,7 @@ function ConnectButtonComponent() {
   const handleEthereumConnect = async (walletType) => {
     try {
       await connectEthereumWallet(walletType);
-      setShowModal(false);
+      setShowConnectModal(false);
     } catch (error) {
       console.error("Error in Ethereum connection:", error);
     }
@@ -56,7 +57,7 @@ function ConnectButtonComponent() {
         {connected ? (
           <div
             className="cursor-pointer border-gradient2 w-full rounded-full text-[#ededef] p-[1px]"
-            onClick={handleDisconnect}
+            onClick={handleDisconnectClick}
           >
             <div className="bg-[#121212] border-gradient2 rounded-full py-2 px-3 flex gap-2">
               <Image
@@ -86,11 +87,19 @@ function ConnectButtonComponent() {
         )}
       </div>
 
+      {/* Connect Modal */}
       <WalletModal
-        isOpen={showModal}
-        onClose={() => setShowModal(false)}
+        isOpen={showConnectModal}
+        onClose={() => setShowConnectModal(false)}
         onSelectWallet={handleStarknetSelect}
         handleEthereumConnect={handleEthereumConnect}
+      />
+
+      {/* Disconnect Modal */}
+      <DisconnectModal
+        isOpen={showDisconnectModal}
+        onClose={() => setShowDisconnectModal(false)}
+        onDisconnect={disconnectWallet}
       />
     </>
   );
