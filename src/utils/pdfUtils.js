@@ -105,4 +105,4 @@ export const downloadAgreement = async (agreement) => {
   } catch (error) {
     console.error('Error downloading agreement:', error);
   }
-}
+};

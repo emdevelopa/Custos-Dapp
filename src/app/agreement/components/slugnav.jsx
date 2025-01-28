@@ -107,4 +107,4 @@ const Slugnav = ({ agreement }) => {
   );
 };
 
-export default Slugnav
+export default Slugnav;
