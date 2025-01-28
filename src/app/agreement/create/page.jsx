@@ -495,16 +495,14 @@ const AgreementModal = () => {
   const Stepper = () => {
     const [margins, setMargins] = useState({ marginLeft: 0, marginRight: 0 });
 
-    // Ref to hold references to each step circle element
     const stepRef = useRef([]);
 
     useEffect(() => {
-      // Ensure the step elements are rendered before trying to get their widths
       if (stepRef.current.length > 0) {
         setMargins({
-          marginLeft: stepRef.current[0].offsetWidth / 2, // Margin based on first step's width
+          marginLeft: stepRef.current[0].offsetWidth / 2,
           marginRight:
-            stepRef.current[stepperConfig.length - 1].offsetWidth / 2, // Margin based on last step's width
+            stepRef.current[stepperConfig.length - 1].offsetWidth / 2,
         });
       }
     }, [stepperConfig]);
@@ -516,7 +514,7 @@ const AgreementModal = () => {
             ref={(el) => (stepRef.current[index] = el)}
             key={index}
             className="flex flex-col items-center justify-center"
-            style={{ marginLeft: index !== 0 ? "20px" : "0" }} // Adds margin to the left of each circle
+            style={{ marginLeft: index !== 0 ? "20px" : "0" }}
           >
             <div
               className={`w-7 h-7 rounded-full flex justify-center items-center mb-4 z-20 ${
@@ -549,13 +547,13 @@ const AgreementModal = () => {
               {index < stepperConfig.length - 1 && (
                 <div
                   key={index}
-                  className={`progress-segment absolute top-0 h-full ${
+                  className={`progress-segment invisible lg:visible absolute top-0 h-full ${
                     modalStep > index
                       ? "bg-[#0094FF] transition-all duration-500 ease-in"
                       : "bg-white"
                   }`}
                   style={{
-                    left: `${(index / (stepperConfig.length - 1)) * 100}%`, // Position each segment based on the index
+                    left: `${(index / (stepperConfig.length - 1)) * 100}%`,
                     width: `${100 / (stepperConfig.length - 1) - 10}%`,
                   }}
                 />
