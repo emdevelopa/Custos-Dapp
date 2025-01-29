@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import Link from "next/link";
 import { HiVideoCamera } from "react-icons/hi2";
 import Image from "next/image";
-import StarIcon from "../../../public/star.png";
+import StarIcon from "../../../../public/star.png";
 
 const UploadOrReload = () => {
   const [isRecording, setIsRecording] = useState(false);

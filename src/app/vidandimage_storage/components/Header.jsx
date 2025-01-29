@@ -1,6 +1,6 @@
 import { HiMagnifyingGlass, HiBell } from "react-icons/hi2";
 import Image from "next/image";
-import Avatar from "../../../public/man avatar.png";
+import Avatar from "../../../../public/man avatar.png";
 
 function Header() {
   return (
