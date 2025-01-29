@@ -116,7 +116,7 @@ const Agree = () => {
               </p>
               <br />
               <p>
-                Whether it's a business contract, a rental agreement, or a
+                Whether It&apos;s a business contract, a rental agreement, or a
                 partnership arrangement, Custos ensures that agreements are
                 securely stored, easily accessible, and tamper-proof, fostering
                 trust and accountability among parties.
