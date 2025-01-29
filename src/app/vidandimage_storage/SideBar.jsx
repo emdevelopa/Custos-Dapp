@@ -1,5 +1,5 @@
 import React from 'react';
-import { HiDocumentText, HiVideoCamera, HiPhoto, HiCog6Tooth } from "react-icons/hi2"; // React Icons
+import { HiDocumentText, HiVideoCamera, HiPhoto, HiCog6Tooth } from "react-icons/hi2";
 import Image from 'next/image';
 import logo from '../../../public/logo.png';
 import SolarIcon from '../../../public/solar_minimize-square-minimalistic-linear.png';

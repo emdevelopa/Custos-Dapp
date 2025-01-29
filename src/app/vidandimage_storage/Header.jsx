@@ -1,4 +1,4 @@
-import { HiMagnifyingGlass, HiBell } from "react-icons/hi2"; // React Icons
+import { HiMagnifyingGlass, HiBell } from "react-icons/hi2";
 import Image from "next/image";
 import Avatar from "../../../public/man avatar.png";
 
