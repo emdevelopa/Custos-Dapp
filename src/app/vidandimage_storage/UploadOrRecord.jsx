@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import Link from "next/link";
-import { Video } from "lucide-react";
+import { HiVideoCamera } from "react-icons/hi2"; // React Icons
 import Image from "next/image";
 import StarIcon from "../../../public/star.png";
 
@@ -50,7 +50,7 @@ const UploadOrReload = () => {
               onClick={handleRecording}
             >
               {isRecording ? "Stop Recording" : "Start Recording"}
-              <Video className="w-5 h-5 mr-2" />
+              <HiVideoCamera className="w-5 h-5 mr-2" />
             </button>
           </Link>
 
