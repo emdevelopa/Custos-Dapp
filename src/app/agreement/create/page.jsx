@@ -12,10 +12,11 @@ import SuccessScreen from "../components/Success";
 import SignaturePad from "react-signature-canvas";
 import { base64ToImageFile } from "@/utils/serializer";
 import { useAccount } from "@starknet-react/core";
-import "react-quill/dist/quill.snow.css";
-import TurndownService from "turndown";
+import "@uiw/react-md-editor/markdown-editor.css";
+import "@uiw/react-markdown-preview/markdown.css";
 import dynamic from "next/dynamic";
-const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
+
+const MDEditor = dynamic(() => import("@uiw/react-md-editor"), { ssr: false });
 
 const AgreementModal = () => {
   const [modalStep, setModalStep] = useState(1);
@@ -43,7 +44,6 @@ const AgreementModal = () => {
 
   const [errors, setErrors] = useState({});
   const { address } = useContext(WalletContext);
-  const turndownService = new TurndownService();
 
   // Fetch country list from API
   useEffect(() => {
@@ -98,12 +98,11 @@ const AgreementModal = () => {
   // const creatoraddress = useAccount()?.address;
   const handleSubmit = async (event) => {
     event.preventDefault();
-    const markdown = turndownService.turndown(content);
-    const mergedContent = `<!-- HTML Content -->\n${content}\n\n<!-- Markdown Content -->\n${markdown}`;
+
 
     const formData = new FormData();
     formData.append("agreementType", agreementType);
-    formData.append("content", mergedContent);
+    formData.append("content", content);
     formData.append("country", searchTerm);
     formData.append("first_party_address", address);
     formData.append("first_party_id_type", idType);
@@ -254,34 +253,12 @@ const AgreementModal = () => {
           <>
             <h1 className="text-white text-[1.2em]">Agreement Content</h1>
             <div>
-              <ReactQuill
+              <MDEditor
                 value={content}
-                onChange={(value) => setContent(value)}
+                onChange={setContent}
                 placeholder="Write or Paste the Content of Your Agreement Here"
-                modules={{
-                  toolbar: [
-                    ["bold", "italic", "underline", "strike"],
-                    [{ list: "ordered" }, { list: "bullet" }],
-                    ["link", "blockquote", "code-block"],
-                    [{ align: [] }],
-                    ["clean"],
-                    [{ color: [] }, { background: [] }],
-                  ],
-                }}
-                formats={[
-                  "bold",
-                  "italic",
-                  "underline",
-                  "strike",
-                  "list",
-                  "bullet",
-                  "link",
-                  "blockquote",
-                  "code-block",
-                  "align",
-                  "color",
-                  "background",
-                ]}
+                className="custom-editor"
+                height="350px"
               />
             </div>
           </>
