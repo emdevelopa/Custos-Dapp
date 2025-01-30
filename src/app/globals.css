@@ -10,7 +10,7 @@
   background-size: contain;
   background-blend-mode: multiply;
   font-family: "Outfit", sans-serif;
-  background-color: #0C1215;
+  background-color: #0c1215;
   font-optical-sizing: auto;
   font-style: normal;
 }
@@ -158,8 +158,10 @@
   border-radius: inherit; /* Match the border radius of the card */
   padding: 0.47px; /* Adjust the width of the border */
   background: linear-gradient(90deg, #0094ff 0%, #a02294 100%);
+
   -webkit-mask: linear-gradient(#0C1215 0 0) content-box, linear-gradient(#0C1215 0 0);
   mask: linear-gradient(#0C1215 0 0) content-box, linear-gradient(#0C1215 0 0);
+
   mask-composite: destination-out; /* For other browsers */
 }
 .border-gradient2 {
@@ -179,8 +181,9 @@
   background: linear-gradient(90deg, #0094ff 0%, #a02294 100%);
 
   /* Masking the background so that the gradient appears only on the border */
-  -webkit-mask: linear-gradient(#0C1215 0 0) content-box, linear-gradient(#0C1215 0 0);
-  mask: linear-gradient(#0C1215 0 0) content-box, linear-gradient(#0C1215 0 0);
+  -webkit-mask: linear-gradient(#0c1215 0 0) content-box,
+    linear-gradient(#0c1215 0 0);
+  mask: linear-gradient(#0c1215 0 0) content-box, linear-gradient(#0c1215 0 0);
   mask-composite: exclude;
 }
 
@@ -511,6 +514,7 @@ button .text-transparent {
   scrollbar-width: none; /* for Firefox */
 }
 
+
 /* @supports (-webkit-appearance: none) {
     border:none,
   * {
@@ -575,4 +579,29 @@ button .text-transparent {
   mask-composite: destination-out; /* For other browsers */
     } 
   }
+
+.custom-editor {
+  width: 700px; /* Fixed width on large screens */
+  min-height: 300px;
+  height: 40vh;
+  max-height: 500px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .custom-editor {
+    width: 600px; /* Slightly smaller width for tablets */
+    height: 35vh;
+  }
+}
+
+@media (max-width: 576px) {
+  .custom-editor {
+    width: 90vw; /* Adjust width dynamically for smaller screens */
+    height: 30vh;
+  }
+}
+button[data-name="fullscreen"] {
+  display: none !important;
+
 }
