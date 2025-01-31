@@ -13,6 +13,7 @@ import SignaturePad from "react-signature-canvas";
 import { base64ToImageFile } from "@/utils/serializer";
 import { useAccount } from "@starknet-react/core";
 import Image from "next/image";
+import AgreementTemplate from "../agreementTemplate/page";
 
 // Stepper Config
 const stepperConfig = [
@@ -567,87 +568,93 @@ const AgreementModal = () => {
 
   return (
     <>
+     <div className=" flex items-start float-left">
+           <button
+                    className="w-fit text-[#EAFBFF] "
+                    onClick={() => window.history.back()}
+                  >
+                    <div className="w-fit  flex justify-start items-centr">
+                      <FaArrowLeft className="mr-2 mt-[3px] text-[#EAFBFF]" />
+                      <p className="text-[#EAFBFF] font-bold">Back</p>
+                    </div>
+                  </button>
+
+          </div>
       <div className="w-full px-4 flex flex-col gap-8 overflow-clip  justify-center items-center h-auto">
+         
         {/* Agreement Selection Section */}
         {!selectedAgreement && (
-          <div className="w-full flex flex-row md:flex-col justify-center items-center text-center">
-            <h2 className="text-[#EAFBFF] text-[24px]">
-              Choose the Best Way to Create Your Agreement
-            </h2>
-            <div className="space-x-4 mt-8 flex">
-              <div
-                onClick={() => handleAgreementSelection("A")}
-                className="cursor-pointer"
-              >
-                <div
-                  className="w-[268px] h-[360px] bg-[radial-gradient(13.75%_27.94%_at_50%_50%,_rgba(39,_73,_98,_0.1)_0%,_rgba(45,_72,_92,_0.2)_100%)] 
-                rounded-[20px] flex flex-col items-center justify-center p-4 
-                border-[2px] border-[transparent] 
-                group transition-all duration-300 ease-in-out relative"
-                >
-                  <div className="w-[80px] h-[80px] z-30">
-                    <Image
-                      src="/template.svg"
-                      width={400}
-                      height={400}
-                      className="w-full h-full object-cover rounded-t-[20px]"
-                    />
-                  </div>
-                  <div className="flex z-20 flex-col justify-center items-center w-full h-[50%]  rounded-b-[20px] p-4">
-                    <p className="text-[#EAFBFF] text-[20px] font-[500] mb-2 mt-12">
-                      Start with a ready template
-                    </p>
-                    <p className="text-[#EAFBFF] text-[14px] font-[400]">
-                      Save time by customizing one of our ready-to-use agreement
-                      templates.
-                    </p>
-                  </div>
-                  <div className="group-hover:bg-[radial-gradient(13.75%_27.94%_at_50%_50%,_rgba(39,_73,_98,_0.2)_0%,_rgba(45,_72,_92,_0.4)_100%)] w-full h-full absolute inset-0 rounded-[20px] transition-all duration-300 ease-in-out"></div>
-                </div>
+        <div className="w-full flex flex-col justify-center items-center text-center">
+        <h2 className="text-[#EAFBFF] text-[24px] md:text-[28px]">
+          Choose the Best Way to Create Your Agreement
+        </h2>
+        <div className="space-y-4 md:space-x-4 md:space-y-0 mt-8 flex flex-col md:flex-row">
+          <div
+            onClick={() => handleAgreementSelection("A")}
+            className="cursor-pointer"
+          >
+            <div
+              className="w-full md:w-[268px] h-[360px] bg-[radial-gradient(13.75%_27.94%_at_50%_50%,_rgba(39,_73,_98,_0.1)_0%,_rgba(45,_72,_92,_0.2)_100%)] 
+              rounded-[20px] flex flex-col items-center justify-center p-4 
+              border-[2px] border-[transparent] 
+              group transition-all duration-300 ease-in-out relative"
+            >
+              <div className="w-[80px] h-[80px] z-30">
+                <Image
+                  src="/template.svg"
+                  width={400}
+                  height={400}
+                  className="w-full h-full object-cover rounded-t-[20px]"
+                />
               </div>
-
-              <div
-                onClick={() => handleAgreementSelection("B")}
-                className="cursor-pointer"
-              >
-                <div
-                  className="w-[268px] h-[360px] bg-[radial-gradient(13.75%_27.94%_at_50%_50%,_rgba(39,_73,_98,_0.1)_0%,_rgba(45,_72,_92,_0.2)_100%)] 
-                rounded-[20px] flex flex-col items-center justify-center p-4 
-                border-[2px] border-[transparent] 
-                group transition-all duration-300 ease-in-out relative"
-                >
-                  <div className="w-[80px] h-[80px] z-30">
-                    <Image
-                      src="/Notepen.svg"
-                      width={400}
-                      height={400}
-                      className="w-full h-full object-cover rounded-t-[20px]"
-                    />
-                  </div>
-                  <div className="flex z-20 flex-col justify-center items-center w-full h-[50%]  rounded-b-[20px] p-4">
-                    <p className="text-[#EAFBFF] text-[20px] font-[500] mt-12 mb-2">
-                      Build your agreement from scratch
-                    </p>
-                    <p className="text-[#EAFBFF] text-[14px] font-[400]">
-                      {" "}
-                      Create and customize every detail for a unique, tailored
-                      agreement
-                    </p>
-                  </div>
-                  <div className="group-hover:bg-[radial-gradient(13.75%_27.94%_at_50%_50%,_rgba(39,_73,_98,_0.2)_0%,_rgba(45,_72,_92,_0.4)_100%)] w-full h-full absolute inset-0 rounded-[20px] transition-all duration-300 ease-in-out"></div>
-                </div>
+              <div className="flex z-20 flex-col justify-center items-center w-full h-[50%]  rounded-b-[20px] p-4">
+                <p className="text-[#EAFBFF] text-[20px] font-[500] mb-2 mt-12">
+                  Start with a ready template
+                </p>
+                <p className="text-[#EAFBFF] text-[14px] font-[400]">
+                  Save time by customizing one of our ready-to-use agreement templates.
+                </p>
               </div>
+              <div className="group-hover:bg-[radial-gradient(13.75%_27.94%_at_50%_50%,_rgba(39,_73,_98,_0.2)_0%,_rgba(45,_72,_92,_0.4)_100%)] w-full h-full absolute inset-0 rounded-[20px] transition-all duration-300 ease-in-out"></div>
             </div>
           </div>
+      
+          <div
+            onClick={() => handleAgreementSelection("B")}
+            className="cursor-pointer"
+          >
+            <div
+              className="w-full md:w-[268px] h-[360px] bg-[radial-gradient(13.75%_27.94%_at_50%_50%,_rgba(39,_73,_98,_0.1)_0%,_rgba(45,_72,_92,_0.2)_100%)] 
+              rounded-[20px] flex flex-col items-center justify-center p-4 
+              border-[2px] border-[transparent] 
+              group transition-all duration-300 ease-in-out relative"
+            >
+              <div className="w-[80px] h-[80px] z-30">
+                <Image
+                  src="/Notepen.svg"
+                  width={400}
+                  height={400}
+                  className="w-full h-full object-cover rounded-t-[20px]"
+                />
+              </div>
+              <div className="flex z-20 flex-col justify-center items-center w-full h-[50%]  rounded-b-[20px] p-4">
+                <p className="text-[#EAFBFF] text-[20px] font-[500] mt-12 mb-2">
+                  Build your agreement from scratch
+                </p>
+                <p className="text-[#EAFBFF] text-[14px] font-[400]">
+                  Create and customize every detail for a unique, tailored agreement
+                </p>
+              </div>
+              <div className="group-hover:bg-[radial-gradient(13.75%_27.94%_at_50%_50%,_rgba(39,_73,_98,_0.2)_0%,_rgba(45,_72,_92,_0.4)_100%)] w-full h-full absolute inset-0 rounded-[20px] transition-all duration-300 ease-in-out"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
         )}
 
-        {selectedAgreement === "A" && (
-          <div className="w-full flex flex-col justify-center items-center text-center">
-            <h2 className="text-[#EAFBFF]">Agreement A is Not Ready</h2>
-            <p className="text-white">
-              You cannot proceed with this agreement at the moment.
-            </p>
-          </div>
+    {selectedAgreement === "A" && (
+      <AgreementTemplate/>
         )}
 
         {selectedAgreement === "B" && (

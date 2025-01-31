@@ -511,3 +511,8 @@ const AgreementSlug = ({ params }, agreementparam) => {
 };
 
 export default AgreementSlug;
+
+
+
+
+
