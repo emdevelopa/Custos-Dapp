@@ -12,6 +12,11 @@ import SuccessScreen from "../components/Success";
 import SignaturePad from "react-signature-canvas";
 import { base64ToImageFile } from "@/utils/serializer";
 import { useAccount } from "@starknet-react/core";
+import "@uiw/react-md-editor/markdown-editor.css";
+import "@uiw/react-markdown-preview/markdown.css";
+import dynamic from "next/dynamic";
+
+const MDEditor = dynamic(() => import("@uiw/react-md-editor"), { ssr: false });
 import Image from "next/image";
 import AgreementTemplate from "../agreementTemplate/page";
 
@@ -120,6 +125,7 @@ const AgreementModal = () => {
   // const creatoraddress = useAccount()?.address;
   const handleSubmit = async (event) => {
     event.preventDefault();
+
 
     const formData = new FormData();
     formData.append("agreementType", agreementType);
@@ -273,16 +279,13 @@ const AgreementModal = () => {
         return (
           <>
             <h1 className="text-white text-[1.2em]">Agreement Content</h1>
-            <div className="text-white flex flex-col">
-              <textarea
-                id="content"
-                name="content"
-                placeholder="Write or Paste the Content of Your Agreement Here"
+            <div>
+              <MDEditor
                 value={content}
-                onChange={(e) => setContent(e.target.value)}
-                className="mt-1 focus:outline-none w-full border-[#BEBDBD] focus-visible:top-10 focus:border-[#19B1D2] active:border-[#0094FF] px-2 py-3 rounded-md bg-transparent border shadow-sm text-white sm:text-sm"
-                rows="10"
-                cols="50"
+                onChange={setContent}
+                placeholder="Write or Paste the Content of Your Agreement Here"
+                className="custom-editor"
+                height="350px"
               />
             </div>
           </>
