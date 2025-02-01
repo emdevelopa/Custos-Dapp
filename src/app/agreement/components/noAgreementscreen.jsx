@@ -23,7 +23,7 @@ const NoAgreementscreen = () => {
 
       <Link href="/agreement/create"> 
         <button className="launch-pad-button-container" link={"/agreement/create"}>
-          <Image src="./NewAgreeButton.png" alt="Zoom Image" />
+          <Image src="/NewAgreeButton.png" width={400} height={400} alt="Zoom Image" />
         </button>
       </Link>
     </div>
