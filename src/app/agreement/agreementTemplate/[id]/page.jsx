@@ -46,36 +46,11 @@ const agreementData = [
   ];
 
 const AgreementPage = ({ params }) => {
-  const { id } = params;
-
-  
-  const agreement = agreementData.find((item) => item.id === parseInt(id));
-
-  if (!agreement) {
-    return <p>Agreement not found.</p>;
-  }
-
   const [content, setContent] = useState(agreement.content);
   const [isEditing, setIsEditing] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
-
-
-  if (loading) {
-    return (
-      <div className="text-[#EAFBFF] flex justify-center items-center h-screen">
-        <Loading text={`Loading Agreement from  Blockchain...`} />
-      </div>
-    );
-  } 
-  const handleContentChange = (e) => {
-    setContent(e.target.value);
-  };
-
-  const toggleEditMode = () => {
-    setIsEditing((prev) => !prev);
-  };
 
   const fetchAgreementData = async () => {
     setLoading(true);
@@ -94,6 +69,34 @@ const AgreementPage = ({ params }) => {
   useState(() => {
     fetchAgreementData();
   }, []);
+
+  const { id } = params;
+
+  
+  const agreement = agreementData.find((item) => item.id === parseInt(id));
+
+  if (!agreement) {
+    return <p>Agreement not found.</p>;
+  }
+
+
+
+
+  if (loading) {
+    return (
+      <div className="text-[#EAFBFF] flex justify-center items-center h-screen">
+        <Loading text={`Loading Agreement from  Blockchain...`} />
+      </div>
+    );
+  } 
+  const handleContentChange = (e) => {
+    setContent(e.target.value);
+  };
+
+  const toggleEditMode = () => {
+    setIsEditing((prev) => !prev);
+  };
+
 
   const handleSave = async () => {
     try {
