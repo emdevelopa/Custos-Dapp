@@ -46,6 +46,10 @@ const agreementData = [
   ];
 
 const AgreementPage = ({ params }) => {
+  const { id } = params;
+
+  
+  const agreement = agreementData.find((item) => item.id === parseInt(id));
   const [content, setContent] = useState(agreement.content);
   const [isEditing, setIsEditing] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -70,10 +74,7 @@ const AgreementPage = ({ params }) => {
     fetchAgreementData();
   }, []);
 
-  const { id } = params;
-
-  
-  const agreement = agreementData.find((item) => item.id === parseInt(id));
+ 
 
   if (!agreement) {
     return <p>Agreement not found.</p>;
