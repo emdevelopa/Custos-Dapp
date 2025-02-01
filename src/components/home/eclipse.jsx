@@ -7,7 +7,9 @@ const Shape = () => {
       {/* <div className="shape"></div> */}
       <div className="eclipse-container ">
         <Image
-          src="./ecllipse.png"
+          src="/ecllipse.png"
+          width={200}
+          height={200}
           alt="Eclipse Image"
           className="eclipse w-[40%] max-md-[600px]:w-[65%]"
         />
