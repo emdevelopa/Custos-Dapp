@@ -43,7 +43,7 @@ function ConnectButtoncomponent() {
 
   //     };
 
-  const handleConnect = async () => {
+  const handleConnect= async () => {
     console.log("Attempting to connect wallet...");
     await connectWallet();
   };

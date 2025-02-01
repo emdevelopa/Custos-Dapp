@@ -521,8 +521,8 @@ button .text-transparent {
 .add-safari-border-color{
   @supports (-webkit-appearance: none) {
     border-width:0px;
-    border-color: transparent;
-    /* border-color: conic-gradient(from 90deg at 40% -25%, #a0229369, #0095ff60); */
+    /* border-color: transparent !important; */
+    border-color: conic-gradient(from 90deg at 40% -25%, #a0229369, #0095ff60);
   * {
     border-radius: none !important; 
   }
@@ -530,7 +530,7 @@ button .text-transparent {
 }
 .remove-safari-border{
   border-width:0;
-  border-color: transparent;
+  border-color: transparent ;
 }
 .remove-safari-border::-webkit-scrollbar{
     border-width:0;
@@ -540,7 +540,7 @@ button .text-transparent {
 @media not all and (min-resolution: 0.001dpcm){
   @supports(-webkit-appearance:none){
     .box-btn, .sh-btn{
-      border:2px;
+      border:1px;
       border-color:linear-gradient(90deg, #0094ff 0%, #a02294 100%);
     }
   }
@@ -566,12 +566,12 @@ button .text-transparent {
   @supports (-webkit-appearance: none) {
 .sh-btn{
   content: "";
-  border-radius: none; /* Match the border radius of the card */
+  border-radius: none; 
   padding: 0px;
-  border-width: 2px !important;
+  border-width: 1px !important;
   border-color: linear-gradient(90deg, #0094ff 0%, #a02294 100%) !important;
-  -webkit-mask: linear-gradient(#0C1215 0 0) content-box, linear-gradient(#0C1215 0 0);
-  mask: linear-gradient(#0C1215 0 0) content-box, linear-gradient(#0C1215 0 0);
+  -webkit-mask: linear-gradient(#0C1215 0 0) content-box, linear-gradient(#0C1215 0 0) !important;
+  mask: linear-gradient(#0C1215 0 0) content-box, linear-gradient(#0C1215 0 0) !important;
   mask-composite: destination-out; /* For other browsers */
     } 
   }

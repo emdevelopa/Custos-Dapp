@@ -22,7 +22,7 @@ const Hero = () => {
     <main className="flex items-center justify-center min-h-screen">
       <div className="text-white py-20 mx-auto flex flex-col justify-center items-center w-full px-4">
         <div onClick={toggleLaunchDapps} className=" flex w-fit h-fit">
-          <button className="relative br w-full text-white shadow-lg py-3 px-6 transform hover:scale-105 transition-transform duration-300 border-gradient bg-opacity-50  backdrop-filter backdrop-blur-lg flex items-center justify-center ">
+          <button className="relative br w-full text-white shadow-lg py-3 px-6 transform hover:scale-105 transition-transform duration-300 border-gradient bg-opacity-50  backdrop-filter backdrop-blur-lg flex flex-1 items-center justify-center">
             <span className="flex items-center">Launch Custos Dapp</span>
             <img
               src="/star.png"
