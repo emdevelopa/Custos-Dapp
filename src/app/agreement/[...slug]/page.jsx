@@ -4,7 +4,6 @@ import DOMPurify from "dompurify";
 import Slugnav from "../components/slugnav";
 import { format } from "date-fns";
 import Image from "next/image";
-import ReactMarkdown from "react-markdown";
 import parse from "html-react-parser";
 import { useRouter } from "next/navigation";
 import mammoth from "mammoth";
@@ -18,6 +17,11 @@ import {
   numberToHex,
 } from "@/utils/serializer";
 // import { useNotification } from "@/contexts/NotificationContext";
+import "@uiw/react-md-editor/markdown-editor.css";
+import "@uiw/react-markdown-preview/markdown.css";
+import dynamic from "next/dynamic";
+
+const MDEditor = dynamic(() => import("@uiw/react-md-editor"), { ssr: false });
 
 const AgreementSlug = ({ params }, agreementparam) => {
   const [agreement, setAgreement] = useState(null);
@@ -201,19 +205,15 @@ const AgreementSlug = ({ params }, agreementparam) => {
       <div className="agreement-content-wrapper">{children}</div>
     );
 
-    switch (contentFormat) {
-      case "html":
-        const cleanHtml = DOMPurify.sanitize(content);
-        return <ContentWrapper>{parse(cleanHtml)}</ContentWrapper>;
-      case "markdown":
-        return (
-          <ContentWrapper>
-            <ReactMarkdown>{content}</ReactMarkdown>
-          </ContentWrapper>
-        );
-      default:
-        return <ContentWrapper>{content}</ContentWrapper>;
-    }
+    return (
+      <ContentWrapper>
+        <MDEditor
+          preview="preview"
+          hideToolbar={true}
+          value={content}
+        ></MDEditor>
+      </ContentWrapper>
+    );
   };
 
   if (loading) {
