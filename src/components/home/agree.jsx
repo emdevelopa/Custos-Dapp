@@ -71,6 +71,7 @@ const Agree = () => {
         </div>
       </Section>
 
+
       {/* Section 2: Launch Dapps */}
       <Section id="launch-dapps" headerText="Launch Dapps">
         <div className="flex justify-center items-center mb-12">
@@ -81,6 +82,7 @@ const Agree = () => {
                 <FaLongArrowAltRight className="ml-1" />
               </div>
                 {/* <button className="relative max-w-sm br text-white p-3 shadow-lg transform hover:scale-105 transition-transform duration-300 border-gradient bg-opacity-50 mb-5 backdrop-filter backdrop-blur-lg flex items-center justify-center overflow-clip">
+
             <span className="flex items-center">Launch Dapp</span>
             <svg
               className="ml-2 w-6 h-6"
@@ -122,7 +124,9 @@ const Agree = () => {
                 trust and accountability among parties.
               </p>
             </div>
+
                {/* <button className="relative max-w-sm br text-white p-3 shadow-lg transform hover:scale-105 transition-transform duration-300 border-gradient bg-opacity-50 mb-5 backdrop-filter backdrop-blur-lg flex items-center justify-center overflow-clip">
+
             <span className="flex items-center">Launch Dapp</span>
             <svg
               className="ml-2 w-6 h-6"
