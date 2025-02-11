@@ -1,3 +1,5 @@
+"use client";
+
 import React from "react";
 import AgreementBox from "../components/AgreementBox";
 import AgreementEditCard from "../components/AgreementEditCard";
