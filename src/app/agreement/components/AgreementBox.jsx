@@ -4,17 +4,13 @@ import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import React from 'react'
 
-const AgreementBox = ({id,title, content}) => {
-    // const router = useRouter()
-    // function handleClick(){
-    //     router.push(`/agreement/agreementTemplate/${id}`)
-    // }
+const AgreementBox = ({id, title, content, onSelect}) => {
   return (
   
-            <Link href={`/agreement/agreementTemplate/${id}`}
+            <div
               key={id}
-            //   onClick={handleClick}
               className="relative border-gradient w-auto cursor-pointer h-[330px] bg-[#010E12] text-white py-4 rounded-[20px] po overflow-hidden transition-opacity duration-100 ease-in-out hover:opacity-90"
+              onClick={() => onSelect(id)}
             >
               <div
                 className="absolute inset-0 border-[1px] border-transparent rounded-[20px]"
@@ -55,10 +51,10 @@ const AgreementBox = ({id,title, content}) => {
                   }}
                 ></div>
                 <h3 className="relative text-[#EAFBFF] font-bold text-lg px-4 py-4 w-full text-center">
-                  {title}
+                  {/* {title} */}
                 </h3>
               </div>
-            </Link>
+            </div>
           
   )
 }
