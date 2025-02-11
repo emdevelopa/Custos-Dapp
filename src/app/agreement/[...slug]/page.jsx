@@ -16,7 +16,7 @@ import {
   hexTimestampToFormattedDate,
   numberToHex,
 } from "@/utils/serializer";
-// import { useNotification } from "@/contexts/NotificationContext";
+
 import "@uiw/react-md-editor/markdown-editor.css";
 import "@uiw/react-markdown-preview/markdown.css";
 import dynamic from "next/dynamic";
@@ -283,21 +283,21 @@ const AgreementSlug = ({ params }, agreementparam) => {
         </div>
 
         <div className="space-y-4">
-          {key == "onchain" ? (
-            ""
-          ) : (
-            <>
-              <div className="flex flex-col gap-2">
-                <strong className="text-lg">Agreement Title:</strong>
-                <span className="text-sm">
+          {/* {key == "onchain" ? ( */}
+            {/* "" */}
+          {/* ) : ( */}
+            {/* <> */}
+              {/* <div className="flex flex-col gap-2"> */}
+                {/* <strong className="text-lg">Agreement Title:</strong> */}
+                {/* <span className="text-sm"> */}
                   {/* {agreement.agreement_id || "N/A"} */}
-                  <div className="box w-fit p-2">
-                    <div className="sh"></div>
-                  </div>
-                </span>
-              </div>
-            </>
-          )}
+                  {/* <div className="box w-fit p-2"> */}
+                    {/* <div className="sh"></div> */}
+                  {/* </div> */}
+                {/* </span> */}
+              {/* </div> */}
+            {/* </> */}
+          {/* )} */}
           <div className="flex flex-col gap-2">
             <strong className="text-lg">Content:</strong>
             {isEditing ? (

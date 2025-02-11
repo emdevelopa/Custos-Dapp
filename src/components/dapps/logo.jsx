@@ -5,7 +5,7 @@ import Image from "next/image";
 export const Logo = ({ open }) => {
   return (
     <Link
-      href="/logoicon.png"
+      href="/"
       className="font-normal flex items-center justify-center text-sm text-white py-1 relative z-20"
     >
       <div className="flex items-center gap-2 w-full">
