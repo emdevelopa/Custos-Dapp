@@ -17,11 +17,10 @@ import {
   numberToHex,
 } from "@/utils/serializer";
 
-import "@uiw/react-md-editor/markdown-editor.css";
-import "@uiw/react-markdown-preview/markdown.css";
+// Remove markdown editor imports and use ReactQuill instead
 import dynamic from "next/dynamic";
-
-const MDEditor = dynamic(() => import("@uiw/react-md-editor"), { ssr: false });
+const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
+import "react-quill/dist/quill.snow.css";
 
 const AgreementSlug = ({ params }, agreementparam) => {
   const [agreement, setAgreement] = useState(null);
@@ -29,7 +28,8 @@ const AgreementSlug = ({ params }, agreementparam) => {
   const [accessToken, setAccessToken] = useState(null);
   const [isEditing, setIsEditing] = useState(false);
   const [editableFields, setEditableFields] = useState({});
-  const [contentFormat, setContentFormat] = useState("plain");
+  // Force content format to HTML now that we got ReactQuill
+  const [contentFormat, setContentFormat] = useState("html");
   const { openNotification } = useNotification();
   const router = useRouter();
   const { address } = useContext(WalletContext);
@@ -39,7 +39,6 @@ const AgreementSlug = ({ params }, agreementparam) => {
   useEffect(() => {
     if (key === "access_token") {
       setAccessToken(value || params?.agreementAccessToken);
-
       fetchAgreementByAccessToken(value);
     } else if (key == "onchain") {
       console.log("here at last");
@@ -50,8 +49,6 @@ const AgreementSlug = ({ params }, agreementparam) => {
   }, [key, value]);
 
   const fetchAgreementById = async (agreementId) => {
-    // console.log(agreementId);
-
     try {
       const response = await fetch(
         `https://custosbackend.onrender.com/agreement/agreement/${agreementId}/`
@@ -80,24 +77,15 @@ const AgreementSlug = ({ params }, agreementparam) => {
       if (response.ok) {
         const data = await response.json();
         console.log(data);
-
         setAgreement(data);
         initializeEditableFields(data);
       } else {
         console.error("Failed to fetch agreement by access token");
-        openNotification(
-          "error",
-          "",
-          "Failed to fetch agreement by access token"
-        );
+        openNotification("error", "", "Failed to fetch agreement by access token");
       }
     } catch (error) {
       console.error("Error fetching agreement by access token:", error);
-      openNotification(
-        "error",
-        "Error feching agreement by access token",
-        `${error}`
-      );
+      openNotification("error", "Error feching agreement by access token", `${error}`);
     } finally {
       setLoading(false);
     }
@@ -114,6 +102,7 @@ const AgreementSlug = ({ params }, agreementparam) => {
       return "text";
     }
   };
+
   const getOnchainAgreement = async (id) => {
     setLoading(true);
     try {
@@ -127,21 +116,16 @@ const AgreementSlug = ({ params }, agreementparam) => {
       // Process and transform the on-chain data
       const transformedAgreement = {
         agreementType: byteArrayToString(agreementsDetails.agreement_title),
-        second_party_address: numberToHex(
-          agreementsDetails.second_party_address
-        ),
+        second_party_address: numberToHex(agreementsDetails.second_party_address),
         first_party_address: numberToHex(agreementsDetails.creator),
-        first_party_valid_id: byteArrayToString(
-          agreementsDetails.first_party_valid_id
-        ),
-        second_party_valid_id: byteArrayToString(
-          agreementsDetails.second_party_valid_id
-        ),
+        first_party_valid_id: byteArrayToString(agreementsDetails.first_party_valid_id),
+        second_party_valid_id: byteArrayToString(agreementsDetails.second_party_valid_id),
         content: byteArrayToString(agreementsDetails.content),
         created_at: hexTimestampToFormattedDate(agreementsDetails.timestamp),
       };
 
-      setContentFormat(detectContentFormat(transformedAgreement.content));
+      // Force HTML format for rich editing
+      setContentFormat("html");
       setAgreement(transformedAgreement);
     } catch (error) {
       openNotification("error", "Error fetching agreement details", `${error}`);
@@ -158,7 +142,7 @@ const AgreementSlug = ({ params }, agreementparam) => {
       first_party_country: data?.first_party_country,
       first_party_id_type: data?.first_party_id_type,
     });
-    setContentFormat(detectContentFormat(data?.content));
+    setContentFormat("html"); // ensure rich HTML editing
   };
 
   const handleEditClick = () => {
@@ -166,7 +150,7 @@ const AgreementSlug = ({ params }, agreementparam) => {
   };
 
   const handleSave = async () => {
-    setIsEditing(!true);
+    setIsEditing(false);
 
     try {
       const formData = new FormData();
@@ -200,19 +184,13 @@ const AgreementSlug = ({ params }, agreementparam) => {
     setEditableFields((prev) => ({ ...prev, [field]: value }));
   };
 
+  // Use DOMPurify to sanitize HTML and render the content
   const renderContent = (content) => {
-    const ContentWrapper = ({ children }) => (
-      <div className="agreement-content-wrapper">{children}</div>
-    );
-
     return (
-      <ContentWrapper>
-        <MDEditor
-          preview="preview"
-          hideToolbar={true}
-          value={content}
-        ></MDEditor>
-      </ContentWrapper>
+      <div
+        className="agreement-content-wrapper"
+        dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(content) }}
+      />
     );
   };
 
@@ -233,7 +211,7 @@ const AgreementSlug = ({ params }, agreementparam) => {
   }
 
   function formatDate(date) {
-    format(new Date(date), "EEEE, do MMMM yyyy. hh:mm:ss aaaa");
+    return format(new Date(date), "EEEE, do MMMM yyyy. hh:mm:ss aaaa");
   }
 
   return (
@@ -283,43 +261,18 @@ const AgreementSlug = ({ params }, agreementparam) => {
         </div>
 
         <div className="space-y-4">
-          {/* {key == "onchain" ? ( */}
-            {/* "" */}
-          {/* ) : ( */}
-            {/* <> */}
-              {/* <div className="flex flex-col gap-2"> */}
-                {/* <strong className="text-lg">Agreement Title:</strong> */}
-                {/* <span className="text-sm"> */}
-                  {/* {agreement.agreement_id || "N/A"} */}
-                  {/* <div className="box w-fit p-2"> */}
-                    {/* <div className="sh"></div> */}
-                  {/* </div> */}
-                {/* </span> */}
-              {/* </div> */}
-            {/* </> */}
-          {/* )} */}
           <div className="flex flex-col gap-2">
             <strong className="text-lg">Content:</strong>
             {isEditing ? (
               <div className="w-full">
-                <textarea
+                <ReactQuill
                   value={editableFields.content}
-                  onChange={(e) => handleInputChange("content", e.target.value)}
-                  rows="10"
+                  onChange={(content) => handleInputChange("content", content)}
                   className="w-full p-2 bg-[#091219] text-[#EAFBFF] border border-[#19B1D2] rounded"
                 />
-                <select
-                  value={contentFormat}
-                  onChange={(e) => setContentFormat(e.target.value)}
-                  className="mt-2 w-full p-2 bg-[#091219] text-[#EAFBFF] border border-[#19B1D2] rounded"
-                >
-                  <option value="plain">Plain Text</option>
-                  <option value="html">HTML</option>
-                  <option value="markdown">Markdown</option>
-                </select>
               </div>
             ) : (
-              <div className=" py-4 rounded-lg font-normal text-sm">
+              <div className="py-4 rounded-lg font-normal text-sm">
                 {renderContent(agreement?.content)}
               </div>
             )}
@@ -412,72 +365,22 @@ const AgreementSlug = ({ params }, agreementparam) => {
           ) : (
             <>
               <div className="flex flex-col gap-2">
-                <strong className="text-lg">First Party Country:</strong>
-                {isEditing ? (
-                  <input
-                    type="text"
-                    value={editableFields.first_party_country}
-                    onChange={(e) =>
-                      handleInputChange("first_party_country", e.target.value)
-                    }
-                    className="w-full p-2 bg-[#091219] text-[#EAFBFF] border border-[#19B1D2] rounded"
-                  />
-                ) : (
-                  <span className="text-sm">
-                    {agreement?.first_party_country || "N/A"}
-                  </span>
-                )}
+                <strong className="text-lg">Second Party Address:</strong>
+                <span className="text-sm">{agreement.second_party_address}</span>
               </div>
               <div className="flex flex-col gap-2">
-                <strong className="text-lg">First Party ID Type:</strong>
-                {isEditing ? (
-                  <input
-                    type="text"
-                    value={editableFields?.first_party_id_type}
-                    onChange={(e) =>
-                      handleInputChange("first_party_id_type", e.target.value)
-                    }
-                    className="w-full p-2 bg-[#091219] text-[#EAFBFF] border border-[#19B1D2] rounded"
+                <strong className="text-lg">Second Party Valid ID:</strong>
+                <span className="text-sm">
+                  <Image
+                    src={agreement?.second_party_valid_id || "/not-found-image.png"}
+                    alt="First Party Signature"
+                    width={20}
+                    height={20}
+                    className="w-[16em] h-[10em] bg-white object-cover rounded-lg"
                   />
-                ) : (
-                  <span className="text-sm">
-                    {agreement?.first_party_id_type}
-                  </span>
-                )}
+                </span>
               </div>
-              <div className="flex flex-col gap-2">
-                <strong className="text-sm">First Party Signature:</strong>
-                <Image
-                  src={agreement?.first_party_signature || "/not-found-image.png"}
-                  alt="First Party Signature"
-                  width={20}
-                  height={20}
-                  className="w-[16em] h-[10em] bg-white object-cover rounded-lg"
-                />
-              </div>
-            </>
-          )}
-          <div className="flex flex-col gap-2">
-            <strong className="text-lg">Second Party Address:</strong>
-            <span className="text-sm">{agreement.second_party_address}</span>
-          </div>
-          <div className="flex flex-col gap-2">
-            <strong className="text-lg">Second Party Valid ID:</strong>
-            <span className="text-sm">
-              <Image
-                src={agreement?.second_party_valid_id || "/not-found-image.png"}
-                alt="First Party Signature"
-                width={20}
-                height={20}
-                className="w-[16em] h-[10em] bg-white object-cover rounded-lg"
-              />
-            </span>
-          </div>
 
-          {key == "onchain" ? (
-            ""
-          ) : (
-            <>
               <div className="flex flex-col gap-2">
                 <strong className="text-lg">Second Party Country:</strong>
                 <span className="text-sm">
@@ -493,9 +396,7 @@ const AgreementSlug = ({ params }, agreementparam) => {
               <div className="flex flex-col gap-2">
                 <strong className="text-sm">Second Party Signature:</strong>
                 <Image
-                  src={
-                    agreement?.second_party_signature || "/not-found-image.png"
-                  }
+                  src={agreement?.second_party_signature || "/not-found-image.png"}
                   alt="First Party Signature"
                   width={20}
                   height={20}
@@ -511,8 +412,3 @@ const AgreementSlug = ({ params }, agreementparam) => {
 };
 
 export default AgreementSlug;
-
-
-
-
-
