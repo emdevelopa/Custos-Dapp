@@ -10,122 +10,17 @@
   background-size: contain;
   background-blend-mode: multiply;
   font-family: "Outfit", sans-serif;
-  background-color: #0C1215;
+  background-color: #0c1215;
   font-optical-sizing: auto;
   font-style: normal;
 }
-
-.kanit-thin {
-  font-family: "Kanit", sans-serif;
-  font-weight: 100;
-  font-style: normal;
+*{
+  outline:none;
+  border:none;
+  border-width: none;
+  -webkit-appearance:none;
 }
 
-.kanit-extralight {
-  font-family: "Kanit", sans-serif;
-  font-weight: 200;
-  font-style: normal;
-}
-
-.kanit {
-  font-family: "Kanit", sans-serif;
-}
-
-.kanit-light {
-  font-family: "Kanit", sans-serif;
-  font-weight: 300;
-  font-style: normal;
-}
-
-.kanit-regular {
-  font-family: "Kanit", sans-serif;
-  font-weight: 400;
-  font-style: normal;
-}
-
-.kanit-medium {
-  font-family: "Kanit", sans-serif;
-  font-weight: 500;
-  font-style: normal;
-}
-
-.kanit-semibold {
-  font-family: "Kanit", sans-serif;
-  font-weight: 600;
-  font-style: normal;
-}
-
-.kanit-bold {
-  font-family: "Kanit", sans-serif;
-  font-weight: 700;
-  font-style: normal;
-}
-
-.kanit-extrabold {
-  font-family: "Kanit", sans-serif;
-  font-weight: 800;
-  font-style: normal;
-}
-
-.kanit-black {
-  font-family: "Kanit", sans-serif;
-  font-weight: 900;
-  font-style: normal;
-}
-
-.kanit-thin-italic {
-  font-family: "Kanit", sans-serif;
-  font-weight: 100;
-  font-style: italic;
-}
-
-.kanit-extralight-italic {
-  font-family: "Kanit", sans-serif;
-  font-weight: 200;
-  font-style: italic;
-}
-
-.kanit-light-italic {
-  font-family: "Kanit", sans-serif;
-  font-weight: 300;
-  font-style: italic;
-}
-
-.kanit-regular-italic {
-  font-family: "Kanit", sans-serif;
-  font-weight: 400;
-  font-style: italic;
-}
-
-.kanit-medium-italic {
-  font-family: "Kanit", sans-serif;
-  font-weight: 500;
-  font-style: italic;
-}
-
-.kanit-semibold-italic {
-  font-family: "Kanit", sans-serif;
-  font-weight: 600;
-  font-style: italic;
-}
-
-.kanit-bold-italic {
-  font-family: "Kanit", sans-serif;
-  font-weight: 700;
-  font-style: italic;
-}
-
-.kanit-extrabold-italic {
-  font-family: "Kanit", sans-serif;
-  font-weight: 800;
-  font-style: italic;
-}
-
-.kanit-black-italic {
-  font-family: "Kanit", sans-serif;
-  font-weight: 900;
-  font-style: italic;
-}
 
 @layer utilities {
   .text-balance {
@@ -152,9 +47,10 @@
   border-radius: inherit; /* Match the border radius of the card */
   padding: 0.47px; /* Adjust the width of the border */
   background: linear-gradient(90deg, #0094ff 0%, #a02294 100%);
+
   -webkit-mask: linear-gradient(#0C1215 0 0) content-box, linear-gradient(#0C1215 0 0);
   mask: linear-gradient(#0C1215 0 0) content-box, linear-gradient(#0C1215 0 0);
-  -webkit-mask-composite: destination-out; /* For Safari */
+
   mask-composite: destination-out; /* For other browsers */
 }
 .border-gradient2 {
@@ -174,8 +70,9 @@
   background: linear-gradient(90deg, #0094ff 0%, #a02294 100%);
 
   /* Masking the background so that the gradient appears only on the border */
-  -webkit-mask: linear-gradient(#0C1215 0 0) content-box, linear-gradient(#0C1215 0 0);
-  mask: linear-gradient(#0C1215 0 0) content-box, linear-gradient(#0C1215 0 0);
+  -webkit-mask: linear-gradient(#0c1215 0 0) content-box,
+    linear-gradient(#0c1215 0 0);
+  mask: linear-gradient(#0c1215 0 0) content-box, linear-gradient(#0c1215 0 0);
   mask-composite: exclude;
 }
 
@@ -382,13 +279,24 @@ button .text-transparent {
   transform: translateY(20vh);
   visibility: 1;
   transition: opacity 2s ease-out, transform 1s ease-out,
-    visibility 1200ms ease-out;
+  visibility 1200ms ease-out;
   will-change: opacity, transform, visibility;
 }
+
+@media not all and (min-resolution: 0.001dpcm) {
+  @supports (-webkit-appearance: none) {
+    * {
+      border: none !important;
+      outline: none !important;
+    }
+  }
+}
+
 .fade-in-section.is-visible {
   opacity: 1;
   transform: none;
   visibility: visible;
+
 }
 /* HTML: <div class="box"><sh></sh> </div> */
 .box {
@@ -423,13 +331,29 @@ button .text-transparent {
   position: absolute;
   padding: 2px;
   inset: calc(0px - 0px - 0px);
-  border: calc(0px + 1px + 0px) solid #1f85ad;
+  border-style: calc(0px + 1px + 0px) solid #1f85ad;
   border-radius: 100px;
   -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
   -webkit-mask-composite: xor;
   mask-composite: exclude;
   transform: translateZ(-1px);
   pointer-events: none;
+}
+@media not all and (min-resolution: 0.001dpcm) {
+  @supports (-webkit-appearance: none) {
+    .box-btn .sh-btn {
+      border: transparent;
+     border-style: calc(0px + 1px + 0px) solid #1f85ad;
+      border-radius: 0px;
+      border-top-width: 0px;
+      border-bottom-width: 0px;
+      border-top-left-radius: 0px;
+      border-top-right-radius: 0px;
+      border-bottom-right-radius: 0px;
+      border-bottom-right-radius: 0px;
+      
+    } 
+  }
 }
 .box-btn .sh-btn::before {
   content: "";
@@ -442,10 +366,7 @@ button .text-transparent {
   filter: blur(0px);
   transform: translate(0px, 0px);
 }
-/* .m{
- 
- color: linear-gradient(90deg, #0094ff 0%, #a02294 100%);
-} */
+
 
 .validate-gradient {
   background: rgb(4, 8, 12);
@@ -477,4 +398,89 @@ button .text-transparent {
 .scrollbar-hide {
   -ms-overflow-style: none; /* for Internet Explorer, Edge */
   scrollbar-width: none; /* for Firefox */
+}
+
+
+.add-safari-border-color{
+  @supports (-webkit-appearance: none) {
+    border-width:0px;
+    /* border-color: transparent !important; */
+    border-color: conic-gradient(from 90deg at 40% -25%, #a0229369, #0095ff60);
+  * {
+    border-radius: none !important; 
+  }
+}
+}
+.remove-safari-border{
+  border-width:0;
+  border-color: transparent ;
+}
+.remove-safari-border::-webkit-scrollbar{
+    border-width:0;
+    border-color: transparent;
+}
+
+@media not all and (min-resolution: 0.001dpcm){
+  @supports(-webkit-appearance:none){
+    .box-btn, .sh-btn{
+      border:1px;
+      border-color:linear-gradient(90deg, #0094ff 0%, #a02294 100%);
+    }
+  }
+}
+
+
+@media not all and (min-resolution: 0.001dpcm) {
+  @supports (-webkit-appearance: none) {
+  .box-btn .sh-btn {
+  content: "";
+  border-radius: none; /* Match the border radius of the card */
+  padding: 0px; /* Adjust the width of the border */
+  background: linear-gradient(90deg, #0094ff 0%, #a02294 100%);
+  -webkit-mask: linear-gradient(#0C1215 0 0) content-box, linear-gradient(#0C1215 0 0);
+  mask: linear-gradient(#0C1215 0 0) content-box, linear-gradient(#0C1215 0 0);
+  mask-composite: destination-out; /* For other browsers */
+    } 
+  }
+}
+
+
+@media not all and (min-resolution: 0.001dpcm) {
+  @supports (-webkit-appearance: none) {
+.sh-btn{
+  content: "";
+  border-radius: none; 
+  padding: 0px;
+  border-width: 1px !important;
+  border-color: linear-gradient(90deg, #0094ff 0%, #a02294 100%) !important;
+  -webkit-mask: linear-gradient(#0C1215 0 0) content-box, linear-gradient(#0C1215 0 0) !important;
+  mask: linear-gradient(#0C1215 0 0) content-box, linear-gradient(#0C1215 0 0) !important;
+  mask-composite: destination-out; /* For other browsers */
+    } 
+  }
+}
+.custom-editor {
+  width: 700px; /* Fixed width on large screens */
+  min-height: 300px;
+  height: 40vh;
+  max-height: 500px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .custom-editor {
+    width: 600px; /* Slightly smaller width for tablets */
+    height: 35vh;
+  }
+}
+
+@media (max-width: 576px) {
+  .custom-editor {
+    width: 90vw; /* Adjust width dynamically for smaller screens */
+    height: 30vh;
+  }
+}
+button[data-name="fullscreen"] {
+  display: none !important;
+
 }
