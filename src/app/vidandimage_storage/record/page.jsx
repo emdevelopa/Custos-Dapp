@@ -1,5 +1,5 @@
 "use client";
-import Record from "@/app/crimerecorder/record/page";
+import Record from "../../../app/crimerecorder/record/page";
 import icon1 from "../../../../public/record2.png";
 import icon2 from "../../../../public/picture.png";
 

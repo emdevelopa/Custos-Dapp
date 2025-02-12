@@ -183,6 +183,8 @@ const   Navbar = () => {
                               <p className="flex sm:text-xl gap-4 sm:gap-6 h-full font-semibold text-white ">
                                 <Image
                                   src="/about.svg"
+                                  width={32}
+                                  height={32}
                                   alt="about"
                                   className="rounded-lg h-fit p-1 w-[2em]"
                                 />
@@ -202,6 +204,8 @@ const   Navbar = () => {
                                 <Image
                                   src="/careers.svg"
                                   alt="careers"
+                                  width={32}
+                                  height={32}
                                   className="rounded-lg h-fit w-[2em]"
                                 />
                                 <p className="flex flex-col ">
@@ -220,6 +224,8 @@ const   Navbar = () => {
                                 <Image
                                   src="/call.svg"
                                   alt="call"
+                                  width={32}
+                                  height={32}
                                   className="rounded-lg h-fit w-[2em]"
                                 />
                                 <p className="flex flex-col ">
@@ -356,6 +362,8 @@ const   Navbar = () => {
                   <Image
                     src="/about.svg"
                     alt="about"
+                    width={''}
+                    height={''}
                     className="rounded-lg h-fit p-1 w-[2em]"
                   />
                   <p className="flex flex-col ">

@@ -2,14 +2,14 @@
 import { useState, useEffect, useContext } from "react"; 
 import { FiX } from "react-icons/fi"; 
 import "../globals.css";
-import Footer from "@/components/footer";
+import Footer from "../../components/footer";
 import Metadata from "../metadata";
-import BackgroundWrapper from "@/components/backgroundwrapper";
+import BackgroundWrapper from "../../components/backgroundwrapper";
 
-import Sidepane from "@/components/dapps/sidepane";
-import Header from "@/components/dapps/header";
+import Sidepane from "../../components/dapps/sidepane";
+import Header from "../../components/dapps/header";
 import Image from 'next/image';
-import { WalletContext } from "@/components/walletprovider"; // Import WalletContext
+import { WalletContext } from "../../components/walletprovider"; // Import WalletContext
 
 export default function RootLayout({ children }) {
   const [isSidepaneOpen, setSidepaneOpen] = useState(false); // State to toggle sidepane

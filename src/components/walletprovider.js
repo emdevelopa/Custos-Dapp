@@ -8,8 +8,8 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { injected, walletConnect, metaMask } from "wagmi/connectors";
 import "@rainbow-me/rainbowkit/styles.css";
 import { RainbowKitProvider } from "@rainbow-me/rainbowkit";
-import { useNotification } from "@/context/NotificationProvider";
-import { padAddress } from "@/utils/serializer";
+import { useNotification } from "../context/NotificationProvider";
+import { padAddress } from "../utils/serializer";
 
 const queryClient = new QueryClient();
 

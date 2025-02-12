@@ -1,7 +1,7 @@
 import Image from "next/image";
 import { FaTimes } from "react-icons/fa";
-import { GlobalStateContext } from "@/context/GlobalStateProvider";
-import { useModal } from "@/context/ModalProvider";
+import { GlobalStateContext } from "../../../context/GlobalStateProvider";
+import { useModal } from "../../../context/ModalProvider";
 
 const SuccessScreen = () => {
   const { closeModal } = useModal();

@@ -3,8 +3,8 @@ import { useState, useEffect, useContext } from "react";
 import { FiX } from "react-icons/fi"; 
 import "../globals.css";
 
-import Sidepane from "@/components/dapps/sidepane";
-import Header from "@/components/dapps/header";
+import Sidepane from "../../components/dapps/sidepane";
+import Header from "../../components/dapps/header";
 import Image from 'next/image';
 export default function RootLayout({ children }) {
   const [isSidepaneOpen, setSidepaneOpen] = useState(false); // State to toggle sidepane

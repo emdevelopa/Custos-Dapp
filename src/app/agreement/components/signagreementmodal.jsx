@@ -2,12 +2,12 @@
 import { useContext, useEffect, useState, useRef } from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { GlobalStateContext } from "@/context/GlobalStateProvider";
+import { GlobalStateContext } from "../../../context/GlobalStateProvider";
 import SignaturePad from "react-signature-canvas";
-import useIdentityVerification from "@/utils/verification";
-import { useNotification } from "@/context/NotificationProvider";
+import useIdentityVerification from "../../../utils/verification";
+import { useNotification } from "../../../context/NotificationProvider";
 import { Buffer } from 'buffer';
-import { base64ToImageFile } from "@/utils/serializer";
+import { base64ToImageFile } from "../../../utils/serializer";
 
 const SignAgreementModal = ({
   fullname,

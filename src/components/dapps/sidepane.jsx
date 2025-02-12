@@ -2,7 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 import { usePathname, useRouter } from "next/navigation";
-import ConnectButtoncomponent from "@/components/connect";
+import ConnectButtoncomponent from "../../components/connect";
 
 const Sidepane = ({ isOpen, onClose }) => {
   const pathname = usePathname();

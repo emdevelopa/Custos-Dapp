@@ -1,6 +1,6 @@
 import Image from "next/image";
 import { FaTimes } from "react-icons/fa";
-import { useModal } from "@/context/ModalProvider";
+import { useModal } from "../../../context/ModalProvider";
 
 const ErrorScreen = () => {
   const { closeModal, message } = useModal();

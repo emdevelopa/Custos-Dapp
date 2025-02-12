@@ -1,19 +1,19 @@
 /* eslint-disable react/no-unescaped-entities */
 "use client";
 import { useContext, useEffect, useState } from "react";
-import useIdentityVerification from "@/utils/verification";
-import { GlobalStateContext } from "@/context/GlobalStateProvider";
+import useIdentityVerification from "../../../utils/verification";
+import { GlobalStateContext } from "../../../context/GlobalStateProvider";
 import { useRouter } from "next/navigation";
-import { provider, UseWriteToContract } from "@/utils/fetchcontract";
+import { provider, UseWriteToContract } from "../../../utils/fetchcontract";
 import Image from "next/image";
 import {
   hexToNumber,
   stringToByteArray,
   stringToFelt,
-} from "@/utils/serializer";
+} from "../../../utils/serializer";
 import SuccessScreen from "./Success";
-import Loading from "@/components/loading"
-import { useNotification } from "@/context/NotificationProvider";
+import Loading from "../../../components/loading"
+import { useNotification } from "../../../context/NotificationProvider";
 
 const ValidateAgreementModal = ({
   fullname,

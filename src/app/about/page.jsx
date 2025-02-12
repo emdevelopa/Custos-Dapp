@@ -1,7 +1,7 @@
 "use client";
 import React, { useState, useRef } from "react";
 import Image from "next/image";
-import Navbar from "@/components/navbar";
+import Navbar from "../../components/navbar";
 import ShowLaunchDapps from "../../components/showLaunchDapps";
 import { FaLongArrowAltRight } from "react-icons/fa";
 

@@ -1,12 +1,12 @@
 "use client";
 
 import React, { useContext, useEffect, useState } from "react";
-import { UseReadContractData } from "@/utils/fetchcontract";
+import { UseReadContractData } from "../../../utils/fetchcontract";
 import NoRecordScreen from "./NoRecordScreen";
-import { WalletContext } from "@/components/walletprovider";
+import { WalletContext } from "../../../components/walletprovider";
 import Image from "next/image";
 import { ClipboardIcon } from "@heroicons/react/outline";
-import { useNotification } from "@/context/NotificationProvider";
+import { useNotification } from "../../../context/NotificationProvider";
 
 const Uploads = () => {
   const { address, wallet } = useContext(WalletContext); // Using WalletContext

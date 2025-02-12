@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { FaBars, FaTimes } from "react-icons/fa";
-import ConnectButtoncomponent from "@/components/connect";
-import { UseReadContractData } from "@/utils/fetchcontract";
-import NotificationsDropdown from "@/app/agreement/components/notificationsDropdown";
+import ConnectButtoncomponent from "../../components/connect";
+import { UseReadContractData } from "../../utils/fetchcontract";
+import NotificationsDropdown from "../../app/agreement/components/notificationsDropdown";
 
 export const Header = ({ onToggle }) => {
   const [isOpen, setIsOpen] = useState(false);

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { FaArrowLeft } from 'react-icons/fa'
 import ValidateAgreementModal from './validateAgreement';
 import SignAgreementModal from './signagreementmodal';
-import { printAgreement, downloadAgreement } from '@/utils/pdfUtils';
+import { printAgreement, downloadAgreement } from '../../../utils/pdfUtils';
 
 const Slugnav = ({ agreement }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
