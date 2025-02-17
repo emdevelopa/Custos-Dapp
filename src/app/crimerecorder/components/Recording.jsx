@@ -159,7 +159,7 @@ export const Recording = ({ text, icon1, imgText, category }) => {
 
             const typedData  = await prepareResponse.json();
             
-            console.log("restored typed data...",typedData)
+            console.log("restored typed data...",typedData.typedData)
             const safeTypedData = normalizeTypedData(typedData);
 
             
