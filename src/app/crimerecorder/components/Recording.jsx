@@ -95,6 +95,37 @@ export const Recording = ({ text, icon1, imgText, category }) => {
       callRef.current = JSON.stringify(calls, null, 2);
     }
 
+    const normalizeTypedData = (rawData) => {
+      // Ensure Calls array exists and is properly formatted
+      const normalized = {
+        ...rawData,
+        message: {
+          ...rawData.message,
+          Calls: (rawData.message.Calls || []).map(call => ({
+            To: call.To,
+            Selector: call.Selector,
+            Calldata: Array.isArray(call.Calldata) ? 
+              call.Calldata.map(item => item.toString()) : 
+              []
+          }))
+        }
+      };
+    
+      // Convert all numeric values to hex strings
+      const hexify = (value) => 
+        typeof value === 'string' ? value : `0x${value.toString(16)}`;
+    
+      return {
+        ...normalized,
+        message: {
+          ...normalized.message,
+          Nonce: hexify(normalized.message.Nonce),
+          'Execute After': hexify(normalized.message['Execute After']),
+          'Execute Before': hexify(normalized.message['Execute Before']),
+        }
+      };
+    };
+    
     // Execute the transaction with gasless option
     const triggerWallet = async () => {
       if (uri) {
@@ -129,9 +160,11 @@ export const Recording = ({ text, icon1, imgText, category }) => {
             const { typedData } = await prepareResponse.json();
             
             console.log("restored typed data...",typedData)
-            // 2. Client-side signing
+            const safeTypedData = normalizeTypedData(typedData);
+
+            
             const signature = await account.signer.signMessage(
-              typedData,
+              safeTypedData,
               account.address
             );
             console.log("signature...",signature)
