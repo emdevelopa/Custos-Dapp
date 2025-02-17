@@ -32,6 +32,7 @@ import Filename from "./nameModal";
 import Image from "next/image";
 import { publicProvider, useAccount } from "@starknet-react/core";
 import { accessListify } from "ethers";
+import { fetchDataFromAPI } from "./avnucall";
 
 const NFT_STORAGE_TOKEN = process.env.NEXT_PUBLIC_IPFS_KEY;
 
@@ -102,13 +103,25 @@ export const Recording = ({ text, icon1, imgText, category }) => {
             console.log("call ref is :", callRef.current);
             console.log("account is :", account);
 
-            const transactionResponse = await executeCalls(
-              account,
-              JSON.parse(callRef.current),
-              {},
-              { ...options, apiKey: process.env.NEXT_PUBLIC_AVNU_KEY }
-            );
-            console.log("Transaction successful:", transactionResponse);
+            // const transactionResponse = await executeCalls(
+            //   account,
+            //   JSON.parse(callRef.current),
+            //   {},
+            //   { ...options, apiKey: process.env.NEXT_PUBLIC_AVNU_KEY }
+            // );
+            const response = await fetch("/api/avnuhandler", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({
+                account,
+                calls: JSON.parse(callRef.current),
+                options,
+              }),
+            });
+    
+            const data = await response.json();
+            console.log('...', data)
+            
             openNotification("success", "Transaction successful", "");
             setLoading(false);
             openModal("success");
