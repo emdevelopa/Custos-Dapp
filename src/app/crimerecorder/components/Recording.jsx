@@ -164,7 +164,7 @@ export const Recording = ({ text, icon1, imgText, category }) => {
 
             
             const signature = await starknetJsAccount.signer.signMessage(
-              typedData,    
+              typedData.typedData,    
               account.address
             );
             console.log("signature...",signature)
