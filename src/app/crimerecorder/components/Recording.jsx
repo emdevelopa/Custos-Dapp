@@ -159,7 +159,7 @@ export const Recording = ({ text, icon1, imgText, category }) => {
 
             const {typedData}  = await prepareResponse.json();
             
-            console.log("restored typed data...",typedData.typedData)
+            console.log("restored typed data...",typedData)
             // const safeTypedData = normalizeTypedData(typedData);
 
             
@@ -167,7 +167,12 @@ export const Recording = ({ text, icon1, imgText, category }) => {
               typedData,    
               account.address
             );
-            console.log("signature...",signature)
+            console.log("raw signature...",signature)
+            const serializedSignature = {
+              r: signature.r.toString(),
+              s: signature.s.toString(),
+              recovery: signature.recovery
+            };
             // 3. Execute through API
             const executeResponse = await fetch("/api/execute-signed", {
               method: "POST",
@@ -175,7 +180,7 @@ export const Recording = ({ text, icon1, imgText, category }) => {
               body: JSON.stringify({
                 userAddress: account.address,
                 typedData,
-                signature,
+                signature: serializedSignature,
                 deploymentData: undefined, 
               }),
             });
