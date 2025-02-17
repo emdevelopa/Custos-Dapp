@@ -128,11 +128,11 @@ export const Recording = ({ text, icon1, imgText, category }) => {
 
             const { typedData } = await prepareResponse.json();
             
-            
             console.log("restored typed data...",typedData)
             // 2. Client-side signing
             const signature = await account.signer.signMessage(
-              typedData
+              typedData,
+              account.address
             );
             console.log("signature...",signature)
             // 3. Execute through API
