@@ -20,6 +20,8 @@ export async function POST(req) {
       accountClassHash
     );
 
+    console.log('server-side typed data...', typedData)
+
     const replacer = (key, value) => 
       typeof value === 'bigint' ? value.toString() : value;
 

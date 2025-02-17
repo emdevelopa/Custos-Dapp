@@ -125,6 +125,8 @@ export const Recording = ({ text, icon1, imgText, category }) => {
             if (!prepareResponse.ok) throw new Error("Preparation failed");
             const { typedData } = await prepareResponse.json();
 
+            console.log("typed data...",typedData)
+
             const reviver = (key, value) => {
               if (typeof value === 'string' && /^\d+$/.test(value)) {
                 return BigInt(value);
