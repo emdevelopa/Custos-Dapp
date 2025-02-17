@@ -6,7 +6,7 @@ export async function POST(req) {
 
   try {
     const options = {
-      baseUrl: "https://starknet.api.avnu-fi",
+      baseUrl: "https://starknet.api.avnu.fi",
       apiKey: process.env.NEXT_PUBLIC_AVNU_KEY
     };
 
