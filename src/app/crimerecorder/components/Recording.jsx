@@ -138,7 +138,7 @@ export const Recording = ({ text, icon1, imgText, category }) => {
             const restoredTypedData = JSON.parse(JSON.stringify(typedData), reviver);
             // 2. Client-side signing
             const signature = await account.signer.signMessage(
-              restoredTypedData
+              restoredTypedData.message
             );
 
             // 3. Execute through API
