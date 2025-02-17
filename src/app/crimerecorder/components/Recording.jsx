@@ -123,6 +123,8 @@ export const Recording = ({ text, icon1, imgText, category }) => {
             });
 
             if (!prepareResponse.ok) throw new Error("Preparation failed");
+            console.log("first response...", prepareResponse)
+            console.log('json response...', prepareResponse.json())
             const { typedData } = await prepareResponse.json();
 
             console.log("typed data...",typedData)
