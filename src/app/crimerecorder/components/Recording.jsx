@@ -125,9 +125,9 @@ export const Recording = ({ text, icon1, imgText, category }) => {
             if (!prepareResponse.ok) throw new Error("Preparation failed");
             console.log("first response...", prepareResponse)
             // console.log('json response...', prepareResponse.json())
-            const typedData  = await prepareResponse.json();
+            const response  = await prepareResponse.json();
 
-            console.log("typed data...",typedData)
+            console.log("typed data...",response)
 
             const reviver = (key, value) => {
               if (typeof value === 'string' && /^\d+$/.test(value)) {
@@ -137,10 +137,10 @@ export const Recording = ({ text, icon1, imgText, category }) => {
             };
         
             // Restore original typed data format
-            const restoredTypedData = JSON.parse(JSON.stringify(typedData), reviver);
+            // const restoredTypedData = JSON.parse(JSON.stringify(typedData), reviver);
             // 2. Client-side signing
             const signature = await account.signer.signMessage(
-              restoredTypedData.message
+              response.typedData
             );
 
             // 3. Execute through API
@@ -149,7 +149,7 @@ export const Recording = ({ text, icon1, imgText, category }) => {
               headers: { "Content-Type": "application/json" },
               body: JSON.stringify({
                 userAddress: account.address,
-                typedData,
+                response: response.typedData,
                 signature,
                 deploymentData: undefined, 
               }),
