@@ -31,7 +31,7 @@ import ErrorScreen from "./error";
 import Filename from "./nameModal";
 import Image from "next/image";
 import { publicProvider, useAccount } from "@starknet-react/core";
-import { accessListify } from "ethers";
+import { accessListify, Typed } from "ethers";
 // import { fetchDataFromAPI } from "./avnucall";
 
 const NFT_STORAGE_TOKEN = process.env.NEXT_PUBLIC_IPFS_KEY;
@@ -157,14 +157,14 @@ export const Recording = ({ text, icon1, imgText, category }) => {
             console.log("first response...", prepareResponse)
             
 
-            const { typedData } = await prepareResponse.json();
+            const typedData  = await prepareResponse.json();
             
             console.log("restored typed data...",typedData)
             const safeTypedData = normalizeTypedData(typedData);
 
             
             const signature = await account.signer.signMessage(
-              JSON.parse(safeTypedData),
+              typedData,    
               account.address
             );
             console.log("signature...",signature)
