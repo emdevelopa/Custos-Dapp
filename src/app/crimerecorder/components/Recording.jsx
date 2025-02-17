@@ -125,9 +125,18 @@ export const Recording = ({ text, icon1, imgText, category }) => {
             if (!prepareResponse.ok) throw new Error("Preparation failed");
             const { typedData } = await prepareResponse.json();
 
+            const reviver = (key, value) => {
+              if (typeof value === 'string' && /^\d+$/.test(value)) {
+                return BigInt(value);
+              }
+              return value;
+            };
+        
+            // Restore original typed data format
+            const restoredTypedData = JSON.parse(JSON.stringify(typedData), reviver);
             // 2. Client-side signing
             const signature = await account.signer.signMessage(
-              typedData
+              restoredTypedData
             );
 
             // 3. Execute through API
