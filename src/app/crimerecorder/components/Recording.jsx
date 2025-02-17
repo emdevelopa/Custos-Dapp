@@ -32,7 +32,7 @@ import Filename from "./nameModal";
 import Image from "next/image";
 import { publicProvider, useAccount } from "@starknet-react/core";
 import { accessListify } from "ethers";
-import { fetchDataFromAPI } from "./avnucall";
+// import { fetchDataFromAPI } from "./avnucall";
 
 const NFT_STORAGE_TOKEN = process.env.NEXT_PUBLIC_IPFS_KEY;
 
