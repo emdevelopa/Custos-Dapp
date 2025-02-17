@@ -22,6 +22,7 @@ import {
   executeCalls,
   fetchAccountCompatibility,
   fetchAccountsRewards,
+  fetchExecuteTransaction,
   fetchGasTokenPrices,
   // SEPOLIA_BASE_URL,
 } from "@avnu/gasless-sdk";
@@ -119,8 +120,9 @@ export const Recording = ({ text, icon1, imgText, category }) => {
                 gasTokenAddress: undefined, // Let AVNU handle token selection
                 maxGasTokenAmount: undefined, // Use default values
               }),
-            });
 
+            });
+            
             if (!prepareResponse.ok) throw new Error("Preparation failed");
             const { typedData } = await prepareResponse.json();
 
@@ -129,21 +131,18 @@ export const Recording = ({ text, icon1, imgText, category }) => {
               account.address,
               typedData
             );
+            
+            const result = await fetchExecuteTransaction(
+              account.address,
+              JSON.stringify(typedData),
+              signature,
+              options,
+              undefined
+            );
 
-            // 3. Execute through API
-            const executeResponse = await fetch("/api/execute-signed", {
-              method: "POST",
-              headers: { "Content-Type": "application/json" },
-              body: JSON.stringify({
-                userAddress: account.address,
-                typedData,
-                signature,
-                deploymentData: undefined, 
-              }),
-            });
-
-            if (!executeResponse.ok) throw new Error("Execution failed");
-            const { transactionHash } = await executeResponse.json();
+            console.log("result is ", result);
+            if (!result.ok) throw new Error("Execution failed");
+            const { transactionHash } = await result.json();
             console.log("success...",transactionHash)
 
             openNotification("success", "Transaction successful", "");
