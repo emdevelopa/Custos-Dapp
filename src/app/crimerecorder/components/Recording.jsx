@@ -53,7 +53,7 @@ export const Recording = ({ text, icon1, imgText, category }) => {
   ];
 
   const { openNotification } = useNotification();
-  const { connection: account, connectorData } = useContext(WalletContext);
+  const { connection: account, connectorData , starknetJsAccount: starknetJsAccount} = useContext(WalletContext);
   const { showModal, setShowModal } = useContext(GlobalStateContext);
   const [mediaRecorder, setMediaRecorder] = useState(null);
   const [mediaStream, setMediaStream] = useState(null);
@@ -130,7 +130,7 @@ export const Recording = ({ text, icon1, imgText, category }) => {
     const triggerWallet = async () => {
       if (uri) {
         try {
-          if (uri !== "") {
+          if (uri !== "" && starknetJsAccount) {
             console.log("call ref is :", callRef.current);
             console.log("account is :", account);
 
@@ -163,7 +163,7 @@ export const Recording = ({ text, icon1, imgText, category }) => {
             // const safeTypedData = normalizeTypedData(typedData);
 
             
-            const signature = await account.signer.signMessage(
+            const signature = await starknetJsAccount.signer.signMessage(
               typedData,    
               account.address
             );
