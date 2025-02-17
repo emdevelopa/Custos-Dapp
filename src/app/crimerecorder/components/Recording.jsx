@@ -116,7 +116,7 @@ export const Recording = ({ text, icon1, imgText, category }) => {
               body: JSON.stringify({
                 userAddress: account.address,
                 calls: JSON.parse(callRef.current),
-                gasTokenAddress: undefined, // Let AVNU handle token selection
+                gasTokenAddress: undefined, 
                 maxGasTokenAmount: undefined, // Use default values
               }),
               
@@ -124,8 +124,8 @@ export const Recording = ({ text, icon1, imgText, category }) => {
 
             if (!prepareResponse.ok) throw new Error("Preparation failed");
             console.log("first response...", prepareResponse)
-            console.log('json response...', prepareResponse.json())
-            const { typedData } = await prepareResponse.json();
+            // console.log('json response...', prepareResponse.json())
+            const typedData  = await prepareResponse.json();
 
             console.log("typed data...",typedData)
 
