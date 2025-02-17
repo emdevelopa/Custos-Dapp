@@ -109,19 +109,43 @@ export const Recording = ({ text, icon1, imgText, category }) => {
             //   {},
             //   { ...options, apiKey: process.env.NEXT_PUBLIC_AVNU_KEY }
             // );
-            const response = await fetch("/api/avnuhandler", {
+            // 1. Prepare transaction through API
+            const prepareResponse = await fetch("/api/execute", {
               method: "POST",
               headers: { "Content-Type": "application/json" },
               body: JSON.stringify({
-                account,
+                userAddress: account.address,
                 calls: JSON.parse(callRef.current),
-                options,
+                gasTokenAddress: undefined, // Let AVNU handle token selection
+                maxGasTokenAmount: undefined, // Use default values
               }),
             });
-    
-            const data = await response.json();
-            console.log('...', data)
-            
+
+            if (!prepareResponse.ok) throw new Error("Preparation failed");
+            const { typedData } = await prepareResponse.json();
+
+            // 2. Client-side signing
+            const signature = await account.signer.signTypedData(
+              account.address,
+              typedData
+            );
+
+            // 3. Execute through API
+            const executeResponse = await fetch("/api/execute-signed", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({
+                userAddress: account.address,
+                typedData,
+                signature,
+                deploymentData: undefined, 
+              }),
+            });
+
+            if (!executeResponse.ok) throw new Error("Execution failed");
+            const { transactionHash } = await executeResponse.json();
+            console.log("success...",transactionHash)
+
             openNotification("success", "Transaction successful", "");
             setLoading(false);
             openModal("success");
