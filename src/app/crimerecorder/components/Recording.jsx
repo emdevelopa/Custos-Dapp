@@ -124,32 +124,24 @@ export const Recording = ({ text, icon1, imgText, category }) => {
 
             if (!prepareResponse.ok) throw new Error("Preparation failed");
             console.log("first response...", prepareResponse)
-            // console.log('json response...', prepareResponse.json())
-            const response  = await prepareResponse.json();
+            
 
-            console.log("typed data...",response)
-
-            const reviver = (key, value) => {
-              if (typeof value === 'string' && /^\d+$/.test(value)) {
-                return BigInt(value);
-              }
-              return value;
-            };
-        
-            // Restore original typed data format
-            const restoredTypedData = JSON.parse(JSON.stringify(response.typedData), reviver);
+            const { typedData } = await prepareResponse.json();
+            
+            
+            console.log("restored typed data...",typedData)
             // 2. Client-side signing
             const signature = await account.signer.signMessage(
-              restoredTypedData
+              typedData
             );
-
+            console.log("signature...",signature)
             // 3. Execute through API
             const executeResponse = await fetch("/api/execute-signed", {
               method: "POST",
               headers: { "Content-Type": "application/json" },
               body: JSON.stringify({
                 userAddress: account.address,
-                typedData: response.typedData,
+                typedData,
                 signature,
                 deploymentData: undefined, 
               }),

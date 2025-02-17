@@ -22,12 +22,11 @@ export async function POST(req) {
 
     console.log('server-side typed data...', typedData)
 
-    const replacer = (key, value) => 
-      typeof value === 'bigint' ? value.toString() : value;
+    // const replacer = (key, value) => 
+    //   typeof value === 'bigint' ? value.toString() : value;
 
-    return NextResponse.json({ 
-      typedData: JSON.parse(JSON.stringify(typedData, replacer)) 
-    }, { status: 200 });
+    return NextResponse.json({ typedData }, { status: 200 });
+
   } catch (error) {
     console.error("Preparation error:", error);
     return NextResponse.json(
