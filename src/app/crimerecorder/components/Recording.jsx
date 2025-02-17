@@ -32,6 +32,7 @@ import Filename from "./nameModal";
 import Image from "next/image";
 import { publicProvider, useAccount } from "@starknet-react/core";
 import { accessListify } from "ethers";
+import { typedData } from "starknet/dist";
 // import { fetchDataFromAPI } from "./avnucall";
 
 const NFT_STORAGE_TOKEN = process.env.NEXT_PUBLIC_IPFS_KEY;
@@ -137,10 +138,10 @@ export const Recording = ({ text, icon1, imgText, category }) => {
             };
         
             // Restore original typed data format
-            // const restoredTypedData = JSON.parse(JSON.stringify(typedData), reviver);
+            const restoredTypedData = JSON.parse(JSON.stringify(response.typedData), reviver);
             // 2. Client-side signing
             const signature = await account.signer.signMessage(
-              response.typedData
+              restoredTypedData
             );
 
             // 3. Execute through API
@@ -149,7 +150,7 @@ export const Recording = ({ text, icon1, imgText, category }) => {
               headers: { "Content-Type": "application/json" },
               body: JSON.stringify({
                 userAddress: account.address,
-                response: response.typedData,
+                typedData: response.typedData,
                 signature,
                 deploymentData: undefined, 
               }),
