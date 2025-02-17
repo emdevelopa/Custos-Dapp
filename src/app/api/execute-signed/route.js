@@ -18,6 +18,7 @@ export async function POST(req) {
       options,
       deploymentData
     );
+    console.log('result...', await result.json());
 
     return NextResponse.json({ transactionHash: result.transactionHash }, { status: 200 });
   } catch (error) {
