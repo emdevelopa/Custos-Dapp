@@ -46,6 +46,7 @@ export const WalletProvider = ({ children }) => {
       if (wallet && wallet.isConnected) {
         setWallet(wallet);
         setConnection(wallet.account);
+        console.log("setconnection is:", wallet);
 
         setConnectorData(wallet.selectedAddress);
         openNotification(
@@ -87,7 +88,7 @@ export const WalletProvider = ({ children }) => {
     if (wallet && wallet.isConnected) {
       setWallet(wallet);
       setConnection(wallet.account);
-      // console.log("setconnection is:", wallet.selectedAddress);
+      console.log("setconnection is:", wallet);
 
       setConnectorData(wallet.selectedAddress);
       openNotification(

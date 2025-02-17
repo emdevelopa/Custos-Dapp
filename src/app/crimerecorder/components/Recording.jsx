@@ -59,7 +59,7 @@ export const Recording = ({ text, icon1, imgText, category }) => {
   const videoRef = useRef(null);
   const canvasRef = useRef(null);
   const [recordedChunks, setRecordedChunks] = useState([]);
-  const [facingMode, setFacingMode] = useState("environment");
+  const [currentFacingMode, setCurrentFacingMode] = useState("environment");
   const [isRecording, setIsRecording] = useState(false);
   const [loading, setLoading] = useState(false);
   const [paymasterRewards, setPaymasterRewards] = useState([]);
@@ -79,48 +79,51 @@ export const Recording = ({ text, icon1, imgText, category }) => {
   const route = useRouter();
 
   useEffect(() => {
-    if (uri) {
+    if (uri !== "") {
       const calls = [
         {
           entrypoint: "crime_record",
           contractAddress:
             "0x020bd5ec01c672e69e3ca74df376620a6be8a2b104ab70a9f0885be00dd38fb9",
-          calldata: CallData.compile([byteArray?.byteArrayFromString(String(uri)), 0]),
+          calldata: CallData.compile([
+            byteArray?.byteArrayFromString(String(uri)),
+            0,
+          ]),
         },
       ];
-      callRef.current = calls;
+      callRef.current = JSON.stringify(calls, null, 2);
+    }
 
-      const triggerTransaction = async () => {
-        setLoading(true);
+    // Execute the transaction with gasless option
+    const triggerWallet = async () => {
+      if (uri) {
         try {
-          const response = await fetch("/api/avnuhandler", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({ account, calls }),
-          });
+          if (uri !== "") {
+            console.log("call ref is :", callRef.current);
+            console.log("account is :", account);
 
-          const result = await response.json();
-
-          if (!response.ok) {
-            throw new Error(result.error || "Transaction failed");
+            const transactionResponse = await executeCalls(
+              account,
+              JSON.parse(callRef.current),
+              {},
+              { ...options, apiKey: process.env.NEXT_PUBLIC_AVNU_KEY }
+            );
+            console.log("Transaction successful:", transactionResponse);
+            openNotification("success", "Transaction successful", "");
+            setLoading(false);
+            openModal("success");
+            // setSuccessModalOpen(true);
           }
-
-          console.log("Transaction successful:", result.transactionResponse);
-          openNotification("success", "Transaction successful", "");
-          openModal("success");
         } catch (error) {
           console.error("Transaction failed:", error);
-          openNotification("error", "Transaction failed", error.message);
-          openModal("error");
-        } finally {
+          openNotification("error", "Transaction failed", `${error}`);
           setLoading(false);
+          openModal("error");
+          // setErrorModalOpen(true);
         }
-      };
-
-      triggerTransaction();
-    }
+      }
+    };
+    if (uri !== "") triggerWallet();
   }, [uri]);
 
   // const triggerTransaction = async () => {
@@ -289,75 +292,9 @@ export const Recording = ({ text, icon1, imgText, category }) => {
       console.error("Media stream not available");
       return;
     }
-  
+
     const chunks = [];
-    const canvas = document.createElement("canvas");
-    canvas.width = 700; 
-    canvas.height = 896; 
-    const ctx = canvas.getContext("2d");
-  
-    // creating watermarks
-    const watermarkImg = document.createElement("img");
-    const watermarkImg2 = document.createElement("img");
-    watermarkImg.src = "/custos-with-logo.png";
-    watermarkImg2.src = "/light-custos-with-logo.png";
-   
-    let time;
-    let watermarkX = 10;
-    let watermarkY = 10;
-  
-    const drawFrame = () => {
-      ctx.drawImage(videoRef.current, 0, 0, canvas.width, canvas.height);
-  
-      // add watermark
-      if (watermarkImg.complete) {
-    ctx.globalAlpha = 0.4;
-    if (!time || Date.now() - time > 2500) {
-      watermarkX = Math.random() * (canvas.width - watermarkImg.width);
-      watermarkY = Math.random() * (canvas.height - watermarkImg.height);
-      time = Date.now();
-    }
-    ctx.drawImage(
-      watermarkImg,
-      watermarkX,
-      watermarkY,
-      watermarkImg.width,
-      watermarkImg.height
-    );
-    ctx.globalAlpha = 1.0;
-  }
-  
-       // add timestamp
-       const timestamp = new Date().toLocaleString();
-       ctx.font = "20px Arial";
-       const gradient = ctx.createLinearGradient(0, 0, canvasRef.current.width, 0);
-       gradient.addColorStop(0, "#19B1D2");
-       gradient.addColorStop(1, "#0094FF");
-       ctx.fillStyle = gradient;
-       ctx.textAlign = "center"; 
-       ctx.textBaseline = "top"; 
-       ctx.fillText(
-         timestamp,
-         canvas.width / 2, 
-         20 
-       );
-  
-      requestAnimationFrame(drawFrame);
-    };
-  
-    Promise.all([new Promise((resolve) => (watermarkImg.onload = resolve)), 
-                  new Promise((resolve) => (watermarkImg2.onload = resolve))]).then(() => {
-      drawFrame();
-    });
-  
-    // Add the canvas stream to the MediaRecorder
-    const stream = canvas.captureStream();
-    const newMediaStream = new MediaStream();
-    stream.getTracks().forEach((track) => {
-      newMediaStream.addTrack(track);
-    });
-  
-    const recorder = new MediaRecorder(newMediaStream);
+    const recorder = new MediaRecorder(mediaStream);
     recorder.ondataavailable = (event) => chunks.push(event.data);
     recorder.onstop = async () => {
       const blob = new Blob(chunks, { type: "video/webm" });
@@ -365,12 +302,12 @@ export const Recording = ({ text, icon1, imgText, category }) => {
       stopCamera();
       setUploadModalOpen(true); // Open modal for filename input after recording stops
     };
-  
+
     recorder.start();
     setIsRecording(true);
     setMediaRecorder(recorder);
   };
-  
+
   const stopRecording = () => {
     if (mediaRecorder) {
       mediaRecorder.stop();
@@ -380,11 +317,10 @@ export const Recording = ({ text, icon1, imgText, category }) => {
     stopCamera();
   };
 
-  const takePicture = async () => {  
-    const context = canvasRef.current.getContext("2d");  
+  const takePicture = async () => {
+    const context = canvasRef.current.getContext("2d");
     canvasRef.current.width = videoRef.current.videoWidth;
     canvasRef.current.height = videoRef.current.videoHeight;
-
     context.drawImage(
       videoRef.current,
       0,
@@ -392,111 +328,27 @@ export const Recording = ({ text, icon1, imgText, category }) => {
       canvasRef.current.width,
       canvasRef.current.height
     );
-  
-    // creating watermarks
-    const watermarkImg = document.createElement("img");
-    const watermarkImg2 = document.createElement("img");
-    watermarkImg.src = "/custos-with-logo.png";
-    watermarkImg2.src = "/light-custos-with-logo.png";
-  
-    Promise.all([new Promise((resolve) => (watermarkImg.onload = resolve)), 
-                  new Promise((resolve) => (watermarkImg2.onload = resolve))]).then(() => {
-  
-      // Top-left watermark
-      const topLeftWatermarkX = 20;
-      const topLeftWatermarkY = 25;
-      context.drawImage(
-        watermarkImg,
-        topLeftWatermarkX,
-        topLeftWatermarkY,
-        watermarkImg.width,
-        watermarkImg.height
-      );
-  
-      // Bottom-right watermark
-      const bottomRightWatermarkX =
-        canvasRef.current.width - watermarkImg2.width - 20;
-      const bottomRightWatermarkY =
-        canvasRef.current.height - watermarkImg2.height - 25;
-      context.drawImage(
-        watermarkImg2,
-        bottomRightWatermarkX,
-        bottomRightWatermarkY,
-        watermarkImg2.width,
-        watermarkImg2.height
-      );
-  
-      // add timestamp
-      const timestamp = new Date().toLocaleString();
-      context.font = "20px Arial";
-      const gradient = context.createLinearGradient(0, 0, canvasRef.current.width, 0);
-      gradient.addColorStop(0, "#19B1D2");
-      gradient.addColorStop(1, "#0094FF");
-      context.fillStyle = gradient;
-      context.textAlign = "center"; 
-      context.textBaseline = "top"; 
-      context.fillText(
-        timestamp,
-        canvasRef.current.width / 2, 
-        20 
-      );
-  
-      canvasRef.current.toBlob((blob) => {
-        console.log("Blob created:", blob);
-        setRecordedChunks(blob);
-        setUploadModalOpen(true);
-      }, "image/png");
-    }).catch((error) => {
-      console.error("Error taking picture:", error);
-    });
+
+    const dataURL = canvasRef.current.toDataURL("image/png");
+    const blob = await fetch(dataURL).then((res) => res.blob());
+    setRecordedChunks(blob); // Set picture for upload
+    setUploadModalOpen(true); // Open modal for filename input after picture is taken
   };
 
-  const checkCameraSupport = () => {
-    if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
-      alert("Camera access is not supported in your browser. Please update to a modern browser.");
-      return false;
-    }
-    return true;
-  };
-   // Switch camera facing mode
   const switchCamera = async () => {
-  if (!checkCameraSupport()) return;
-
-  try {
-    const newMode = facingMode === "user" ? "environment" : "user";
-    console.log("Switching to:", newMode);
-
-    // Stop the current video tracks if available but don't stop the recorder
-    if (mediaStream) {
-      mediaStream.getVideoTracks().forEach((track) => track.stop());
-    }
-
-    // Get a new stream with the desired facing mode
-    const newStream = await navigator.mediaDevices.getUserMedia({
-      video: { facingMode: newMode },
+    setIsClicked((prev) => {
+      return !prev;
     });
-
-    // Set the new stream to the video element and update the facing mode
-    setMediaStream(newStream);
-    setFacingMode(newMode);
-    if (videoRef.current) {
-      videoRef.current.srcObject = newStream;
+    setCurrentFacingMode((prev) => (prev === "user" ? "environment" : "user"));
+    if (isRecording) {
+      mediaRecorder.pause();
     }
-
-    // Reattach the new stream to the recorder without stopping it
-    if (mediaRecorder && mediaRecorder.state === "recording") {
-      mediaRecorder.stream = newStream;
+    stopCamera();
+    await startCamera();
+    if (isRecording) {
+      mediaRecorder.resume();
     }
-
-    console.log("Switched to:", newMode);
-  } catch (error) {
-    console.error("Error switching camera:", error.message);
-    alert(`Error switching camera: ${error.message}`);
-  }
-};
-
-
-
+  };
 
   async function uploadToIPFS(fileBlob, fileName) {
     const formData = new FormData();
@@ -540,6 +392,7 @@ export const Recording = ({ text, icon1, imgText, category }) => {
       const ipfsHash = data.IpfsHash; // Access the IPFS hash from the response
 
       console.log("IPFS Hash:", ipfsHash);
+      // Store the IPFS hash locally for the current user
 
       // Store the IPFS hash locally
       localStorage.setItem("uri", ipfsHash);

@@ -7,7 +7,7 @@ import { WalletProvider } from "@/components/walletprovider";
 import { ModalProvider } from "@/context/ModalProvider";
 import { NotificationProvider } from "@/context/NotificationProvider";
 import { GlobalStateProvider } from "@/context/GlobalStateProvider";
-import { Analytics } from "@vercel/analytics/react"
+import { Analytics } from "@vercel/analytics/react";
 
 // Add the manifest so that it can be injected at nextjs runtime.
 // NOTE: Removing this or moving this to the metadata.js file will not allow the
@@ -18,7 +18,7 @@ export default function RootLayout({ children }) {
   //  const pathname = usePathname();
 
   // if (pathname.includes("/crimerecorder")) {
-  //   return ( 
+  //   return (
   //     <html lang="en">
   //       <head>
   //         <title>404 Not Found</title>
