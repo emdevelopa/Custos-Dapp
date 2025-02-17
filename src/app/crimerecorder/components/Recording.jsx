@@ -160,7 +160,7 @@ export const Recording = ({ text, icon1, imgText, category }) => {
             const typedData  = await prepareResponse.json();
             
             console.log("restored typed data...",typedData.typedData)
-            const safeTypedData = normalizeTypedData(typedData);
+            // const safeTypedData = normalizeTypedData(typedData);
 
             
             const signature = await account.signer.signMessage(
