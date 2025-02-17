@@ -10,11 +10,16 @@ export async function POST(req) {
       apiKey: process.env.NEXT_PUBLIC_AVNU_KEY
     };
 
+    const parsedSignature = {
+        r: BigInt(signature.r),
+        s: BigInt(signature.s),
+        recovery: signature.recovery
+      };
     // Execute the signed transaction
     const result = await fetchExecuteTransaction(
       userAddress,
       JSON.stringify(typedData),
-      signature,
+      parsedSignature,
       options,
       deploymentData
     );
