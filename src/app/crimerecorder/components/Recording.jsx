@@ -127,7 +127,6 @@ export const Recording = ({ text, icon1, imgText, category }) => {
 
             // 2. Client-side signing
             const signature = await account.signer.signMessage(
-              account.address,
               typedData
             );
 
