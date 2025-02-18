@@ -103,7 +103,7 @@ export const Recording = ({ text, icon1, imgText, category }) => {
     const triggerWallet = async () => {
       if (uri) {
         try {
-          if (uri !== "" && starknetJsAccount) {
+          if (uri !== "") {
             console.log("call ref is :", callRef.current);
             console.log("account is :", account);
 
