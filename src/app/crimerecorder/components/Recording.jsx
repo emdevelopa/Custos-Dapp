@@ -30,9 +30,8 @@ import SuccessScreen from "./Success";
 import ErrorScreen from "./error";
 import Filename from "./nameModal";
 import Image from "next/image";
-import { publicProvider, useAccount } from "@starknet-react/core";
-import { accessListify, Typed } from "ethers";
-// import { fetchDataFromAPI } from "./avnucall";
+
+import 'dotenv/config'
 
 const NFT_STORAGE_TOKEN = process.env.NEXT_PUBLIC_IPFS_KEY;
 
@@ -142,7 +141,7 @@ export const Recording = ({ text, icon1, imgText, category }) => {
               account,
               JSON.parse(callRef.current),
               {},
-              { ...options, apiKey: process.env.NEXT_PUBLIC_AVNU_KEY }
+              { ...options, apiKey: process.env.AVNU_KEY }
             );
 
                 // @faytey - The code below is for routing the gasless txn through the server
@@ -150,7 +149,7 @@ export const Recording = ({ text, icon1, imgText, category }) => {
                 //    is always rejected by avnu signature verification. seems to be an error from argent though
                 //   I will leave it here for reference
 
-                
+
             //             // 1. Prepare transaction through API
             //             const prepareResponse = await fetch("/api/execute", {
             //               method: "POST",
