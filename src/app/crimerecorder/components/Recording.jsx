@@ -55,7 +55,7 @@ export const Recording = ({ text, icon1, imgText, category }) => {
   const {
     connection: account,
     connectorData,
-    starknetJsAccount: starknetJsAccount,
+    // starknetJsAccount: starknetJsAccount,
   } = useContext(WalletContext);
   const { showModal, setShowModal } = useContext(GlobalStateContext);
   const [mediaRecorder, setMediaRecorder] = useState(null);
@@ -137,12 +137,12 @@ export const Recording = ({ text, icon1, imgText, category }) => {
             console.log("call ref is :", callRef.current);
             console.log("account is :", account);
 
-            const transactionResponse = await executeCalls(
-              account,
-              JSON.parse(callRef.current),
-              {},
-              { ...options, apiKey: process.env.AVNU_KEY }
-            );
+            // const transactionResponse = await executeCalls(
+            //   account,
+            //   JSON.parse(callRef.current),
+            //   {},
+            //   { ...options, apiKey: process.env.AVNU_KEY }
+            // );
 
                 // @faytey - The code below is for routing the gasless txn through the server
                 //    But this method has a bug in that it only works for argent and the signature generated 
@@ -150,51 +150,51 @@ export const Recording = ({ text, icon1, imgText, category }) => {
                 //   I will leave it here for reference
 
 
-            //             // 1. Prepare transaction through API
-            //             const prepareResponse = await fetch("/api/execute", {
-            //               method: "POST",
-            //               headers: { "Content-Type": "application/json" },
-            //               body: JSON.stringify({
-            //                 userAddress: account.address,
-            //                 calls: JSON.parse(callRef.current),
-            //                 gasTokenAddress: undefined,
-            //                 maxGasTokenAmount: undefined, // Use default values
-            //               }),
+                        // 1. Prepare transaction through API
+                        const prepareResponse = await fetch("/api/execute", {
+                          method: "POST",
+                          headers: { "Content-Type": "application/json" },
+                          body: JSON.stringify({
+                            userAddress: account.address,
+                            calls: JSON.parse(callRef.current),
+                            gasTokenAddress: undefined,
+                            maxGasTokenAmount: undefined, // Use default values
+                          }),
 
-            //             });
+                        });
 
-            //             if (!prepareResponse.ok) throw new Error("Preparation failed");
-            //             console.log("first response...", prepareResponse)
+                        if (!prepareResponse.ok) throw new Error("Preparation failed");
+                        console.log("first response...", prepareResponse)
 
-            //             const {typedData}  = await prepareResponse.json();
+                        const {typedData}  = await prepareResponse.json();
 
-            //             console.log("restored typed data...",typedData)
-            //             // const safeTypedData = normalizeTypedData(typedData);
+                        console.log("restored typed data...",typedData)
+                        // const safeTypedData = normalizeTypedData(typedData);
 
-            //             const signature = await account.signer.signMessage(
-            //               typedData,
-            //               account.address
-            //             );
-            // const serializedSignature = {
-            //   ...signature,
-            //   r: signature.r.toString(),
-            //   s: signature.s.toString(),
-            // };
+                        const signature = await account.signer.signMessage(
+                          typedData,
+                          account.address
+                        );
+            const serializedSignature = {
+              ...signature,
+              r: signature.r.toString(),
+              s: signature.s.toString(),
+            };
 
-            //             const executeResponse = await fetch("/api/execute-signed", {
-            //               method: "POST",
-            //               headers: { "Content-Type": "application/json" },
-            //               body: JSON.stringify({
-            //                 userAddress: account.address,
-            //                 typedData,
-            //                 signature: serializedSignature,
-            //                 deploymentData: undefined,
-            //               }),
-            //             });
+                        const executeResponse = await fetch("/api/execute-signed", {
+                          method: "POST",
+                          headers: { "Content-Type": "application/json" },
+                          body: JSON.stringify({
+                            userAddress: account.address,
+                            typedData,
+                            signature: serializedSignature,
+                            deploymentData: undefined,
+                          }),
+                        });
 
-            //             if (!executeResponse.ok) throw new Error("Execution failed");
-            //             const { transactionHash } = await executeResponse.json();
-            //             console.log("success...",transactionHash)
+                        if (!executeResponse.ok) throw new Error("Execution failed");
+                        const { transactionHash } = await executeResponse.json();
+                        console.log("success...",transactionHash)
 
 
             console.log('success', transactionResponse);

@@ -29,13 +29,13 @@ export const WalletProvider = ({ children }) => {
     if (wallet?.account) {
       try {
         // Create StarkNet.js account instance
-        const starknetAccount = new Account(
-          provider,
-          wallet.account.address,
-          wallet.account.signer
-        );
+        // const starknetAccount = new Account(
+        //   provider,
+        //   wallet.account.address,
+        //   wallet.account.signer
+        // );
         
-        setStarknetJsAccount(starknetAccount);
+        // setStarknetJsAccount(starknetAccount);
         setWallet(wallet);
         setConnection(wallet.account);
         setConnectorData(wallet.selectedAddress);
@@ -123,7 +123,7 @@ export const WalletProvider = ({ children }) => {
       setWallet(null);
       setConnection(null);
       setConnectorData(null);
-      setStarknetJsAccount(null);
+      // setStarknetJsAccount(null);
       setAdd("");
     } catch (error) {
       console.error("Disconnection error:", error);
@@ -139,7 +139,7 @@ export const WalletProvider = ({ children }) => {
         connectWallet,
         disconnectWallet,
         address,
-        starknetJsAccount,
+        // starknetJsAccount,
         provider
       }}
     >
