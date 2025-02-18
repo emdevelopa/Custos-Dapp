@@ -53,7 +53,11 @@ export const Recording = ({ text, icon1, imgText, category }) => {
   ];
 
   const { openNotification } = useNotification();
-  const { connection: account, connectorData , starknetJsAccount: starknetJsAccount} = useContext(WalletContext);
+  const {
+    connection: account,
+    connectorData,
+    starknetJsAccount: starknetJsAccount,
+  } = useContext(WalletContext);
   const { showModal, setShowModal } = useContext(GlobalStateContext);
   const [mediaRecorder, setMediaRecorder] = useState(null);
   const [mediaStream, setMediaStream] = useState(null);
@@ -101,31 +105,31 @@ export const Recording = ({ text, icon1, imgText, category }) => {
         ...rawData,
         message: {
           ...rawData.message,
-          Calls: (rawData.message.Calls || []).map(call => ({
+          Calls: (rawData.message.Calls || []).map((call) => ({
             To: call.To,
             Selector: call.Selector,
-            Calldata: Array.isArray(call.Calldata) ? 
-              call.Calldata.map(item => item.toString()) : 
-              []
-          }))
-        }
+            Calldata: Array.isArray(call.Calldata)
+              ? call.Calldata.map((item) => item.toString())
+              : [],
+          })),
+        },
       };
-    
+
       // Convert all numeric values to hex strings
-      const hexify = (value) => 
-        typeof value === 'string' ? value : `0x${value.toString(16)}`;
-    
+      const hexify = (value) =>
+        typeof value === "string" ? value : `0x${value.toString(16)}`;
+
       return {
         ...normalized,
         message: {
           ...normalized.message,
           Nonce: hexify(normalized.message.Nonce),
-          'Execute After': hexify(normalized.message['Execute After']),
-          'Execute Before': hexify(normalized.message['Execute Before']),
-        }
+          "Execute After": hexify(normalized.message["Execute After"]),
+          "Execute Before": hexify(normalized.message["Execute Before"]),
+        },
       };
     };
-    
+
     // Execute the transaction with gasless option
     const triggerWallet = async () => {
       if (uri) {
@@ -134,60 +138,67 @@ export const Recording = ({ text, icon1, imgText, category }) => {
             console.log("call ref is :", callRef.current);
             console.log("account is :", account);
 
-            // const transactionResponse = await executeCalls(
-            //   account,
-            //   JSON.parse(callRef.current),
-            //   {},
-            //   { ...options, apiKey: process.env.NEXT_PUBLIC_AVNU_KEY }
-            // );
-            // 1. Prepare transaction through API
-            const prepareResponse = await fetch("/api/execute", {
-              method: "POST",
-              headers: { "Content-Type": "application/json" },
-              body: JSON.stringify({
-                userAddress: account.address,
-                calls: JSON.parse(callRef.current),
-                gasTokenAddress: undefined, 
-                maxGasTokenAmount: undefined, // Use default values
-              }),
-              
-            });
-
-            if (!prepareResponse.ok) throw new Error("Preparation failed");
-            console.log("first response...", prepareResponse)
-            
-
-            const {typedData}  = await prepareResponse.json();
-            
-            console.log("restored typed data...",typedData)
-            // const safeTypedData = normalizeTypedData(typedData);
-
-            
-            const signature = await account.signer.signMessage(
-              typedData,    
-              account.address
+            const transactionResponse = await executeCalls(
+              account,
+              JSON.parse(callRef.current),
+              {},
+              { ...options, apiKey: process.env.NEXT_PUBLIC_AVNU_KEY }
             );
-const serializedSignature = {
-  ...signature,
-  r: signature.r.toString(),
-  s: signature.s.toString(),
-};
 
-            
-            const executeResponse = await fetch("/api/execute-signed", {
-              method: "POST",
-              headers: { "Content-Type": "application/json" },
-              body: JSON.stringify({
-                userAddress: account.address,
-                typedData,
-                signature: serializedSignature,
-                deploymentData: undefined, 
-              }),
-            });
+                // @faytey - The code below is for routing the gasless txn through the server
+                //    But this method has a bug in that it only works for argent and the signature generated 
+                //    is always rejected by avnu signature verification. seems to be an error from argent though
+                //   I will leave it here for reference
 
-            if (!executeResponse.ok) throw new Error("Execution failed");
-            const { transactionHash } = await executeResponse.json();
-            console.log("success...",transactionHash)
+                
+            //             // 1. Prepare transaction through API
+            //             const prepareResponse = await fetch("/api/execute", {
+            //               method: "POST",
+            //               headers: { "Content-Type": "application/json" },
+            //               body: JSON.stringify({
+            //                 userAddress: account.address,
+            //                 calls: JSON.parse(callRef.current),
+            //                 gasTokenAddress: undefined,
+            //                 maxGasTokenAmount: undefined, // Use default values
+            //               }),
+
+            //             });
+
+            //             if (!prepareResponse.ok) throw new Error("Preparation failed");
+            //             console.log("first response...", prepareResponse)
+
+            //             const {typedData}  = await prepareResponse.json();
+
+            //             console.log("restored typed data...",typedData)
+            //             // const safeTypedData = normalizeTypedData(typedData);
+
+            //             const signature = await account.signer.signMessage(
+            //               typedData,
+            //               account.address
+            //             );
+            // const serializedSignature = {
+            //   ...signature,
+            //   r: signature.r.toString(),
+            //   s: signature.s.toString(),
+            // };
+
+            //             const executeResponse = await fetch("/api/execute-signed", {
+            //               method: "POST",
+            //               headers: { "Content-Type": "application/json" },
+            //               body: JSON.stringify({
+            //                 userAddress: account.address,
+            //                 typedData,
+            //                 signature: serializedSignature,
+            //                 deploymentData: undefined,
+            //               }),
+            //             });
+
+            //             if (!executeResponse.ok) throw new Error("Execution failed");
+            //             const { transactionHash } = await executeResponse.json();
+            //             console.log("success...",transactionHash)
+
+
+            console.log('success', transactionResponse);
 
             openNotification("success", "Transaction successful", "");
             setLoading(false);
@@ -206,60 +217,6 @@ const serializedSignature = {
     if (uri !== "") triggerWallet();
   }, [uri]);
 
-  // const triggerTransaction = async () => {
-  //   try {
-  //     if (uri) {
-  //       await sendUriToBackend(uri); // Send data to the backend
-  //       openNotification(
-  //         "info",
-  //         "Wallet not connected",
-  //         "Data sent to backend for processing"
-  //       );
-  //     }
-  //   } catch (error) {
-  //     openNotification("error", "Transaction failed", `${error}`);
-  //   }
-  // };
-
-  // if (uri) {
-  //   if (account && account.address) {
-  //     triggerWallet();
-  //   } else {
-  //     // triggerTransaction();
-
-  //       openNotification("error", "Transaction failed", `${error}`);
-  //       setLoading(false);
-  //       openModal("error");
-
-  //   }
-  // }
-
-  // Function to send data to the backend
-  // async function sendUriToBackend(uri) {
-  //   const data = "place holder";
-  //   setLoading(true);
-  //   try {
-  //     const response = await fetch("https://custosbackend.onrender.com/agreement/crime_recorder/push/", {
-  //       method: "POST",
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //       },
-  //       body: JSON.stringify({ uri , data}),
-  //     });
-
-  //     if (!response.ok) {
-  //       throw new Error(`Failed to send data to backend: ${response.statusText}`);
-  //     }
-
-  //     const result = await response.json();
-  //     setLoading(false)
-  //     console.log("Backend response:", result);
-  //   } catch (error)
-  //    {
-  //     setLoading(false)
-  //     console.error("Error sending data to backend:", error);
-  //   }
-  // }
 
   useEffect(() => {
     if (!account) return;
