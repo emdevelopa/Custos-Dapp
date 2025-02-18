@@ -30,8 +30,9 @@ import SuccessScreen from "./Success";
 import ErrorScreen from "./error";
 import Filename from "./nameModal";
 import Image from "next/image";
-
-import 'dotenv/config'
+import { publicProvider, useAccount } from "@starknet-react/core";
+import { accessListify, Typed } from "ethers";
+// import { fetchDataFromAPI } from "./avnucall";
 
 const NFT_STORAGE_TOKEN = process.env.NEXT_PUBLIC_IPFS_KEY;
 
@@ -55,7 +56,7 @@ export const Recording = ({ text, icon1, imgText, category }) => {
   const {
     connection: account,
     connectorData,
-    // starknetJsAccount: starknetJsAccount,
+    starknetJsAccount: starknetJsAccount,
   } = useContext(WalletContext);
   const { showModal, setShowModal } = useContext(GlobalStateContext);
   const [mediaRecorder, setMediaRecorder] = useState(null);
@@ -98,73 +99,103 @@ export const Recording = ({ text, icon1, imgText, category }) => {
       callRef.current = JSON.stringify(calls, null, 2);
     }
 
+    const normalizeTypedData = (rawData) => {
+      // Ensure Calls array exists and is properly formatted
+      const normalized = {
+        ...rawData,
+        message: {
+          ...rawData.message,
+          Calls: (rawData.message.Calls || []).map((call) => ({
+            To: call.To,
+            Selector: call.Selector,
+            Calldata: Array.isArray(call.Calldata)
+              ? call.Calldata.map((item) => item.toString())
+              : [],
+          })),
+        },
+      };
+
+      // Convert all numeric values to hex strings
+      const hexify = (value) =>
+        typeof value === "string" ? value : `0x${value.toString(16)}`;
+
+      return {
+        ...normalized,
+        message: {
+          ...normalized.message,
+          Nonce: hexify(normalized.message.Nonce),
+          "Execute After": hexify(normalized.message["Execute After"]),
+          "Execute Before": hexify(normalized.message["Execute Before"]),
+        },
+      };
+    };
 
     // Execute the transaction with gasless option
     const triggerWallet = async () => {
       if (uri) {
         try {
-          if (uri !== "") {
+          if (uri !== "" && starknetJsAccount) {
             console.log("call ref is :", callRef.current);
             console.log("account is :", account);
 
-            // const transactionResponse = await executeCalls(
-            //   account,
-            //   JSON.parse(callRef.current),
-            //   {},
-            //   { ...options, apiKey: process.env.AVNU_KEY }
-            // );
+            const transactionResponse = await executeCalls(
+              account,
+              JSON.parse(callRef.current),
+              {},
+              { ...options, apiKey: process.env.NEXT_PUBLIC_AVNU_KEY }
+            );
 
                 // @faytey - The code below is for routing the gasless txn through the server
                 //    But this method has a bug in that it only works for argent and the signature generated 
                 //    is always rejected by avnu signature verification. seems to be an error from argent though
                 //   I will leave it here for reference
 
+                
+            //             // 1. Prepare transaction through API
+            //             const prepareResponse = await fetch("/api/execute", {
+            //               method: "POST",
+            //               headers: { "Content-Type": "application/json" },
+            //               body: JSON.stringify({
+            //                 userAddress: account.address,
+            //                 calls: JSON.parse(callRef.current),
+            //                 gasTokenAddress: undefined,
+            //                 maxGasTokenAmount: undefined, // Use default values
+            //               }),
 
-                        // 1. Prepare transaction through API
-                        const prepareResponse = await fetch("/api/execute", {
-                          method: "POST",
-                          headers: { "Content-Type": "application/json" },
-                          body: JSON.stringify({
-                            userAddress: account.address,
-                            calls: JSON.parse(callRef.current),
-                            gasTokenAddress: undefined,
-                            maxGasTokenAmount: undefined, // Use default values
-                          }),
+            //             });
 
-                        });
+            //             if (!prepareResponse.ok) throw new Error("Preparation failed");
+            //             console.log("first response...", prepareResponse)
 
-                        if (!prepareResponse.ok) throw new Error("Preparation failed");
-                        console.log("first response...", prepareResponse)
+            //             const {typedData}  = await prepareResponse.json();
 
-                        const {typedData}  = await prepareResponse.json();
+            //             console.log("restored typed data...",typedData)
+            //             // const safeTypedData = normalizeTypedData(typedData);
 
-                        console.log("restored typed data...",typedData)
-                        // const safeTypedData = normalizeTypedData(typedData);
+            //             const signature = await account.signer.signMessage(
+            //               typedData,
+            //               account.address
+            //             );
+            // const serializedSignature = {
+            //   ...signature,
+            //   r: signature.r.toString(),
+            //   s: signature.s.toString(),
+            // };
 
-                        const signature = await account.signer.signMessage(
-                          typedData,
-                          account.address
-                        );
-            const serializedSignature = {
-              ...signature,
-              r: signature.r.toString(),
-              s: signature.s.toString(),
-            };
+            //             const executeResponse = await fetch("/api/execute-signed", {
+            //               method: "POST",
+            //               headers: { "Content-Type": "application/json" },
+            //               body: JSON.stringify({
+            //                 userAddress: account.address,
+            //                 typedData,
+            //                 signature: serializedSignature,
+            //                 deploymentData: undefined,
+            //               }),
+            //             });
 
-                        const executeResponse = await fetch("/api/execute-signed", {
-                          method: "POST",
-                          headers: { "Content-Type": "application/json" },
-                          body: JSON.stringify({
-                            userAddress: account.address,
-                            typedData,
-                            signature: serializedSignature,
-                            deploymentData: undefined,
-                          }),
-                        });
-
-                        if (!executeResponse.ok) throw new Error("Execution failed");
-                        const { transactionHash } = await executeResponse.json();
-                        console.log("success...",transactionHash)
+            //             if (!executeResponse.ok) throw new Error("Execution failed");
+            //             const { transactionHash } = await executeResponse.json();
+            //             console.log("success...",transactionHash)
 
 
             console.log('success', transactionResponse);
