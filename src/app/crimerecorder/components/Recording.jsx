@@ -163,7 +163,7 @@ export const Recording = ({ text, icon1, imgText, category }) => {
             // const safeTypedData = normalizeTypedData(typedData);
 
             
-            const signature = await starknetJsAccount.signer.signMessage(
+            const signature = await account.signer.signMessage(
               typedData,    
               account.address
             );
