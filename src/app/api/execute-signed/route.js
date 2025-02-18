@@ -10,9 +10,11 @@ export async function POST(req) {
       apiKey: process.env.NEXT_PUBLIC_AVNU_KEY
     };
 
-    const parsedSignature = signature.r && signature.s 
-    ? { r: signature.r, s: signature.s } 
-    : signature;
+    const parsedSignature = {
+      r: BigInt(signature.r),
+      s: BigInt(signature.s),
+      ...signature,
+    };
 
     console.log('signature ...', parsedSignature);
     // Execute the signed transaction

@@ -167,9 +167,11 @@ export const Recording = ({ text, icon1, imgText, category }) => {
               typedData,    
               account.address
             );
-            const serializedSignature = signature.r && signature.s 
-            ? { r: signature.r.toString(), s: signature.s.toString() } 
-            : signature;
+const serializedSignature = {
+  ...signature,
+  r: signature.r.toString(),
+  s: signature.s.toString(),
+};
 
             
             const executeResponse = await fetch("/api/execute-signed", {
