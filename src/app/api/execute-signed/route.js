@@ -1,5 +1,6 @@
 import { fetchExecuteTransaction } from '@avnu/gasless-sdk';
 import { NextResponse } from 'next/server';
+import 'dotenv/config'
 
 export async function POST(req) {
   const { userAddress, typedData, signature, deploymentData } = await req.json();
@@ -7,7 +8,7 @@ export async function POST(req) {
   try {
     const options = {
       baseUrl: "https://starknet.api.avnu.fi",
-      apiKey: process.env.NEXT_PUBLIC_AVNU_KEY
+      apiKey: process.env.AVNU_KEY
     };
 
     const parsedSignature = {
