@@ -169,9 +169,9 @@ export const Recording = ({ text, icon1, imgText, category }) => {
             );
             console.log("raw signature...",signature)
             const serializedSignature = {
+              ...signature,
               r: signature.r.toString(),
               s: signature.s.toString(),
-              recovery: signature.recovery
             };
             // 3. Execute through API
             const executeResponse = await fetch("/api/execute-signed", {

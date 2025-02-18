@@ -13,7 +13,7 @@ export async function POST(req) {
     const parsedSignature = {
         r: BigInt(signature.r),
         s: BigInt(signature.s),
-        recovery: signature.recovery
+        ...signature,
       };
     // Execute the signed transaction
     const result = await fetchExecuteTransaction(
