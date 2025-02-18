@@ -13,8 +13,7 @@ export async function POST(req) {
 
     const parsedSignature = {
       r: BigInt(signature.r),
-      s: BigInt(signature.s),
-      ...signature,
+      s: BigInt(signature.s)
     };
 
     console.log('signature ...', parsedSignature);
