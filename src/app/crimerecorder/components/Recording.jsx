@@ -141,7 +141,7 @@ export const Recording = ({ text, icon1, imgText, category }) => {
               account,
               JSON.parse(callRef.current),
               {},
-              { ...options, apiKey: process.env.NEXT_PUBLIC_AVNU_KEY }
+              { ...options, apiKey: process.env.AVNU_KEY }
             );
 
                 // @faytey - The code below is for routing the gasless txn through the server
