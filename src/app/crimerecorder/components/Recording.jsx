@@ -163,10 +163,15 @@ export const Recording = ({ text, icon1, imgText, category }) => {
             // const safeTypedData = normalizeTypedData(typedData);
 
             
+            const signature = await starknetJsAccount.signer.signMessage(
+              typedData,    
+              account.address
+            );
             const serializedSignature = signature.r && signature.s 
             ? { r: signature.r.toString(), s: signature.s.toString() } 
             : signature;
-            // 3. Execute through API
+
+            
             const executeResponse = await fetch("/api/execute-signed", {
               method: "POST",
               headers: { "Content-Type": "application/json" },
