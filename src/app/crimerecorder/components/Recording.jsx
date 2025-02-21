@@ -99,40 +99,13 @@ export const Recording = ({ text, icon1, imgText, category }) => {
       callRef.current = JSON.stringify(calls, null, 2);
     }
 
-    const normalizeTypedData = (rawData) => {
-      // Ensure Calls array exists and is properly formatted
-      const normalized = {
-        ...rawData,
-        message: {
-          ...rawData.message,
-          Calls: (rawData.message.Calls || []).map((call) => ({
-            To: call.To,
-            Selector: call.Selector,
-            Calldata: Array.isArray(call.Calldata)
-              ? call.Calldata.map((item) => item.toString())
-              : [],
-          })),
-        },
-      };
 
-      // Convert all numeric values to hex strings
-      const hexify = (value) =>
-        typeof value === "string" ? value : `0x${value.toString(16)}`;
-
-      return {
-        ...normalized,
-        message: {
-          ...normalized.message,
-          Nonce: hexify(normalized.message.Nonce),
-          "Execute After": hexify(normalized.message["Execute After"]),
-          "Execute Before": hexify(normalized.message["Execute Before"]),
-        },
-      };
-    };
 
     // Execute the transaction with gasless option
     const triggerWallet = async () => {
-      if (uri) {
+      
+      if (uri !== "") {
+        setLoading(true);
         try {
           if (uri !== "" && starknetJsAccount) {
             console.log("call ref is :", callRef.current);
@@ -426,13 +399,9 @@ export const Recording = ({ text, icon1, imgText, category }) => {
       }
 
       const data = await response.json();
-      const ipfsHash = data.IpfsHash; // Access the IPFS hash from the response
+      const ipfsHash = data.IpfsHash; 
 
       console.log("IPFS Hash:", ipfsHash);
-      // Store the IPFS hash locally for the current user
-
-      // Store the IPFS hash locally
-      localStorage.setItem("uri", ipfsHash);
       setUri(ipfsHash);
 
       console.log("File uploaded successfully and data saved!");
@@ -443,7 +412,7 @@ export const Recording = ({ text, icon1, imgText, category }) => {
       openModal("error");
       // setErrorModalOpen(true);
     } finally {
-      setLoading(false); // Ensure loading state is reset
+      setLoading(false); 
     }
   }
 
