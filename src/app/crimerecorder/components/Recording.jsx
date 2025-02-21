@@ -53,11 +53,7 @@ export const Recording = ({ text, icon1, imgText, category }) => {
   ];
 
   const { openNotification } = useNotification();
-  const {
-    connection: account,
-    connectorData,
-    starknetJsAccount: starknetJsAccount,
-  } = useContext(WalletContext);
+  const { connection: account, connectorData } = useContext(WalletContext);
   const { showModal, setShowModal } = useContext(GlobalStateContext);
   const [mediaRecorder, setMediaRecorder] = useState(null);
   const [mediaStream, setMediaStream] = useState(null);
@@ -99,15 +95,12 @@ export const Recording = ({ text, icon1, imgText, category }) => {
       callRef.current = JSON.stringify(calls, null, 2);
     }
 
-
-
     // Execute the transaction with gasless option
     const triggerWallet = async () => {
-      
       if (uri !== "") {
         setLoading(true);
         try {
-          if (uri !== "" && starknetJsAccount) {
+  
             console.log("call ref is :", callRef.current);
             console.log("account is :", account);
 
@@ -118,12 +111,11 @@ export const Recording = ({ text, icon1, imgText, category }) => {
               { ...options, apiKey: process.env.NEXT_PUBLIC_AVNU_KEY }
             );
 
-                // @faytey - The code below is for routing the gasless txn through the server
-                //    But this method has a bug in that it only works for argent and the signature generated 
-                //    is always rejected by avnu signature verification. seems to be an error from argent though
-                //   I will leave it here for reference
+            // @faytey - The code below is for routing the gasless txn through the server
+            //    But this method has a bug in that it only works for argent and the signature generated
+            //    is always rejected by avnu signature verification. seems to be an error from argent though
+            //   I will leave it here for reference
 
-                
             //             // 1. Prepare transaction through API
             //             const prepareResponse = await fetch("/api/execute", {
             //               method: "POST",
@@ -170,15 +162,14 @@ export const Recording = ({ text, icon1, imgText, category }) => {
             //             const { transactionHash } = await executeResponse.json();
             //             console.log("success...",transactionHash)
 
-
-            console.log('success', transactionResponse);
+            console.log("success", transactionResponse);
 
             openNotification("success", "Transaction successful", "");
             setLoading(false);
             openModal("success");
             // setSuccessModalOpen(true);
           }
-        } catch (error) {
+         catch (error) {
           console.error("Transaction failed:", error);
           openNotification("error", "Transaction failed", `${error}`);
           setLoading(false);
@@ -189,7 +180,6 @@ export const Recording = ({ text, icon1, imgText, category }) => {
     };
     if (uri !== "") triggerWallet();
   }, [uri]);
-
 
   useEffect(() => {
     if (!account) return;
@@ -399,7 +389,7 @@ export const Recording = ({ text, icon1, imgText, category }) => {
       }
 
       const data = await response.json();
-      const ipfsHash = data.IpfsHash; 
+      const ipfsHash = data.IpfsHash;
 
       console.log("IPFS Hash:", ipfsHash);
       setUri(ipfsHash);
@@ -412,7 +402,7 @@ export const Recording = ({ text, icon1, imgText, category }) => {
       openModal("error");
       // setErrorModalOpen(true);
     } finally {
-      setLoading(false); 
+      setLoading(false);
     }
   }
 
