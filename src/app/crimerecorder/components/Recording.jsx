@@ -258,22 +258,25 @@ export const Recording = ({ text, icon1, imgText, category }) => {
   const startCamera = async () => {
     checkPermissions();
     try {
-      const stream = await navigator.mediaDevices.getUserMedia({
-        video: true, // Simpler configuration
-        audio: true, // Disable audio if not needed
-      });
+      const constraints = {
+        video: { facingMode: "environment" }, // Default to rear camera
+        audio: true,
+      };
+  
+      const stream = await navigator.mediaDevices.getUserMedia(constraints);
       setMediaStream(stream);
+  
       if (videoRef.current) {
         videoRef.current.srcObject = stream;
-        videoRef.current.muted = true; // Mute to avoid feedback
-        videoRef.current.style.display = "block"; // Show the video feed when camera starts
+        videoRef.current.muted = true;
+        videoRef.current.style.display = "block";
       }
     } catch (error) {
       console.error("Error accessing the camera", error);
       alert("Error accessing the camera: " + error.message);
     }
   };
-
+  
   const stopCamera = () => {
     if (mediaStream) {
       mediaStream.getTracks().forEach((track) => {
@@ -328,27 +331,69 @@ export const Recording = ({ text, icon1, imgText, category }) => {
       canvasRef.current.width,
       canvasRef.current.height
     );
-
+    const startCamera = async () => {
+      checkPermissions();
+      try {
+        const constraints = {
+          video: { facingMode: "environment" }, // Default to rear camera
+          audio: true,
+        };
+    
+        const stream = await navigator.mediaDevices.getUserMedia(constraints);
+        setMediaStream(stream);
+    
+        if (videoRef.current) {
+          videoRef.current.srcObject = stream;
+          videoRef.current.muted = true;
+          videoRef.current.style.display = "block";
+        }
+      } catch (error) {
+        console.error("Error accessing the camera", error);
+        alert("Error accessing the camera: " + error.message);
+      }
+    };
+    
     const dataURL = canvasRef.current.toDataURL("image/png");
     const blob = await fetch(dataURL).then((res) => res.blob());
     setRecordedChunks(blob); // Set picture for upload
     setUploadModalOpen(true); // Open modal for filename input after picture is taken
   };
-
   const switchCamera = async () => {
-    setIsClicked((prev) => {
-      return !prev;
-    });
-    setCurrentFacingMode((prev) => (prev === "user" ? "environment" : "user"));
-    if (isRecording) {
-      mediaRecorder.pause();
-    }
-    stopCamera();
-    await startCamera();
-    if (isRecording) {
-      mediaRecorder.resume();
+    try {
+      // Toggle facing mode
+      const newFacingMode = currentFacingMode === "user" ? "environment" : "user";
+      setCurrentFacingMode(newFacingMode);
+  
+      // Get new stream with updated facing mode
+      const newStream = await navigator.mediaDevices.getUserMedia({
+        video: { facingMode: newFacingMode },
+        audio: true, // Keep audio active
+      });
+  
+      // Update the video stream
+      if (videoRef.current) {
+        videoRef.current.srcObject = newStream;
+      }
+  
+      // Update the media stream state (if needed)
+      setMediaStream(newStream);
+  
+      // If recording, switch the stream without stopping
+      if (isRecording && mediaRecorder) {
+        const newTracks = newStream.getVideoTracks();
+        const oldTracks = mediaStream.getVideoTracks();
+  
+        // Replace the old track with the new one (smooth transition)
+        mediaRecorder.stream.removeTrack(oldTracks[0]);
+        mediaRecorder.stream.addTrack(newTracks[0]);
+      }
+  
+      console.log("Switched camera to:", newFacingMode);
+    } catch (error) {
+      console.error("Error switching camera:", error);
     }
   };
+  
 
   async function uploadToIPFS(fileBlob, fileName) {
     const formData = new FormData();
