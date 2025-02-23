@@ -52,8 +52,9 @@ export default function RootLayout({ children }) {
       )}
 
       
-      <div className={`
-        fixed w-fit md:relative h-full z-50
+      
+<div className={`
+        fixed md:relative h-full z-50
         ${isMobile ? 
           `transform transition-transform duration-300 w-64 
            ${isMobileOpen ? 'translate-x-0' : '-translate-x-full'}` 
@@ -84,7 +85,7 @@ export default function RootLayout({ children }) {
       </button>
         </div>
 
-        <div className="w-full items-center mt-20 flex justify-center m-auto">{children}</div>
+        <div className="w-full items-center mt-20 px-3 flex justify-center m-auto">{children}</div>
       </div>
     </div>
   );
