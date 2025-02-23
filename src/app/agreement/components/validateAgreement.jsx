@@ -45,11 +45,11 @@ const ValidateAgreementModal = ({
       }
 
       const params = [
-        `"${stringToByteArray(agreement?.content)}"`,
-        agreement?.second_party_address,
-        `"${stringToByteArray(agreement?.first_party_valid_id)}"`,
-        `"${stringToByteArray(agreement?.second_party_valid_id)}"`,
-        `"${stringToByteArray(agreement?.agreementType ? agreement.agreementType : "N/A")}"`,
+        `"${stringToByteArray(agreement?.content || "N/A")}"`,
+        agreement?.second_party_address || "N/A",
+        `"${stringToByteArray(agreement?.first_party_valid_id || "N/A")}"`,
+        `"${stringToByteArray(agreement?.second_party_valid_id || "N/A")}"`,
+        `"${stringToByteArray(agreement?.agreementType || "N/A")}"`,
       ];
 
       if (params.some((param) => param == null)) {
