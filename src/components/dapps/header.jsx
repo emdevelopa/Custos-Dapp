@@ -49,7 +49,10 @@ export const Header = ({ onToggle }) => {
   };
 
   return (
-    <div className="backdrop-blur flex items-center justify-between w-full px-4 sm:py-4 py-6">
+    <div
+      className="backdrop-blur flex items-center justify-between w-full px-4 sm:py-4 py-6 "
+    
+    >
       {/* Logo on the left */}
       <div className="flex items-center md:hidden">
         <a href="/">
