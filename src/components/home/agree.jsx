@@ -2,7 +2,7 @@
 import Link from "next/link";
 import React, { useState } from "react";
 import Image from "next/image";
-import { FaLongArrowAltRight } from "react-icons/fa";
+import { FaLongArrowAltRight, FaPlus, FaVideo } from "react-icons/fa";
 import Section from "./macbookScroll"; // Section component with animations
 import ConnectButtoncomponent from "../connect";
 import Shape from "./eclipse";
@@ -22,9 +22,6 @@ import FadeInSection from "../fadeInSection";
 //   printWindow.print();
 // };
 
-
-
-
 const Agree = () => {
   const [showLaunchDapps, setShowLaunchDapps] = useState(false);
 
@@ -34,7 +31,6 @@ const Agree = () => {
   const closeModal = () => {
     setShowLaunchDapps(false);
   };
-
 
   return (
     <main className="mt-20 space-y-32">
@@ -74,16 +70,76 @@ const Agree = () => {
       {/* Section 2: Launch Dapps */}
       <Section id="launch-dapps" headerText="Launch Dapps">
         <div className="flex justify-center items-center mb-12">
-          <div className="w-fit backdrop-blur-[10px] border-gradient2 cursor-pointer p-[2px] rounded-[100px]">
-            {/* <a href="/agreement"> */}
-              <div
-                className="flex items-center text-white text-lg py-2 px-4 rounded-[100px] hover:bg-gradient-to-r from-[#19B1D2] to-[#0094FF] transition-colors duration-300 ease-in-out"
-                onClick={toggleLaunchDapps}
-              >
-                Launch Dapp
-                <FaLongArrowAltRight className="ml-1" />
+          {showLaunchDapps && (
+            <div className="sm:fixed absolute inset-0 z-50 flex items-center justify-center w-full bg-[#00000098] bg-opacity-90 ">
+              <div className="relative bg-[#091219] rounded-lg shadow-lg border-gradient md:w-[50%] w-full sm:flex md:flex-row h-full md:h-auto ">
+                <button
+                  onClick={closeModal}
+                  className="absolute top-0 right-0 flex items-center justify-center text-[3em] text-white w-12 h-12 rounded-full"
+                  style={{ zIndex: 60 }}
+                >
+                  &times;
+                </button>
+
+                <div className=" flex p-6 flex-col justify-between bg-opacity-90 bg-[#091219] bg-[url('/Rectangle.png')] bg-cover bg-center bg-repeat">
+                  <div>
+                    <p className="text-3xl text-white">Launch Dapps</p>
+                    <p className="mt-4 text-gray-300">
+                      Decentralized apps help you leverage blockchain technology
+                      to secure your evidence and legal agreements.
+                    </p>
+                  </div>
+                  <Image
+                    src="/group.png"
+                    alt="group"
+                    width={200}
+                    height={100}
+                    className="rounded-lg mt-8"
+                  />
+                </div>
+
+                <div className="flex flex-col gap-4 sm:gap-4  m-auto w-full sm:p-0 p-4 rounded-lg md:h-auto bg-[#091219]">
+                  <a
+                    href="/agreement"
+                    className="text-white mb-4 z-[100] w-full hover:bg-[#015A9B] sm:p-4 rounded-lg cursor-pointer"
+                  >
+                    <p className="flex items-center text-xl font-semibold">
+                      <FaPlus className="mr-2" />
+                      Create Agreement
+                    </p>
+                    <p className="text-gray-300 mt-1">
+                      Custos ensures that agreements are securely stored.
+                    </p>
+                  </a>
+
+                  <a
+                    href="/crimerecorder"
+                    className="text-white mb-4 z-[100] hover:bg-[#015A9B] sm:p-4 rounded-lg cursor-pointer"
+                  >
+                    <p className="flex items-center text-xl font-semibold text-white">
+                      <FaVideo className="mr-2" />
+                      Record Video
+                    </p>
+                    <p className="text-gray-300 mt-1">
+                      Custos ensures that agreements are securely stored.
+                    </p>
+                  </a>
+                </div>
               </div>
-              {/* <button className="relative max-w-sm br text-white p-3 shadow-lg transform hover:scale-105 transition-transform duration-300 border-gradient bg-opacity-50 mb-5 backdrop-filter backdrop-blur-lg flex items-center justify-center overflow-clip">
+            </div>
+          )}
+          <div
+            className="w-fit backdrop-blur-[10px] border-gradient2 cursor-pointer p-[2px] rounded-[100px] max-md-[400px]:w-[80%] "
+            onClick={toggleLaunchDapps}
+          >
+            {/* <a href="/agreement"> */}
+            <div className=" text-white  max-md-[400px]:py-[20px]  py-2 px-4 rounded-[100px] hover:bg-gradient-to-r from-[#19B1D2] to-[#0094FF] transition-colors duration-300 ease-in-out max-md-[400px]:w-full  max-md-[400px]:bg-gradient-to-bl max-md-[400px]:from-[#0094FF] max-md-[400px]:to-[#19B1D2]">
+              <p className="text-center m-auto text-lg max-md-[400px]:text-[24px]  flex   items-center w-fit">
+                {" "}
+                Launch Dapp <FaLongArrowAltRight className="ml-1" />
+              </p>
+            </div>
+            {/* <button className="relative max-w-sm br text-white p-3 shadow-lg transform hover:scale-105 transition-transform duration-300 border-gradient bg-opacity-50 mb-5 backdrop-filter backdrop-blur-lg flex items-center justify-center overflow-clip">
 
             <span className="flex items-center">Launch Dapp</span>
             <svg
