@@ -12,7 +12,7 @@ import {
 export default function ShowLaunchDapps({ closeModal }) {
   return (
     <>
-      <div className="sm:fixed fixed p-4  inset-0 h-[100vh] z-50 flex items-center justify-center w-full bg-[#00000098] bg-opacity-90 ">
+      <div className="sm:fixed fixed p-4   inset-0 h-[100vh] z-50 flex items-center justify-center w-full bg-[#00000098] bg-opacity-90 ">
         <div className="relative bg-[#091219] rounded-lg shadow-lg border-gradient md:w-[50%] w-full sm:flex md:flex-row h-fit md:h-auto ">
           <button
             onClick={closeModal}

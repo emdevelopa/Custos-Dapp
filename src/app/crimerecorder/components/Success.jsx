@@ -1,3 +1,4 @@
+"use client";
 import Image from "next/image";
 import { FaTimes } from "react-icons/fa";
 import { GlobalStateContext } from "../../../context/GlobalStateProvider";

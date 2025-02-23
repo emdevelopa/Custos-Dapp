@@ -160,14 +160,14 @@ const   Navbar = () => {
                                 preservation and shielding on the blockchain.
                               </p>
                               <Link
-                                href="#"
+                                href="https://t.me/+x1zr5LaAMbdjZWZk"
                                 className="mt-4 z-[100] hover:bg-[#015A9B] flex items-center text-[#00bfff]"
                               >
                                 Join the Community
                                 <FaArrowRight className="ml-1" />
                               </Link>
                               <Link
-                                href="#"
+                                href="https://t.me/+x1zr5LaAMbdjZWZk"
                                 className="mt-2 z-[100] hover:bg-[#015A9B] flex items-center text-[#00bfff]"
                               >
                                 Learn More About Custos
@@ -186,7 +186,9 @@ const   Navbar = () => {
                                   width={32}
                                   height={32}
                                   alt="about"
+                                
                                   className="rounded-lg h-fit p-1 w-[2em]"
+                            
                                 />
                                 <p className="flex flex-col ">
                                   About Us
@@ -204,9 +206,10 @@ const   Navbar = () => {
                                 <Image
                                   src="/careers.svg"
                                   alt="careers"
-                                  width={32}
-                                  height={32}
+                                  width={50}
+                                  height={50}
                                   className="rounded-lg h-fit w-[2em]"
+                              
                                 />
                                 <p className="flex flex-col ">
                                   Careers
@@ -224,9 +227,10 @@ const   Navbar = () => {
                                 <Image
                                   src="/call.svg"
                                   alt="call"
-                                  width={32}
-                                  height={32}
+                                  width={50}
+                                  height={50}
                                   className="rounded-lg h-fit w-[2em]"
+                                
                                 />
                                 <p className="flex flex-col ">
                                   Contact Us
@@ -330,14 +334,14 @@ const   Navbar = () => {
                   shielding on the blockchain.
                 </p>
                 <Link
-                  href="#"
+                  href="https://t.me/+x1zr5LaAMbdjZWZk"
                   className="mt-4 text-gray-300 z-[100] hover:bg-[#015A9B] flex items-center"
                 >
                   Join the Community
                   <FaArrowRight className="ml-1" />
                 </Link>
                 <Link
-                  href="#"
+                  href="https://t.me/+x1zr5LaAMbdjZWZk"
                   className="mt-2 text-gray-300 z-[100] hover:bg-[#015A9B] flex items-center"
                 >
                   Learn More About Custos
@@ -361,9 +365,9 @@ const   Navbar = () => {
                 <p className="flex sm:text-xl gap-4 sm:gap-6 h-full font-semibold text-white ">
                   <Image
                     src="/about.svg"
+                    width={50}
+                    height={50}
                     alt="about"
-                    width={''}
-                    height={''}
                     className="rounded-lg h-fit p-1 w-[2em]"
                   />
                   <p className="flex flex-col ">
@@ -382,6 +386,8 @@ const   Navbar = () => {
                 <p className="flex sm:text-xl gap-4 sm:gap-6 h-full font-semibold text-white ">
                   <Image
                     src="/careers.svg"
+                    width={50}
+                    height={50}
                     alt="careers"
                     className="rounded-lg h-fit w-[2em]"
                   />
@@ -402,6 +408,8 @@ const   Navbar = () => {
                   <Image
                     src="/call.svg"
                     alt="call"
+                    width={50}
+                    height={50}
                     className="rounded-lg h-fit w-[2em]"
                   />
                   <p className="flex flex-col ">
