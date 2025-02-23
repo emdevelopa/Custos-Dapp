@@ -35,13 +35,14 @@ export default function RootLayout({ children }) {
       {/* Main content area */}
       <div className="flex flex-col w-full h-[100vh] overflow-y-scroll scrollbar-hide md:pl-0">
         {/* Header */}
-        <div className="flex w-full sticky top-0 z-[400]">
+        <div className="flex w-full sticky top-0 z-[20]">
           <Header />
           <button className="md:hidden z-30" onClick={(e) => toggleSidepane(e)}>
             {isSidepaneOpen ? (
               <FiX size={40} className="text-[#afb9c0e1]" />
             ) : (
-              <Image src="/hamburger.svg" alt="Menu" width={50} height={20} />
+                <Image src="/hamburger.svg" alt="Menu" width={50} height={20} />
+               
             )}
           </button>
         </div>

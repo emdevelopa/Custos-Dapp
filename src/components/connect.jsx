@@ -48,7 +48,7 @@ function ConnectButtonComponent() {
 
   return (
     <>
-      <div className="justify-end flex max-w-[13em] overflow-hidden w-fit items-end">
+      <div className="justify-end flex overflow-hidden w-fit items-end">
         {connected ? (
           <div
             className="cursor-pointer border-gradient2 w-full rounded-full text-[#ededef] p-[1px]"

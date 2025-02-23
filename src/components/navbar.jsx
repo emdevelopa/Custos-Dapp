@@ -185,6 +185,8 @@ const   Navbar = () => {
                                   src="/about.svg"
                                   alt="about"
                                   className="rounded-lg h-fit p-1 w-[2em]"
+                                  width={100}
+                                  height={100}
                                 />
                                 <p className="flex flex-col ">
                                   About Us
@@ -203,6 +205,8 @@ const   Navbar = () => {
                                   src="/careers.svg"
                                   alt="careers"
                                   className="rounded-lg h-fit w-[2em]"
+                                  width={100}
+                                  height={100}
                                 />
                                 <p className="flex flex-col ">
                                   Careers
@@ -221,6 +225,8 @@ const   Navbar = () => {
                                   src="/call.svg"
                                   alt="call"
                                   className="rounded-lg h-fit w-[2em]"
+                                  width={100}
+                                  height={100}
                                 />
                                 <p className="flex flex-col ">
                                   Contact Us

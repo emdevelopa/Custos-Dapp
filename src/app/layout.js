@@ -50,7 +50,7 @@ export default function RootLayout({ children }) {
                   <div className="min-h-screen w-full remove-safari-border">
                     <GlobalStateProvider>
                       {children}
-          <Analytics />
+                      <Analytics />
                     </GlobalStateProvider>
                   </div>
                   <div className="h-fit">
