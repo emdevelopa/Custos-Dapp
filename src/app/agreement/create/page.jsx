@@ -584,7 +584,7 @@ const AgreementModal = ({ initialStep, ttitle, tcontent, agreement }) => {
 
 <div className="">
         <button
-          className="sm:w-fit w-full sm:flex hidden items-start text-[#EAFBFF] px-4 sm:px-0"
+          className="sm:w-fit w-full md:flex hidden items-start text-[#EAFBFF] px-4 sm:px-0"
           onClick={() => window.history.back()}
         >
           <div className="sm:w-fit w-full  flex justify-start items-centr">

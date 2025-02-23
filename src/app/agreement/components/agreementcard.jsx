@@ -353,9 +353,9 @@ export const PendingAgreementCard = ({
 
       {isModalOpen && (
         <ValidateAgreementModal
-          fullname={agreement.second_party_fullname}
-          agreementId={agreement.id}
-          agreementToken={agreement.access_token}
+          fullname={agreement?.second_party_fullname}
+          agreementId={agreement?.id}
+          agreementToken={agreement?.access_token}
           onClose={() => setIsModalOpen(false)}
           agreement={agreement}
         />

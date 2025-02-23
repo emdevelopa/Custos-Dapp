@@ -16,8 +16,8 @@
 }
 *{
   outline:none;
-  border:none;
-  border-width: none;
+  /* border:none; */
+  /* border-width: none; */
   -webkit-appearance:none;
 }
 

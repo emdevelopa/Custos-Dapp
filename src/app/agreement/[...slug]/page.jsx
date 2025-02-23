@@ -219,7 +219,7 @@ const AgreementSlug = ({ params }, agreementparam) => {
       <Slugnav agreement={agreement} />
       <div className="p-4 rounded-lg shadow-lg bg-gradient-to-r w-full">
         <div className="w-full flex max-lg:flex-col header align-baseline justify-start gap-4 mb-8">
-          <div className="w-full px-3 max-md:px-0">
+          <div className="w-full px-3 max-md:px-0">x
             <span className="text-sm">Agreement Type</span>
             <span className="text-[0.8em] mt-2 w-fit flex text-wrap font-bold bg-gradient-to-r br border-slate-800 px-2 py-[0.8em] border border-gradient from-[#19B1D2] to-[#0094FF] bg-clip-text text-transparent">
               {agreement?.agreementType}
