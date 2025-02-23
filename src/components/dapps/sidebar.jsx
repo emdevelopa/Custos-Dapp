@@ -26,8 +26,8 @@ export const Sidebar = ({ children, open, setOpen }) => {
         <div className="flex-1 flex flex-col gap-2">
           {children}
         </div>
-        <div className="hidden md:flex justify-center items-center mt-16">
-          <ConnectButtoncomponent open={open} />
+        <div className="flex justify-center items-center mt-16">
+          <ConnectButtoncomponent />
         </div>
       </nav>
     </aside>
