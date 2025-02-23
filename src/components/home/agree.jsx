@@ -45,7 +45,7 @@ const Agree = () => {
             Create new legal agreements by providing the agreement content, the
             address of the second party, and details about the first party.
           </p>
-           {/* <TextFade
+          {/* <TextFade
             direction="up"
             className="pt-0 pb-5 flex-col flex justify-center items-center space-y-0"
           >
@@ -71,17 +71,19 @@ const Agree = () => {
         </div>
       </Section>
 
-
       {/* Section 2: Launch Dapps */}
       <Section id="launch-dapps" headerText="Launch Dapps">
         <div className="flex justify-center items-center mb-12">
           <div className="w-fit backdrop-blur-[10px] border-gradient2 cursor-pointer p-[2px] rounded-[100px]">
-            <a href="/agreement">
-              <div className="flex items-center text-white text-lg py-2 px-4 rounded-[100px] hover:bg-gradient-to-r from-[#19B1D2] to-[#0094FF] transition-colors duration-300 ease-in-out">
-                Launch Dapps
+            {/* <a href="/agreement"> */}
+              <div
+                className="flex items-center text-white text-lg py-2 px-4 rounded-[100px] hover:bg-gradient-to-r from-[#19B1D2] to-[#0094FF] transition-colors duration-300 ease-in-out"
+                onClick={toggleLaunchDapps}
+              >
+                Launch Dapp
                 <FaLongArrowAltRight className="ml-1" />
               </div>
-                {/* <button className="relative max-w-sm br text-white p-3 shadow-lg transform hover:scale-105 transition-transform duration-300 border-gradient bg-opacity-50 mb-5 backdrop-filter backdrop-blur-lg flex items-center justify-center overflow-clip">
+              {/* <button className="relative max-w-sm br text-white p-3 shadow-lg transform hover:scale-105 transition-transform duration-300 border-gradient bg-opacity-50 mb-5 backdrop-filter backdrop-blur-lg flex items-center justify-center overflow-clip">
 
             <span className="flex items-center">Launch Dapp</span>
             <svg
@@ -99,13 +101,13 @@ const Agree = () => {
               ></path>
             </svg>
           </button> */}
-            </a>
+            {/* </a> */}
           </div>
         </div>
       </Section>
 
       {/* Section 3: Paid Gas Fee */}
-      <Section id="paid-gas-fee" >
+      <Section id="paid-gas-fee">
         <div className="w-full mt-[10%]  mx-auto flex justify-center transform hover:scale-105 transition-transform duration-300">
           <div className="flex flex-col md:flex-row justify-between items-center gap-8 w-[80%]">
             <div className="text-[2em] whitespace-nowrap mb-2 sm:mb-0 bg-gradient-to-r from-[#0094FF] to-[#A02294] bg-clip-text text-transparent">
@@ -125,7 +127,7 @@ const Agree = () => {
               </p>
             </div>
 
-               {/* <button className="relative max-w-sm br text-white p-3 shadow-lg transform hover:scale-105 transition-transform duration-300 border-gradient bg-opacity-50 mb-5 backdrop-filter backdrop-blur-lg flex items-center justify-center overflow-clip">
+            {/* <button className="relative max-w-sm br text-white p-3 shadow-lg transform hover:scale-105 transition-transform duration-300 border-gradient bg-opacity-50 mb-5 backdrop-filter backdrop-blur-lg flex items-center justify-center overflow-clip">
 
             <span className="flex items-center">Launch Dapp</span>
             <svg
