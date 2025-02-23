@@ -68,23 +68,24 @@ export default function RootLayout({ children }) {
       </div>
 
       {/* Main Content */}
-      <div className={`flex flex-col w-full`}
-      >
+      <div className={`flex flex-col w-full`}      >
         {/* Header with spacing for fixed button */}
-        <div className="sticky top-0 z-30 p-2 border-b flex">
+        <div className="fixed w-full right-0 top-0 z-30 p-2 border-b flex">
           <Header />
+          {isMobile &&
           <button
         onClick={toggleMenu}
-        className="z-50 top-4 left-4 p-2 rounded-full shadow-lg transition-colors w-fit"
+        className="z-30 top-4 left-4 w-fit bg-inherit backdrop-blur"
         aria-label={isMobile ? "Toggle menu" : "Collapse menu"}
       >
         {isMobile ? (
           isMobileOpen ? <FiX className="w-8 h-8 text-[#ffffff]" /> : <FiMenu className="w-8 h-8 text-[#ffffff]" />
         ): ''}
       </button>
+}
         </div>
 
-        <div className="w-full items-center flex justify-center m-auto">{children}</div>
+        <div className="w-full items-center mt-20 flex justify-center m-auto">{children}</div>
       </div>
     </div>
   );

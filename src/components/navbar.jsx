@@ -187,6 +187,7 @@ const   Navbar = () => {
                                   width={50}
                                   height={50}
                                   className="rounded-lg h-fit p-1 w-[2em]"
+                            
                                 />
                                 <p className="flex flex-col ">
                                   About Us
@@ -207,6 +208,7 @@ const   Navbar = () => {
                                   width={50}
                                   height={50}
                                   className="rounded-lg h-fit w-[2em]"
+                              
                                 />
                                 <p className="flex flex-col ">
                                   Careers
@@ -227,6 +229,7 @@ const   Navbar = () => {
                                   width={50}
                                   height={50}
                                   className="rounded-lg h-fit w-[2em]"
+                                
                                 />
                                 <p className="flex flex-col ">
                                   Contact Us

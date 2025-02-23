@@ -580,13 +580,14 @@ const AgreementModal = ({ initialStep, ttitle, tcontent, agreement }) => {
   };
 
   return (
-    <>
-      <div className=" flex items-start float-left">
+    <div className="w-full h-full sm:flex-row flex flex-col items-center justify-center">
+
+<div className="">
         <button
-          className="w-fit text-[#EAFBFF] "
+          className="sm:w-fit w-full sm:flex hidden items-start text-[#EAFBFF] px-4 sm:px-0"
           onClick={() => window.history.back()}
         >
-          <div className="w-fit  flex justify-start items-centr">
+          <div className="sm:w-fit w-full  flex justify-start items-centr">
             <FaArrowLeft className="mr-2 mt-[3px] text-[#EAFBFF]" />
             <p className="text-[#EAFBFF] font-bold">Back</p>
           </div>
@@ -604,6 +605,17 @@ const AgreementModal = ({ initialStep, ttitle, tcontent, agreement }) => {
                 onClick={() => handleAgreementSelection("A")}
                 className="cursor-pointer"
               >
+      <div className=" py-4 sm:hidden flex items-start float-left w-full">
+        <button
+          className="sm:w-fit w-full flex items-start text-[#EAFBFF] px-4 sm:px-0"
+          onClick={() => window.history.back()}
+        >
+          <div className="sm:w-fit w-full  flex justify-start items-centr">
+            <FaArrowLeft className="mr-2 mt-[3px] text-[#EAFBFF]" />
+            <p className="text-[#EAFBFF] font-bold">Back</p>
+          </div>
+        </button>
+      </div>
                 <div
                   className="w-full md:w-[268px] h-[360px] bg-[radial-gradient(13.75%_27.94%_at_50%_50%,_rgba(39,_73,_98,_0.1)_0%,_rgba(45,_72,_92,_0.2)_100%)] 
               rounded-[20px] flex flex-col items-center justify-center p-4 
@@ -731,7 +743,7 @@ const AgreementModal = ({ initialStep, ttitle, tcontent, agreement }) => {
           />
         </Modal>
       </div>
-    </>
+    </div>
   );
 };
 
