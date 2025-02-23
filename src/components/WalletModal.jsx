@@ -10,19 +10,19 @@ import walletconnect from "../../public/wallet-connect.svg";
 const WalletModal = ({
   isOpen,
   onClose,
-  onSelectWallet,
-  handleEthereumConnect,
+  // onSelectWallet,
+  // handleEthereumConnect,
 }) => {
   if (!isOpen) return null;
 
-  const handleStarknetSelect = async (walletId) => {
-    console.log("Selected Starknet wallet:", walletId);
-    try {
-      await onSelectWallet({ id: walletId });
-    } catch (error) {
-      console.error("Error in wallet selection:", error);
-    }
-  };
+  // const handleStarknetSelect = async (walletId) => {
+  //   console.log("Selected Starknet wallet:", walletId);
+  //   try {
+  //     await onSelectWallet({ id: walletId });
+  //   } catch (error) {
+  //     console.error("Error in wallet selection:", error);
+  //   }
+  // };
 
   return (
     <div className="fixed h-screen inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
@@ -71,7 +71,7 @@ const WalletModal = ({
           </div>
 
           {/* Ethereum Section */}
-          <div className="border-b border-gray-700 pb-4">
+          {/* <div className="border-b border-gray-700 pb-4">
             <div className="flex justify-between items-center gap-3">
               <button
                 onClick={() => handleEthereumConnect("metamask")}
@@ -100,7 +100,7 @@ const WalletModal = ({
                 />
               </button>
             </div>
-          </div>
+          </div> */}
         </div>
       </div>
     </div>

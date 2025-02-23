@@ -12,44 +12,39 @@ function ConnectButtonComponent() {
   const [connected, setConnected] = useState(false);
   const [showConnectModal, setShowConnectModal] = useState(false);
   const [showDisconnectModal, setShowDisconnectModal] = useState(false);
-  const {
-    wallet,
-    connectStarknetWallet,
-    connectEthereumWallet,
-    disconnectWallet,
-    address,
-    walletType,
-  } = useContext(WalletContext);
+  const { connection, connectWallet, disconnectWallet, address, wallet } =
+    useContext(WalletContext);
 
   useEffect(() => {
-    setConnected(!!address);
-  }, [address, wallet]);
+    setConnected(!!wallet);
+  }, [wallet, connected]);
 
-  const handleConnect = () => {
-    setShowConnectModal(true);
+  const handleConnect = async () => {
+    await connectWallet();
+    // setShowConnectModal(true);
   };
 
   const handleDisconnectClick = () => {
     setShowDisconnectModal(true);
   };
 
-  const handleStarknetSelect = async (selectedWallet) => {
-    try {
-      await connectStarknetWallet(selectedWallet.id);
-      setShowConnectModal(false);
-    } catch (error) {
-      console.error("Error in Starknet selection:", error);
-    }
-  };
+  // const handleStarknetSelect = async (selectedWallet) => {
+  //   try {
+  //     await connectStarknetWallet(selectedWallet.id);
+  //     setShowConnectModal(false);
+  //   } catch (error) {
+  //     console.error("Error in Starknet selection:", error);
+  //   }
+  // };
 
-  const handleEthereumConnect = async (walletType) => {
-    try {
-      await connectEthereumWallet(walletType);
-      setShowConnectModal(false);
-    } catch (error) {
-      console.error("Error in Ethereum connection:", error);
-    }
-  };
+  // const handleEthereumConnect = async (walletType) => {
+  //   try {
+  //     await connectEthereumWallet(walletType);
+  //     setShowConnectModal(false);
+  //   } catch (error) {
+  //     console.error("Error in Ethereum connection:", error);
+  //   }
+  // };
 
   return (
     <>
@@ -91,8 +86,8 @@ function ConnectButtonComponent() {
       <WalletModal
         isOpen={showConnectModal}
         onClose={() => setShowConnectModal(false)}
-        onSelectWallet={handleStarknetSelect}
-        handleEthereumConnect={handleEthereumConnect}
+        // onSelectWallet={handleStarknetSelect}
+        // handleEthereumConnect={handleEthereumConnect}
       />
 
       {/* Disconnect Modal */}

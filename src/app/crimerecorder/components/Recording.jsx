@@ -31,7 +31,8 @@ import ErrorScreen from "./error";
 import Filename from "./nameModal";
 import Image from "next/image";
 import { publicProvider, useAccount } from "@starknet-react/core";
-import { accessListify } from "ethers";
+import { accessListify, Typed } from "ethers";
+// import { fetchDataFromAPI } from "./avnucall";
 
 const NFT_STORAGE_TOKEN = process.env.NEXT_PUBLIC_IPFS_KEY;
 
@@ -59,7 +60,7 @@ export const Recording = ({ text, icon1, imgText, category }) => {
   const videoRef = useRef(null);
   const canvasRef = useRef(null);
   const [recordedChunks, setRecordedChunks] = useState([]);
-  const [facingMode, setFacingMode] = useState("environment");
+  const [currentFacingMode, setCurrentFacingMode] = useState("environment");
   const [isRecording, setIsRecording] = useState(false);
   const [loading, setLoading] = useState(false);
   const [paymasterRewards, setPaymasterRewards] = useState([]);
@@ -79,104 +80,106 @@ export const Recording = ({ text, icon1, imgText, category }) => {
   const route = useRouter();
 
   useEffect(() => {
-    if (uri) {
+    if (uri !== "") {
       const calls = [
         {
           entrypoint: "crime_record",
           contractAddress:
             "0x020bd5ec01c672e69e3ca74df376620a6be8a2b104ab70a9f0885be00dd38fb9",
-          calldata: CallData.compile([byteArray?.byteArrayFromString(String(uri)), 0]),
+          calldata: CallData.compile([
+            byteArray?.byteArrayFromString(String(uri)),
+            0,
+          ]),
         },
       ];
-      callRef.current = calls;
+      callRef.current = JSON.stringify(calls, null, 2);
+    }
 
-      const triggerTransaction = async () => {
+    // Execute the transaction with gasless option
+    const triggerWallet = async () => {
+      if (uri !== "") {
         setLoading(true);
         try {
-          const response = await fetch("/api/avnuhandler", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({ account, calls }),
-          });
+  
+            console.log("call ref is :", callRef.current);
+            console.log("account is :", account);
 
-          const result = await response.json();
+            const transactionResponse = await executeCalls(
+              account,
+              JSON.parse(callRef.current),
+              {},
+              { ...options, apiKey: process.env.NEXT_PUBLIC_AVNU_KEY }
+            );
 
-          if (!response.ok) {
-            throw new Error(result.error || "Transaction failed");
+            // @faytey - The code below is for routing the gasless txn through the server
+            //    But this method has a bug in that it only works for argent and the signature generated
+            //    is always rejected by avnu signature verification. seems to be an error from argent though
+            //   I will leave it here for reference
+
+            //             // 1. Prepare transaction through API
+            //             const prepareResponse = await fetch("/api/execute", {
+            //               method: "POST",
+            //               headers: { "Content-Type": "application/json" },
+            //               body: JSON.stringify({
+            //                 userAddress: account.address,
+            //                 calls: JSON.parse(callRef.current),
+            //                 gasTokenAddress: undefined,
+            //                 maxGasTokenAmount: undefined, // Use default values
+            //               }),
+
+            //             });
+
+            //             if (!prepareResponse.ok) throw new Error("Preparation failed");
+            //             console.log("first response...", prepareResponse)
+
+            //             const {typedData}  = await prepareResponse.json();
+
+            //             console.log("restored typed data...",typedData)
+            //             // const safeTypedData = normalizeTypedData(typedData);
+
+            //             const signature = await account.signer.signMessage(
+            //               typedData,
+            //               account.address
+            //             );
+            // const serializedSignature = {
+            //   ...signature,
+            //   r: signature.r.toString(),
+            //   s: signature.s.toString(),
+            // };
+
+            //             const executeResponse = await fetch("/api/execute-signed", {
+            //               method: "POST",
+            //               headers: { "Content-Type": "application/json" },
+            //               body: JSON.stringify({
+            //                 userAddress: account.address,
+            //                 typedData,
+            //                 signature: serializedSignature,
+            //                 deploymentData: undefined,
+            //               }),
+            //             });
+
+            //             if (!executeResponse.ok) throw new Error("Execution failed");
+            //             const { transactionHash } = await executeResponse.json();
+            //             console.log("success...",transactionHash)
+
+            console.log("success", transactionResponse);
+
+            openNotification("success", "Transaction successful", "");
+            setLoading(false);
+            openModal("success");
+            // setSuccessModalOpen(true);
           }
-
-          console.log("Transaction successful:", result.transactionResponse);
-          openNotification("success", "Transaction successful", "");
-          openModal("success");
-        } catch (error) {
+         catch (error) {
           console.error("Transaction failed:", error);
-          openNotification("error", "Transaction failed", error.message);
-          openModal("error");
-        } finally {
+          openNotification("error", "Transaction failed", `${error}`);
           setLoading(false);
+          openModal("error");
+          // setErrorModalOpen(true);
         }
-      };
-
-      triggerTransaction();
-    }
+      }
+    };
+    if (uri !== "") triggerWallet();
   }, [uri]);
-
-  // const triggerTransaction = async () => {
-  //   try {
-  //     if (uri) {
-  //       await sendUriToBackend(uri); // Send data to the backend
-  //       openNotification(
-  //         "info",
-  //         "Wallet not connected",
-  //         "Data sent to backend for processing"
-  //       );
-  //     }
-  //   } catch (error) {
-  //     openNotification("error", "Transaction failed", `${error}`);
-  //   }
-  // };
-
-  // if (uri) {
-  //   if (account && account.address) {
-  //     triggerWallet();
-  //   } else {
-  //     // triggerTransaction();
-
-  //       openNotification("error", "Transaction failed", `${error}`);
-  //       setLoading(false);
-  //       openModal("error");
-
-  //   }
-  // }
-
-  // Function to send data to the backend
-  // async function sendUriToBackend(uri) {
-  //   const data = "place holder";
-  //   setLoading(true);
-  //   try {
-  //     const response = await fetch("https://custosbackend.onrender.com/agreement/crime_recorder/push/", {
-  //       method: "POST",
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //       },
-  //       body: JSON.stringify({ uri , data}),
-  //     });
-
-  //     if (!response.ok) {
-  //       throw new Error(`Failed to send data to backend: ${response.statusText}`);
-  //     }
-
-  //     const result = await response.json();
-  //     setLoading(false)
-  //     console.log("Backend response:", result);
-  //   } catch (error)
-  //    {
-  //     setLoading(false)
-  //     console.error("Error sending data to backend:", error);
-  //   }
-  // }
 
   useEffect(() => {
     if (!account) return;
@@ -255,22 +258,25 @@ export const Recording = ({ text, icon1, imgText, category }) => {
   const startCamera = async () => {
     checkPermissions();
     try {
-      const stream = await navigator.mediaDevices.getUserMedia({
-        video: true, // Simpler configuration
-        audio: true, // Disable audio if not needed
-      });
+      const constraints = {
+        video: { facingMode: "environment" }, // Default to rear camera
+        audio: true,
+      };
+  
+      const stream = await navigator.mediaDevices.getUserMedia(constraints);
       setMediaStream(stream);
+  
       if (videoRef.current) {
         videoRef.current.srcObject = stream;
-        videoRef.current.muted = true; // Mute to avoid feedback
-        videoRef.current.style.display = "block"; // Show the video feed when camera starts
+        videoRef.current.muted = true;
+        videoRef.current.style.display = "block";
       }
     } catch (error) {
       console.error("Error accessing the camera", error);
       alert("Error accessing the camera: " + error.message);
     }
   };
-
+  
   const stopCamera = () => {
     if (mediaStream) {
       mediaStream.getTracks().forEach((track) => {
@@ -289,75 +295,9 @@ export const Recording = ({ text, icon1, imgText, category }) => {
       console.error("Media stream not available");
       return;
     }
-  
+
     const chunks = [];
-    const canvas = document.createElement("canvas");
-    canvas.width = 700; 
-    canvas.height = 896; 
-    const ctx = canvas.getContext("2d");
-  
-    // creating watermarks
-    const watermarkImg = document.createElement("img");
-    const watermarkImg2 = document.createElement("img");
-    watermarkImg.src = "/custos-with-logo.png";
-    watermarkImg2.src = "/light-custos-with-logo.png";
-   
-    let time;
-    let watermarkX = 10;
-    let watermarkY = 10;
-  
-    const drawFrame = () => {
-      ctx.drawImage(videoRef.current, 0, 0, canvas.width, canvas.height);
-  
-      // add watermark
-      if (watermarkImg.complete) {
-    ctx.globalAlpha = 0.4;
-    if (!time || Date.now() - time > 2500) {
-      watermarkX = Math.random() * (canvas.width - watermarkImg.width);
-      watermarkY = Math.random() * (canvas.height - watermarkImg.height);
-      time = Date.now();
-    }
-    ctx.drawImage(
-      watermarkImg,
-      watermarkX,
-      watermarkY,
-      watermarkImg.width,
-      watermarkImg.height
-    );
-    ctx.globalAlpha = 1.0;
-  }
-  
-       // add timestamp
-       const timestamp = new Date().toLocaleString();
-       ctx.font = "20px Arial";
-       const gradient = ctx.createLinearGradient(0, 0, canvasRef.current.width, 0);
-       gradient.addColorStop(0, "#19B1D2");
-       gradient.addColorStop(1, "#0094FF");
-       ctx.fillStyle = gradient;
-       ctx.textAlign = "center"; 
-       ctx.textBaseline = "top"; 
-       ctx.fillText(
-         timestamp,
-         canvas.width / 2, 
-         20 
-       );
-  
-      requestAnimationFrame(drawFrame);
-    };
-  
-    Promise.all([new Promise((resolve) => (watermarkImg.onload = resolve)), 
-                  new Promise((resolve) => (watermarkImg2.onload = resolve))]).then(() => {
-      drawFrame();
-    });
-  
-    // Add the canvas stream to the MediaRecorder
-    const stream = canvas.captureStream();
-    const newMediaStream = new MediaStream();
-    stream.getTracks().forEach((track) => {
-      newMediaStream.addTrack(track);
-    });
-  
-    const recorder = new MediaRecorder(newMediaStream);
+    const recorder = new MediaRecorder(mediaStream);
     recorder.ondataavailable = (event) => chunks.push(event.data);
     recorder.onstop = async () => {
       const blob = new Blob(chunks, { type: "video/webm" });
@@ -365,12 +305,12 @@ export const Recording = ({ text, icon1, imgText, category }) => {
       stopCamera();
       setUploadModalOpen(true); // Open modal for filename input after recording stops
     };
-  
+
     recorder.start();
     setIsRecording(true);
     setMediaRecorder(recorder);
   };
-  
+
   const stopRecording = () => {
     if (mediaRecorder) {
       mediaRecorder.stop();
@@ -380,11 +320,10 @@ export const Recording = ({ text, icon1, imgText, category }) => {
     stopCamera();
   };
 
-  const takePicture = async () => {  
-    const context = canvasRef.current.getContext("2d");  
+  const takePicture = async () => {
+    const context = canvasRef.current.getContext("2d");
     canvasRef.current.width = videoRef.current.videoWidth;
     canvasRef.current.height = videoRef.current.videoHeight;
-
     context.drawImage(
       videoRef.current,
       0,
@@ -392,111 +331,69 @@ export const Recording = ({ text, icon1, imgText, category }) => {
       canvasRef.current.width,
       canvasRef.current.height
     );
-  
-    // creating watermarks
-    const watermarkImg = document.createElement("img");
-    const watermarkImg2 = document.createElement("img");
-    watermarkImg.src = "/custos-with-logo.png";
-    watermarkImg2.src = "/light-custos-with-logo.png";
-  
-    Promise.all([new Promise((resolve) => (watermarkImg.onload = resolve)), 
-                  new Promise((resolve) => (watermarkImg2.onload = resolve))]).then(() => {
-  
-      // Top-left watermark
-      const topLeftWatermarkX = 20;
-      const topLeftWatermarkY = 25;
-      context.drawImage(
-        watermarkImg,
-        topLeftWatermarkX,
-        topLeftWatermarkY,
-        watermarkImg.width,
-        watermarkImg.height
-      );
-  
-      // Bottom-right watermark
-      const bottomRightWatermarkX =
-        canvasRef.current.width - watermarkImg2.width - 20;
-      const bottomRightWatermarkY =
-        canvasRef.current.height - watermarkImg2.height - 25;
-      context.drawImage(
-        watermarkImg2,
-        bottomRightWatermarkX,
-        bottomRightWatermarkY,
-        watermarkImg2.width,
-        watermarkImg2.height
-      );
-  
-      // add timestamp
-      const timestamp = new Date().toLocaleString();
-      context.font = "20px Arial";
-      const gradient = context.createLinearGradient(0, 0, canvasRef.current.width, 0);
-      gradient.addColorStop(0, "#19B1D2");
-      gradient.addColorStop(1, "#0094FF");
-      context.fillStyle = gradient;
-      context.textAlign = "center"; 
-      context.textBaseline = "top"; 
-      context.fillText(
-        timestamp,
-        canvasRef.current.width / 2, 
-        20 
-      );
-  
-      canvasRef.current.toBlob((blob) => {
-        console.log("Blob created:", blob);
-        setRecordedChunks(blob);
-        setUploadModalOpen(true);
-      }, "image/png");
-    }).catch((error) => {
-      console.error("Error taking picture:", error);
-    });
+    const startCamera = async () => {
+      checkPermissions();
+      try {
+        const constraints = {
+          video: { facingMode: "environment" }, // Default to rear camera
+          audio: true,
+        };
+    
+        const stream = await navigator.mediaDevices.getUserMedia(constraints);
+        setMediaStream(stream);
+    
+        if (videoRef.current) {
+          videoRef.current.srcObject = stream;
+          videoRef.current.muted = true;
+          videoRef.current.style.display = "block";
+        }
+      } catch (error) {
+        console.error("Error accessing the camera", error);
+        alert("Error accessing the camera: " + error.message);
+      }
+    };
+    
+    const dataURL = canvasRef.current.toDataURL("image/png");
+    const blob = await fetch(dataURL).then((res) => res.blob());
+    setRecordedChunks(blob); // Set picture for upload
+    setUploadModalOpen(true); // Open modal for filename input after picture is taken
   };
-
-  const checkCameraSupport = () => {
-    if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
-      alert("Camera access is not supported in your browser. Please update to a modern browser.");
-      return false;
-    }
-    return true;
-  };
-   // Switch camera facing mode
   const switchCamera = async () => {
-  if (!checkCameraSupport()) return;
-
-  try {
-    const newMode = facingMode === "user" ? "environment" : "user";
-    console.log("Switching to:", newMode);
-
-    // Stop the current video tracks if available but don't stop the recorder
-    if (mediaStream) {
-      mediaStream.getVideoTracks().forEach((track) => track.stop());
+    try {
+      // Toggle facing mode
+      const newFacingMode = currentFacingMode === "user" ? "environment" : "user";
+      setCurrentFacingMode(newFacingMode);
+  
+      // Get new stream with updated facing mode
+      const newStream = await navigator.mediaDevices.getUserMedia({
+        video: { facingMode: newFacingMode },
+        audio: true, // Keep audio active
+      });
+  
+      // Update the video stream
+      if (videoRef.current) {
+        videoRef.current.srcObject = newStream;
+      }
+  
+      // Update the media stream state (if needed)
+      setMediaStream(newStream);
+  
+      // If recording, switch the stream without stopping
+      if (isRecording && mediaRecorder) {
+        const newTracks = newStream.getVideoTracks();
+        const oldTracks = mediaStream.getVideoTracks();
+  
+        // Replace the old track with the new one (smooth transition)
+        mediaRecorder.stream.removeTrack(oldTracks[0]);
+        mediaRecorder.stream.addTrack(newTracks[0]);
+      }
+  
+      console.log("Switched camera to:", newFacingMode);
+    } catch (error) {
+      console.error("Error switching camera:", error);
     }
-
-    // Get a new stream with the desired facing mode
-    const newStream = await navigator.mediaDevices.getUserMedia({
-      video: { facingMode: newMode },
-    });
-
-    // Set the new stream to the video element and update the facing mode
-    setMediaStream(newStream);
-    setFacingMode(newMode);
-    if (videoRef.current) {
-      videoRef.current.srcObject = newStream;
-    }
-
-    // Reattach the new stream to the recorder without stopping it
-    if (mediaRecorder && mediaRecorder.state === "recording") {
-      mediaRecorder.stream = newStream;
-    }
-
-    console.log("Switched to:", newMode);
-  } catch (error) {
-    console.error("Error switching camera:", error.message);
-    alert(`Error switching camera: ${error.message}`);
-  }
-};
-
-
-
+  };
+  
 
   async function uploadToIPFS(fileBlob, fileName) {
     const formData = new FormData();
@@ -537,12 +434,9 @@ export const Recording = ({ text, icon1, imgText, category }) => {
       }
 
       const data = await response.json();
-      const ipfsHash = data.IpfsHash; // Access the IPFS hash from the response
+      const ipfsHash = data.IpfsHash;
 
       console.log("IPFS Hash:", ipfsHash);
-
-      // Store the IPFS hash locally
-      localStorage.setItem("uri", ipfsHash);
       setUri(ipfsHash);
 
       console.log("File uploaded successfully and data saved!");
@@ -553,7 +447,7 @@ export const Recording = ({ text, icon1, imgText, category }) => {
       openModal("error");
       // setErrorModalOpen(true);
     } finally {
-      setLoading(false); // Ensure loading state is reset
+      setLoading(false);
     }
   }
 
