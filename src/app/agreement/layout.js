@@ -56,11 +56,11 @@ export default function RootLayout({ children }) {
 <div className={`
         fixed md:relative h-full z-50
         ${isMobile ? 
-          `transform transition-transform duration-300 w-64 
+          `transform transition-transform duration-300 w-64
            ${isMobileOpen ? 'translate-x-0' : '-translate-x-full'}` 
           : 
           `transition-all duration-300 
-           ${isCollapsed ? 'w-20' : 'w-64'}`
+           ${isCollapsed ? 'w-0' : 'w-fit'}`
         }`}
       >
         <Sidepane 

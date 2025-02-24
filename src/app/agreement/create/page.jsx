@@ -590,7 +590,7 @@ const AgreementModal = ({ initialStep, ttitle, tcontent, agreement }) => {
     <div className="w-full h-full sm:flex-row flex flex-col items-center justify-center">
       {/* <div className=""> */}
         <button
-          className="sm:w-fit w-full sm:flex hidden absolute top-[10%] left-[20%] z-40 items-start text-[#EAFBFF] px-4 sm:px-0"
+          className="sm:w-fit w-full sm:flex hidden absolute top-[10%] left-[10%] z-20 items-start text-[#EAFBFF] px-4 sm:px-0"
           onClick={() => window.history.back()}
         >
           <div className="sm:w-fit w-full  flex justify-start items-centr">
