@@ -201,19 +201,19 @@ export const AgreementCard = ({
                   : ""
               }`}
             >
-              {agreement.validate_signature? isValidating ? ' Validating' : 'Validate Agreement' : 'Validated'}
+              {agreement.validate_signature? isValidating ? ' Validating' : 'Finalized' : 'Validated'}
             </button>
           ) : (
             <button
               // onClick={handleSignClick}
               disabled={true}
               className={`w-fit px-2 py-2 text-white rounded-[2em] border-slate-800 shadow-lg transform hover:scale-105 transition-transform duration-300 border-gradient2 bg-opacity-50 backdrop-filter backdrop-blur-lg flex items-center justify-center relative text-[0.8em] ${
-                !agreement.second_party_signature
-                  ? "cursor-not-allowed opacity-50"
+                !agreement.second_party_signature || agreement.validate_signature
+                  ? "cursor-not-allowed opacity-50 px-4"
                   : "cursor-not-allowed opacity-50"
               }`}
             >
-              {agreement.validated ? 'validated' : 'Awaiting Approval' }
+              {agreement.validated ? (!agreement.validate_signature ? 'Awaiting Approval' : 'Finalized') : 'Finalized'}
             </button>
           )}
         </div>
@@ -353,9 +353,9 @@ export const PendingAgreementCard = ({
 
       {isModalOpen && (
         <ValidateAgreementModal
-          fullname={agreement.second_party_fullname}
-          agreementId={agreement.id}
-          agreementToken={agreement.access_token}
+          fullname={agreement?.second_party_fullname}
+          agreementId={agreement?.id}
+          agreementToken={agreement?.access_token}
           onClose={() => setIsModalOpen(false)}
           agreement={agreement}
         />

@@ -23,6 +23,7 @@ const SignAgreementModal = ({
   const [uploadedSignature, setUploadedSignature] = useState(null);
   const [uploadedId, setUploadedId] = useState(null); // New state for uploaded ID
   const signaturePadRef = useRef(null);
+  const [termsAndConditions, setTermsAndConditions] = useState('false');
   const { globalState } = useContext(GlobalStateContext);
   const router = useRouter();
 
@@ -105,6 +106,26 @@ const SignAgreementModal = ({
     }
   };
   
+
+  useEffect(() => {
+    const fetchTermsAndConditions = async () => {
+      try {
+        const response = await fetch(
+          `https://custosbackend.onrender.com/agreement/terms_and_condition/`
+        );
+        if (!response.ok) {
+          throw new Error(`HTTP Error: ${response.status}`);
+        }
+        const data = await response.json();
+        setTermsAndConditions(data[0].content);
+        console.log(data);
+      } catch (error) {
+        console.error("Error fetching terms and conditions:", error);
+      }
+    };
+
+    fetchTermsAndConditions();
+  }, []);
   
 
 
@@ -182,14 +203,14 @@ const SignAgreementModal = ({
                   className="w-full p-4 text-[#9B9292] bg-transparent border border-[#ffffff46] rounded-lg"
                   rows="6"
                   readOnly
-                  value="Sample terms and policy content..."
+                  value={termsAndConditions}
                 />
 
                 <strong>Signature Type</strong>
                 <select
                   value={signatureType}
                   onChange={(e) => setSignatureType(e.target.value)}
-                  className="mt-1 w-full border-[#BEBDBD] px-2 py-3 rounded-md bg-transparent border shadow-sm text-[#9B9292] sm:text-sm"
+                  className="mt-1 w-full border-[#ffffff46] px-2 py-3 rounded-md bg-transparent border shadow-sm text-[#9B9292] sm:text-sm"
                 >
                   <option value="">Select Signature Type</option>
                   <option value="draw">Draw Signature</option>
@@ -227,6 +248,8 @@ const SignAgreementModal = ({
                   src="/cancleAgreement.png"
                   alt="Cancel Agreement"
                   onClick={onClose}
+                  width={200}
+                  height={200}
                 />
               </div>
               {currentStep === 2 ? (
@@ -235,6 +258,9 @@ const SignAgreementModal = ({
                     src="/SignAgreement.png"
                     alt="Sign Agreement"
                     onClick={handleSignAgreement}
+                    width={200}
+                    height={200}
+
                   />
                 </div>
               ) : (
@@ -243,6 +269,8 @@ const SignAgreementModal = ({
                     src="/ContinueAgreement.png"
                     alt="Continue Agreement"
                     onClick={handleContinue}
+                    width={200}
+                    height={200}
                   />
                 </div>
               )}
