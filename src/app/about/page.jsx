@@ -30,6 +30,8 @@ const About = () => {
               src="/star.png"
               className="absolute w-6 h-8 z-20 animate-star"
               alt="Star Icon"
+              width={24}
+              height={24}
             />
           </button>
         </div>
