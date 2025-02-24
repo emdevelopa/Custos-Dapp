@@ -4,6 +4,7 @@ import Image from "next/image";
 import Navbar from "@/components/navbar";
 import ShowLaunchDapps from "../../components/showLaunchDapps";
 import { FaLongArrowAltRight } from "react-icons/fa";
+import { HoverBorderGradient } from "@/components/home/hoverButton";
 
 const About = () => {
   const [showLaunchDapps, setShowLaunchDapps] = useState(false);
@@ -20,19 +21,7 @@ const About = () => {
     <main className="items-center justify-center min-h-screen">
       <Navbar />
       <div className="text-white py-20 mx-auto flex flex-col justify-center items-center w-full max-w-screen-xl px-4">
-        <div className="flex w-fit h-fit">
-          <button 
-            onClick={toggleLaunchDapps}
-            className="relative br w-full text-white shadow-lg py-3 px-6 transform hover:scale-105 transition-transform duration-300 border-gradient bg-opacity-50 mt-20 mb-5 backdrop-filter backdrop-blur-lg flex items-center justify-center"
-          >
-            <span className="flex items-center">Launch Custos Dapp</span>
-            <Image
-              src="/star.png"
-              className="absolute w-6 h-8 z-20 animate-star"
-              alt="Star Icon"
-            />
-          </button>
-        </div>
+        2
 
         {showLaunchDapps && <ShowLaunchDapps closeModal={closeModal} />}
 
