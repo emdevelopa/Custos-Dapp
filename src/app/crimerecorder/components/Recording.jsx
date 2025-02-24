@@ -363,7 +363,7 @@ export const Recording = ({ text, icon1, imgText, category }) => {
       // Toggle facing mode
       const newFacingMode = currentFacingMode === "user" ? "environment" : "user";
       setCurrentFacingMode(newFacingMode);
-  
+  alert(`switch camera to ${newFacingMode}`)
       // Get new stream with updated facing mode
       const newStream = await navigator.mediaDevices.getUserMedia({
         video: { facingMode: newFacingMode },
