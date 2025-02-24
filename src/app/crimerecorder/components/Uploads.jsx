@@ -109,7 +109,9 @@ const Uploads = () => {
             }
             return null;
           })
-          .filter(Boolean);
+          .filter(Boolean)
+          // Sort files by timestamp in descending order (newest first)
+          .sort((a, b) => b.timestamp - a.timestamp);
 
         console.log("Matched Files:", matchedFiles);
         setFileData(matchedFiles);
