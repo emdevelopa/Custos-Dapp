@@ -9,104 +9,120 @@ import { ClipboardIcon } from "@heroicons/react/outline";
 import { useNotification } from "../../../context/NotificationProvider";
 
 const Uploads = () => {
-  const { address, wallet } = useContext(WalletContext); // Using WalletContext
+  const { address, wallet } = useContext(WalletContext);
   const [uploadedFiles, setUploadedFiles] = useState([]);
   const [fileData, setFileData] = useState([]);
   const [loading, setLoading] = useState(false);
-  const NFT_STORAGE_TOKEN = process.env.NEXT_PUBLIC_IPFS_KEY;
+  const PINATA_JWT = process.env.NEXT_PUBLIC_IPFS_KEY; // Renamed for clarity
 
   const { openNotification } = useNotification();
   const { fetchData } = UseReadContractData();
 
   const Retrieve = async () => {
-    if (!address) return; // Ensure address is available
+    if (!address) return;
     setLoading(true);
     try {
       console.log("Fetching uploads for account:", address);
-
       const result = await fetchData("crime", "get_all_user_uploads", [address]);
-      console.log("Fetched uploads:", result);
+      console.log("Raw result from contract:", result);
 
-      const files =
-        result && typeof result === "object"
-          ? Object.keys(result).map((key) => ({
-              id: result[key].toString(),
-              timestamp: Date.now(),
-            }))
-          : [];
+      // Properly handle array or object response from smart contract
+      let files = [];
+      if (Array.isArray(result)) {
+        files = result.map((item) => ({
+          id: item.toString(),
+          timestamp: Date.now(),
+        }));
+      } else if (result && typeof result === "object") {
+        files = Object.values(result).map((item) => ({
+          id: item.toString(),
+          timestamp: Date.now(),
+        }));
+      }
 
+      console.log("Processed files:", files);
       setUploadedFiles(files);
     } catch (error) {
+      console.error("Error in Retrieve:", error);
       openNotification("error", "", "Error fetching uploaded files");
-      console.error("Error fetching uploaded files:", error);
     } finally {
       setLoading(false);
     }
   };
 
   useEffect(() => {
-    console.log("Wallet Address:", address);
     if (address) Retrieve();
   }, [address]);
 
   useEffect(() => {
     const userUploads = async () => {
+      if (!uploadedFiles.length) return;
       setLoading(true);
       try {
-        console.log("Uploaded Files:", uploadedFiles);
-
+        // First get URIs from blockchain
         const blockchainUris = await Promise.all(
           uploadedFiles.map(async (file) => {
-            const uploadUri = await fetchData("crime", "get_token_uri", [
-              file.id,
-            ]);
-            console.log(`Retrieved URI for file ${file.id}:`, uploadUri);
-            return uploadUri;
+            try {
+              const uploadUri = await fetchData("crime", "get_token_uri", [file.id]);
+              console.log(`URI for file ${file.id}:`, uploadUri);
+              return { id: file.id, uri: uploadUri };
+            } catch (error) {
+              console.error(`Error fetching URI for file ${file.id}:`, error);
+              return null;
+            }
           })
         );
 
-        const response = await fetch(`https://api.pinata.cloud/data/pinList`, {
+        // Filter out any failed URI fetches
+        const validUris = blockchainUris.filter(Boolean);
+        
+        // Then fetch metadata from Pinata
+        const response = await fetch("https://api.pinata.cloud/data/pinList", {
           method: "GET",
-          headers: { Authorization: `Bearer ${NFT_STORAGE_TOKEN}` },
+          headers: {
+            Authorization: `Bearer ${PINATA_JWT}`,
+          },
         });
-        console.log("Pinata Response:", response);
 
-        if (!response.ok)
-          throw new Error("Error fetching metadata from Pinata");
+        if (!response.ok) {
+          throw new Error(`Pinata API error: ${response.status}`);
+        }
 
         const metadata = await response.json();
-        console.log("Pinata Metadata:", metadata);
+        console.log("Pinata metadata received:", metadata);
 
-        const pinataFiles = metadata.rows;
-
-        const matchedFiles = blockchainUris
-          .map((uri) => {
-            const matchedFile = pinataFiles.find(
+        // Match blockchain URIs with Pinata metadata
+        const matchedFiles = validUris
+          .map(({ id, uri }) => {
+            const pinataFile = metadata.rows.find(
               (file) => file.ipfs_pin_hash === uri
             );
-            if (matchedFile) {
+            if (pinataFile) {
               return {
+                id,
                 uri,
-                filename: matchedFile.metadata.name || "Unknown Filename",
-                timestamp: new Date(matchedFile.date_pinned).getTime(),
+                filename: pinataFile.metadata?.name || "Unnamed File",
+                timestamp: new Date(pinataFile.date_pinned).getTime(),
               };
             }
             return null;
           })
           .filter(Boolean);
 
-        console.log("Matched Files:", matchedFiles);
+        console.log("Final matched files:", matchedFiles);
         setFileData(matchedFiles);
       } catch (error) {
-        console.error("Error retrieving URIs or metadata:", error);
+        console.error("Error in userUploads:", error);
+        openNotification("error", "", "Error fetching file metadata");
       } finally {
         setLoading(false);
       }
     };
 
-    if (uploadedFiles.length) userUploads();
+    userUploads();
   }, [uploadedFiles]);
 
+  // Rest of your component remains the same
   const isImageFile = (fileName) => /\.(jpg|jpeg|png|gif|bmp)$/i.test(fileName);
   const isVideoFile = (fileName) => /\.(mp4|webm|ogg|mov)$/i.test(fileName);
 
@@ -146,11 +162,12 @@ const Uploads = () => {
       const response = await fetch(
         `https://gateway.pinata.cloud/ipfs/${file.uri}`
       );
+      if (!response.ok) throw new Error('Download failed');
       const blob = await response.blob();
       saveToDevice(blob, file.filename);
     } catch (error) {
+      console.error("Download error:", error);
       openNotification("error", "", "Error downloading the file");
-      console.error("Error downloading the file:", error);
     }
   };
 
@@ -165,14 +182,16 @@ const Uploads = () => {
           url: fileLink,
         });
       } catch (error) {
-        console.error("Error sharing the file:", error);
+        console.error("Sharing error:", error);
+        openNotification("error", "", "Error sharing the file");
       }
     } else {
       try {
         await navigator.clipboard.writeText(fileLink);
         openNotification("success", "", "Link copied to clipboard!");
       } catch (error) {
-        console.error("Failed to copy the link:", error);
+        console.error("Clipboard error:", error);
+        openNotification("error", "", "Error copying link to clipboard");
       }
     }
   };
@@ -215,6 +234,7 @@ const Uploads = () => {
                   <video
                     src={`https://gateway.pinata.cloud/ipfs/${file.uri}`}
                     className="w-full h-auto rounded"
+                    
                   />
                 ) : (
                   <p className="text-red-500">Unsupported file type</p>
