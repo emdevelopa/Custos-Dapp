@@ -24,11 +24,20 @@ const agreementTypeOptions = [
   { value: "", label: "Select an option" },
   { value: "Non-Disclosure Agreement", label: "Non-Disclosure Agreement" },
   { value: "Allocation of Rights", label: "Allocation of Rights" },
-  { value: "Material Transfer Agreement", label: "Material Transfer Agreement" },
+  {
+    value: "Material Transfer Agreement",
+    label: "Material Transfer Agreement",
+  },
   { value: "Data Use Agreement", label: "Data Use Agreement" },
   { value: "Consortium Agreement", label: "Consortium Agreement" },
-  { value: "Memorandum of Understanding", label: "Memorandum of Understanding" },
-  { value: "Sponsored Research Agreement", label: "Sponsored Research Agreement" },
+  {
+    value: "Memorandum of Understanding",
+    label: "Memorandum of Understanding",
+  },
+  {
+    value: "Sponsored Research Agreement",
+    label: "Sponsored Research Agreement",
+  },
   { value: "Teaming Agreement", label: "Teaming Agreement" },
 ];
 
@@ -195,8 +204,7 @@ const AgreementModal = ({ initialStep, ttitle, tcontent, agreement }) => {
         currentErrors.idImage = "ID Image is required.";
       }
       if (!firstpartyFullname.trim()) {
-        currentErrors.firstpartyFullname =
-          "First Party Fullname is required.";
+        currentErrors.firstpartyFullname = "First Party Fullname is required.";
       }
     } else if (modalStep === 3) {
       if (!secondPartyFullname.trim()) {
@@ -204,8 +212,7 @@ const AgreementModal = ({ initialStep, ttitle, tcontent, agreement }) => {
           "Second Party Fullname is required.";
       }
       if (!secondPartyAddress.trim()) {
-        currentErrors.secondPartyAddress =
-          "Second Party Address is required.";
+        currentErrors.secondPartyAddress = "Second Party Address is required.";
       }
       if (!signatureType) {
         currentErrors.signatureType = "Signature type must be selected.";
@@ -581,10 +588,9 @@ const AgreementModal = ({ initialStep, ttitle, tcontent, agreement }) => {
 
   return (
     <div className="w-full h-full sm:flex-row flex flex-col items-center justify-center">
-
-<div className="">
+      {/* <div className=""> */}
         <button
-          className="sm:w-fit w-full sm:flex hidden items-start text-[#EAFBFF] px-4 sm:px-0"
+          className="sm:w-fit w-full sm:flex hidden absolute top-[10%] left-[10%] z-20 items-start text-[#EAFBFF] px-4 sm:px-0"
           onClick={() => window.history.back()}
         >
           <div className="sm:w-fit w-full  flex justify-start items-centr">
@@ -592,7 +598,7 @@ const AgreementModal = ({ initialStep, ttitle, tcontent, agreement }) => {
             <p className="text-[#EAFBFF] font-bold">Back</p>
           </div>
         </button>
-      </div>
+      {/* </div> */}
       <div className="w-full px-4 flex flex-col gap-8 overflow-clip  justify-center items-center h-auto">
         {/* Agreement Selection Section */}
         {!selectedAgreement && (
@@ -605,17 +611,17 @@ const AgreementModal = ({ initialStep, ttitle, tcontent, agreement }) => {
                 onClick={() => handleAgreementSelection("A")}
                 className="cursor-pointer"
               >
-      <div className=" py-4 sm:hidden flex items-start float-left w-full">
-        <button
-          className="sm:w-fit w-full flex items-start text-[#EAFBFF] px-4 sm:px-0"
-          onClick={() => window.history.back()}
-        >
-          <div className="sm:w-fit w-full  flex justify-start items-centr">
-            <FaArrowLeft className="mr-2 mt-[3px] text-[#EAFBFF]" />
-            <p className="text-[#EAFBFF] font-bold">Back</p>
-          </div>
-        </button>
-      </div>
+                <div className=" py-4 sm:hidden flex items-start float-left w-full">
+                  <button
+                    className="sm:w-fit w-full flex items-start text-[#EAFBFF] px-4 sm:px-0"
+                    onClick={() => window.history.back()}
+                  >
+                    <div className="sm:w-fit w-full  flex justify-start items-centr">
+                      <FaArrowLeft className="mr-2 mt-[3px] text-[#EAFBFF]" />
+                      <p className="text-[#EAFBFF] font-bold">Back</p>
+                    </div>
+                  </button>
+                </div>
                 <div
                   className="w-full md:w-[268px] h-[360px] bg-[radial-gradient(13.75%_27.94%_at_50%_50%,_rgba(39,_73,_98,_0.1)_0%,_rgba(45,_72,_92,_0.2)_100%)] 
               rounded-[20px] flex flex-col items-center justify-center p-4 
@@ -692,7 +698,8 @@ const AgreementModal = ({ initialStep, ttitle, tcontent, agreement }) => {
                     className="w-fit rounded-[2em] hover:text-[#A02294] items-center text-white font-bold justify-center flex"
                     // disabled={modalStep === 1}
                   >
-                    <FaArrowLeft className="mr-2" /> <p className="">Previous</p>
+                    <FaArrowLeft className="mr-2" />{" "}
+                    <p className="">Previous</p>
                   </button>
                 )}
                 <div className="w-full flex-col flex gap-4">
