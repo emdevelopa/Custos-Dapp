@@ -7,9 +7,9 @@ import SignAgreementModal from "./signagreementmodal";
 import DOMPurify from 'dompurify';
 import ReactMarkdown from 'react-markdown';
 import parse from 'html-react-parser';
-import { byteArrayToString, hexTimestampToFormattedDate, numberToHex, padAddress } from "@/utils/serializer";
-import { WalletContext } from "@/components/walletprovider";
-import { useNotification } from "@/context/NotificationProvider";
+import { byteArrayToString, hexTimestampToFormattedDate, numberToHex, padAddress } from "../../../utils/serializer";
+import { WalletContext } from "../../../components/walletprovider";
+import { useNotification } from "../../../context/NotificationProvider";
 import { provider, UseWriteToContract } from "@/utils/fetchcontract";
 
 

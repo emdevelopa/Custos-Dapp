@@ -1,5 +1,5 @@
 import "./globals.css";
-import Footer from "@/components/footer";
+import Footer from "../components/footer";
 import "@rainbow-me/rainbowkit/styles.css";
 import Metadata from "./metadata";
 import BackgroundWrapper from "@/components/backgroundwrapper";
