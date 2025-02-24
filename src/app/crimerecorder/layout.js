@@ -66,7 +66,7 @@ export default function RootLayout({ children }) {
       {/* Main Content */}
       <div className={`flex flex-col w-full`}>
         {/* Header with spacing for fixed button */}
-        <div className="fixed w-full right-0 top-0 z-30 p-2 border-v flex">
+        <div className="fixed w-full right-0 top-0 z-30 p-2 flex">
           <Header />
           {isMobile && (
             <button

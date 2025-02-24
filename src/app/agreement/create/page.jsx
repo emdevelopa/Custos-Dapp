@@ -618,7 +618,7 @@ const AgreementModal = ({ initialStep, ttitle, tcontent, agreement }) => {
                   >
                     <div className="sm:w-fit w-full  flex justify-start items-centr">
                       <FaArrowLeft className="mr-2 mt-[3px] text-[#EAFBFF]" />
-                      <p className="text-[#EAFBFF] font-bold">Back</p>
+                      {/* <p className="text-[#EAFBFF] font-bold">Back</p> */}
                     </div>
                   </button>
                 </div>
