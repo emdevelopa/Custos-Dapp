@@ -1,11 +1,11 @@
 "use client";
-import { cn } from "@/lib/utils";
+import { cn } from "../../lib/utils";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import React from "react";
 import { Logo } from "./logo";
-import ConnectButtoncomponent from "@/components/connect";
+import ConnectButtoncomponent from "../../components/connect";
 
 export const Sidebar = ({ children, open, setOpen }) => {
   return (
