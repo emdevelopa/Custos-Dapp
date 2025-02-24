@@ -7,7 +7,7 @@ import React, {
   useState,
   useCallback,
 } from "react";
-import Notification from "@/components/notification";
+import Notification from "../components/notification";
 
 // Create the context
 const NotificationContext = createContext();

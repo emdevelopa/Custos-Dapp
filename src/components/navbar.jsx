@@ -183,9 +183,10 @@ const   Navbar = () => {
                               <p className="flex sm:text-xl gap-4 sm:gap-6 h-full font-semibold text-white ">
                                 <Image
                                   src="/about.svg"
+                                  width={32}
+                                  height={32}
                                   alt="about"
-                                  width={50}
-                                  height={50}
+                                
                                   className="rounded-lg h-fit p-1 w-[2em]"
                             
                                 />

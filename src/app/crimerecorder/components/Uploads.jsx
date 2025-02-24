@@ -1,15 +1,14 @@
-"use client";
-
+'use client'
 import React, { useContext, useEffect, useState } from "react";
-import { UseReadContractData } from "@/utils/fetchcontract";
+import { UseReadContractData } from "../../../utils/fetchcontract";
 import NoRecordScreen from "./NoRecordScreen";
-import { WalletContext } from "@/components/walletprovider";
+import { WalletContext } from "../../../components/walletprovider";
 import Image from "next/image";
 import { ClipboardIcon } from "@heroicons/react/outline";
-import { useNotification } from "@/context/NotificationProvider";
+import { useNotification } from "../../../context/NotificationProvider";
 
 const Uploads = () => {
-  const { address, wallet } = useContext(WalletContext); // Using WalletContext
+  const { address, wallet } = useContext(WalletContext);
   const [uploadedFiles, setUploadedFiles] = useState([]);
   const [fileData, setFileData] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -17,9 +16,11 @@ const Uploads = () => {
 
   const { openNotification } = useNotification();
   const { fetchData } = UseReadContractData();
+  const [page, setPage] = useState(1);
+  const ITEMS_PER_PAGE = 20; // Pinata's maximum items per page
 
   const Retrieve = async () => {
-    if (!address) return; // Ensure address is available
+    if (!address) return;
     setLoading(true);
     try {
       console.log("Fetching uploads for account:", address);
@@ -65,23 +66,37 @@ const Uploads = () => {
           })
         );
 
-        const response = await fetch(`https://api.pinata.cloud/data/pinList`, {
-          method: "GET",
-          headers: { Authorization: `Bearer ${NFT_STORAGE_TOKEN}` },
-        });
-        console.log("Pinata Response:", response);
+        // Fetch all pages until we have all the files
+        let allPinataFiles = [];
+        let currentPage = 0;
+        let hasMore = true;
 
-        if (!response.ok)
-          throw new Error("Error fetching metadata from Pinata");
+        while (hasMore) {
+          const response = await fetch(
+            `https://api.pinata.cloud/data/pinList?status=pinned&pageLimit=${ITEMS_PER_PAGE}&pageOffset=${currentPage * ITEMS_PER_PAGE}`,
+            {
+              method: "GET",
+              headers: { Authorization: `Bearer ${NFT_STORAGE_TOKEN}` },
+            }
+          );
 
-        const metadata = await response.json();
-        console.log("Pinata Metadata:", metadata);
+          if (!response.ok) {
+            throw new Error("Error fetching metadata from Pinata");
+          }
 
-        const pinataFiles = metadata.rows;
+          const metadata = await response.json();
+          console.log(`Pinata Metadata Page ${currentPage}:`, metadata);
+
+          allPinataFiles = [...allPinataFiles, ...metadata.rows];
+          
+          // Check if we have more pages
+          hasMore = metadata.rows.length === ITEMS_PER_PAGE;
+          currentPage++;
+        }
 
         const matchedFiles = blockchainUris
           .map((uri) => {
-            const matchedFile = pinataFiles.find(
+            const matchedFile = allPinataFiles.find(
               (file) => file.ipfs_pin_hash === uri
             );
             if (matchedFile) {
@@ -89,6 +104,7 @@ const Uploads = () => {
                 uri,
                 filename: matchedFile.metadata.name || "Unknown Filename",
                 timestamp: new Date(matchedFile.date_pinned).getTime(),
+                ipfsUrl: `https://gateway.pinata.cloud/ipfs/${uri}`
               };
             }
             return null;
@@ -99,6 +115,7 @@ const Uploads = () => {
         setFileData(matchedFiles);
       } catch (error) {
         console.error("Error retrieving URIs or metadata:", error);
+        openNotification("error", "", "Error retrieving file metadata");
       } finally {
         setLoading(false);
       }
@@ -106,6 +123,7 @@ const Uploads = () => {
 
     if (uploadedFiles.length) userUploads();
   }, [uploadedFiles]);
+
 
   const isImageFile = (fileName) => /\.(jpg|jpeg|png|gif|bmp)$/i.test(fileName);
   const isVideoFile = (fileName) => /\.(mp4|webm|ogg|mov)$/i.test(fileName);
@@ -143,9 +161,7 @@ const Uploads = () => {
 
   const handleDownload = async (file) => {
     try {
-      const response = await fetch(
-        `https://gateway.pinata.cloud/ipfs/${file.uri}`
-      );
+      const response = await fetch(file.ipfsUrl);
       const blob = await response.blob();
       saveToDevice(blob, file.filename);
     } catch (error) {
@@ -155,21 +171,19 @@ const Uploads = () => {
   };
 
   const handleShare = async (file) => {
-    const fileLink = `https://gateway.pinata.cloud/ipfs/${file.uri}`;
-
     if (navigator.share) {
       try {
         await navigator.share({
           title: file.filename,
           text: `Check out this file: ${file.filename}`,
-          url: fileLink,
+          url: file.ipfsUrl,
         });
       } catch (error) {
         console.error("Error sharing the file:", error);
       }
     } else {
       try {
-        await navigator.clipboard.writeText(fileLink);
+        await navigator.clipboard.writeText(file.ipfsUrl);
         openNotification("success", "", "Link copied to clipboard!");
       } catch (error) {
         console.error("Failed to copy the link:", error);
@@ -179,7 +193,7 @@ const Uploads = () => {
 
   return (
     <div className="min-h-screen relative">
-      {loading && (
+      {loading ? (
         <div className="fixed inset-0 z-30 bg-gradient-to-r bg-opacity-70 flex items-center justify-center">
           <div className="flex flex-col items-center">
             <Image src="/logo.svg" alt="Loading" width={100} height={100} />
@@ -193,68 +207,71 @@ const Uploads = () => {
             }
           `}</style>
         </div>
-      )}
+      ) : (
+        <div className="p-2">
+          {!fileData.length ? (
+            <NoRecordScreen />
+          ) : (
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 text-white">
+              {fileData.map((file, index) => (
+                <div
+                  key={index}
+                  className="relative text-sm whitespace-nowrap mb-2 sm:mb-0 bg-transparent rounded-lg backdrop-blur-lg p-10 shadow-lg"
+                >
+                  {isImageFile(file.filename) ? (
+                    <img
+                      src={file.ipfsUrl}
+                      alt={file.filename}
+                      className="w-full h-auto rounded"
+                    />
+                  ) : isVideoFile(file.filename) ? (
+                    <video
+                      src={file.ipfsUrl}
+                      className="w-full h-auto rounded"
+                    />
+                  ) : (
+                    <div className="p-4 bg-gray-800 rounded">
+                      <p className="text-xs break-all">IPFS URI: {file.uri}</p>
+                      <p className="text-xs break-all mt-2">Gateway URL: {file.ipfsUrl}</p>
+                    </div>
+                  )}
 
-      <div className="p-2">
-        {!fileData.length ? (
-          <NoRecordScreen />
-        ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 text-white">
-            {fileData.map((file, index) => (
-              <div
-                key={index}
-                className="relative text-sm whitespace-nowrap mb-2 sm:mb-0 bg-transparent rounded-lg backdrop-blur-lg p-10 shadow-lg"
-              >
-                {isImageFile(file.filename) ? (
-                  <img
-                    src={`https://gateway.pinata.cloud/ipfs/${file.uri}`}
-                    alt={file.filename}
-                    className="w-full h-auto rounded"
-                  />
-                ) : isVideoFile(file.filename) ? (
-                  <video
-                    src={`https://gateway.pinata.cloud/ipfs/${file.uri}`}
-                    className="w-full h-auto rounded"
-                  />
-                ) : (
-                  <p className="text-red-500">Unsupported file type</p>
-                )}
+                  <p className="text-[#0094FF] mt-4">{file.filename}</p>
+                  <p className="text-sm flex mt-4">
+                    <span className="text-[#EAFBFF]">Time Stamp: </span>
+                    <span className="text-[#19B1D2] ml-1">
+                      {formatDate(file.timestamp)}
+                    </span>
+                  </p>
 
-                <p className="text-[#0094FF] mt-4">{file.filename}</p>
-                <p className="text-sm flex mt-4">
-                  <span className="text-[#EAFBFF]">Time Stamp: </span>
-                  <span className="text-[#19B1D2] ml-1">
-                    {formatDate(file.timestamp)}
-                  </span>
-                </p>
+                  <div className="flex flex-col sm:flex-row justify-between items-center w-full mt-5 gap-4">
+                    <div className="p-[2px] rounded-[100px] bg-gradient-to-r from-[#19B1D2] to-[#A02294]">
+                      <button
+                        className="flex items-center justify-center w-[200px] h-[48px] bg-[#030303] text-white text-sm py-3 px-6 rounded-[100px] transition-colors duration-300 ease-in-out"
+                        onClick={() => handleShare(file)}
+                      >
+                        <ClipboardIcon className="w-4 h-4 mr-2" />
+                        <span>Share</span>
+                      </button>
+                    </div>
 
-                <div className="flex flex-col sm:flex-row justify-between items-center w-full mt-5 gap-4">
-                  <div className="p-[2px] rounded-[100px] bg-gradient-to-r from-[#19B1D2] to-[#A02294]">
-                    <button
-                      className="flex items-center justify-center w-[200px] h-[48px] bg-[#030303] text-white text-sm py-3 px-6 rounded-[100px] transition-colors duration-300 ease-in-out"
-                      onClick={() => handleShare(file)}
-                    >
-                      <ClipboardIcon className="w-4 h-4 mr-2" />
-                      <span>Share</span>
-                    </button>
-                  </div>
-
-                  <div className="p-[2px] rounded-[100px] bg-gradient-to-r from-[#19B1D2] to-[#A02294]">
-                    <button
-                      className="flex items-center justify-center w-[200px] h-[48px] bg-[#209af1] text-white text-sm py-3 px-6 rounded-[100px] transition-colors duration-300 ease-in-out"
-                      onClick={() => handleDownload(file)}
-                    >
-                      {isVideoFile(file.filename)
-                        ? "Download Video"
-                        : "Download Image"}
-                    </button>
+                    <div className="p-[2px] rounded-[100px] bg-gradient-to-r from-[#19B1D2] to-[#A02294]">
+                      <button
+                        className="flex items-center justify-center w-[200px] h-[48px] bg-[#209af1] text-white text-sm py-3 px-6 rounded-[100px] transition-colors duration-300 ease-in-out"
+                        onClick={() => handleDownload(file)}
+                      >
+                        {isVideoFile(file.filename)
+                          ? "Download Video"
+                          : "Download Image"}
+                      </button>
+                    </div>
                   </div>
                 </div>
-              </div>
-            ))}
-          </div>
-        )}
-      </div>
+              ))}
+            </div>
+          )}
+        </div>
+      )}
     </div>
   );
 };

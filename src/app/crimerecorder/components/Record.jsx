@@ -33,7 +33,7 @@ export const Record = ({ text, icon1, icon2 }) => {
   return (
     <div className="w-full flex flex-col items-center gap-6 px-4 md:px-0 mt-40">
       <p className="text-white text-center text-lg md:text-xl">{text}</p>
-      <div className="bg-gradient-to-r from-[#0094ff] to-[#A02294] w-full md:w-[50%] h-[300px] md:h-[400px] p-[1px] rounded-xl">
+      <div className="bg-gradient-to-r from-[#04080C] to-[#09131A] w-full md:w-[50%] h-[300px] md:h-[400px] p-[1px] rounded-xl">
         <div className="w-full h-full flex flex-row gap-8 justify-center items-end rounded-xl pb-[5px] relative">
           {/* Video element for live camera feed */}
           <video

@@ -7,10 +7,10 @@ import Image from "next/image";
 import parse from "html-react-parser";
 import { useRouter } from "next/navigation";
 import mammoth from "mammoth";
-import { useNotification } from "@/context/NotificationProvider";
-import Loading from "@/components/loading";
-import { WalletContext } from "@/components/walletprovider";
-import { UseReadContractData } from "@/utils/fetchcontract";
+import { useNotification } from "../../../context/NotificationProvider";
+import Loading from "../../../components/loading";
+import { WalletContext } from "../../../components/walletprovider";
+import { UseReadContractData } from "../../../utils/fetchcontract";
 import {
   byteArrayToString,
   hexTimestampToFormattedDate,

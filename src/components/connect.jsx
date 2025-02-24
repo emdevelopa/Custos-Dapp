@@ -2,7 +2,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import { FaLongArrowAltRight } from "react-icons/fa";
 import { generateAvatarURL } from "@cfx-kit/wallet-avatar";
-import { padAddress, truncAddress } from "@/utils/serializer";
+import { padAddress, truncAddress } from "../utils/serializer";
 import Image from "next/image";
 import { WalletContext } from "./walletprovider";
 import WalletModal from "./WalletModal";
