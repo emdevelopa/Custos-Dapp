@@ -72,7 +72,7 @@ export default function RootLayout({ children }) {
       <div className={`flex flex-col w-full`}
       >
         {/* Header with spacing for fixed button */}
-        <div className="fixed w-full right-0 top-0 z-30 p-2 border-b flex">
+        <div className="fixed w-full right-0 top-0 z-30 p-2 n flex">
           <Header />
           <button
         onClick={toggleMenu}
