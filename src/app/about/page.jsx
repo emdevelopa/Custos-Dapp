@@ -21,8 +21,21 @@ const About = () => {
     <main className="relative min-h-screen  text-white">
       <Navbar />
 
-      {/* Fixed Vertical Line at the Right */}
-      <div className="fixed right-20 top-0 h-full w-px bg-gradient-to-b from-blue-500/50 to-transparent"></div>
+        {/* Container for content and vertical line */}
+        <div className="container relative mx-auto right-28 py-16">
+        {showLaunchDapps && <ShowLaunchDapps closeModal={closeModal} />}
+      </div>
+        {/* Vertical Line - spans from just below the navbar to just above the footer */}
+        <div
+          className="absolute"
+          style={{
+            top: "250px", // adjust so that it begins where the heading starts
+            bottom: "20px", // adjust so that it ends before the footer
+            right: "50px",
+          }}
+        >
+          <div className="w-px h-full bg-gradient-to-b from-[#0094FF] via-[#5643F1] to-[#A02294]"></div>
+        </div>
 
       <div className="container relative mx-auto px-4 py-16">
         {showLaunchDapps && <ShowLaunchDapps closeModal={closeModal} />}
@@ -161,19 +174,19 @@ const About = () => {
 
 
         {/* Reach Out Section */}
-        <section className="flex flex-col items-center justify-center bg-gradient-to-r from-[#EAF9FF] to-[#8E9A9A] bg-clip-text text-transparent mt-20 mb-10">
-          <div className="text-center p-8 bg-transparent rounded shadow-lg">
-            <p className="md:text-[50px] text-[30px] mb-2 bg-gradient-to-r from-[#0094FF] to-[#A02294] bg-clip-text text-transparent font-bold">
+        <section className="mb-20">
+          <div className="mb-8">
+            <h2 className="text-[30px] md:text-[50px] font-bold bg-gradient-to-r from-[#0094FF] to-[#A02294] bg-clip-text text-transparent">
               Reach out to us
-            </p>
-            <p className="text-[20px] mb-4">
+            </h2>
+            <p className="text-[20px] bg-gradient-to-r from-[#EAF9FF] to-[#8E9A9A] bg-clip-text text-transparent">
               We paid the price to keep your videos and legal agreements safe.
             </p>
           </div>
-          <div className="flex items-center text-white text-sm mb-10 py-4 px-8 rounded-[100px] bg-[#84c2f513] backdrop-filter backdrop-blur-[10px] hover:bg-[#209af1] transition-colors duration-300 ease-in-out">
+          <button className="flex items-center gap-2 text-white text-sm py-4 px-8 rounded-full bg-[#84c2f513] backdrop-blur-[10px] hover:bg-[#209af1] transition-colors duration-300">
             Send Us a Message
-            <FaLongArrowAltRight className="ml-2" />
-          </div>
+            <FaLongArrowAltRight />
+          </button>
         </section>
       </div>
     </main>
