@@ -91,7 +91,7 @@ function Footer() {
               </li>
               <li className="flex items-center mb-2">
                 <FaLinkedin className="mr-2 text-white" />
-                <a href="https" className="hover:underline">
+                <a href="https://www.linkedin.com/company/custosdiretriz/" className="hover:underline">
                   LinkedIn
                 </a>
               </li>
