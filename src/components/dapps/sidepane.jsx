@@ -4,6 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import React, { useState } from "react";
 import { Sidebar, SidebarBody, SidebarLink } from "./sidebar";
+import  ConnectButtoncomponent  from "@/components/connect";
 
 const Sidepane = () => {
   const [open, setOpen] = useState(false);
@@ -123,6 +124,7 @@ const Sidepane = () => {
           </div>
         </div>
       </SidebarBody>
+
     </Sidebar>
   );
 };

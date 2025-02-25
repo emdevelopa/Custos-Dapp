@@ -2,8 +2,8 @@
 "use client";
 import React, { createContext, useContext, useState } from "react";
 import { useRouter } from "next/navigation";
-import SuccessScreen from "@/app/crimerecorder/components/Success";
-import ErrorScreen from "@/app/crimerecorder/components/error";
+import SuccessScreen from "../app/crimerecorder/components/Success";
+import ErrorScreen from "../app/crimerecorder/components/error";
 
 // Create the context
 const ModalContext = createContext();

@@ -16,11 +16,25 @@
 }
 *{
   outline:none;
-  border:none;
-  border-width: none;
+  /* border:none; */
+  /* border-width: none; */
   -webkit-appearance:none;
 }
 
+
+#preload-banner {
+  padding: 10px 0; /* Padding for the banner */
+  text-align: center; /* Center the text */
+  z-index: 1000; /* Ensure it appears above other elements */
+  display: flex; /* Use flexbox for alignment */
+  align-items: center; /* Center items vertically */
+  justify-content: center; /* Center items horizontally */
+}
+
+#preload-banner img {
+  height: 48px; /* Adjust the height as needed */
+  margin-right: 10px; /* Space between image and text */
+}
 
 @layer utilities {
   .text-balance {
@@ -382,7 +396,7 @@ button .text-transparent {
   overflow-x: auto;
 }
 
-.agreement-content-wrapper * {
+.agreement-content-wrapper {
   max-width: 100%;
 }
 

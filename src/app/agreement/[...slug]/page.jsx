@@ -7,10 +7,10 @@ import Image from "next/image";
 import parse from "html-react-parser";
 import { useRouter } from "next/navigation";
 import mammoth from "mammoth";
-import { useNotification } from "@/context/NotificationProvider";
-import Loading from "@/components/loading";
-import { WalletContext } from "@/components/walletprovider";
-import { UseReadContractData } from "@/utils/fetchcontract";
+import { useNotification } from "../../../context/NotificationProvider";
+import Loading from "../../../components/loading";
+import { WalletContext } from "../../../components/walletprovider";
+import { UseReadContractData } from "../../../utils/fetchcontract";
 import {
   byteArrayToString,
   hexTimestampToFormattedDate,
@@ -152,12 +152,15 @@ const AgreementSlug = ({ params }, agreementparam) => {
   const handleSave = async () => {
     setIsEditing(false);
 
+    setLoading(true)
+    openNotification("info", "saving agreement..")
     try {
       const formData = new FormData();
       Object.entries(editableFields).forEach(([key, value]) => {
-        formData.append(key, value);
+        if (value !== null && value !== "") {
+          formData.append(key, value);
+        }
       });
-
       const response = await fetch(
         `https://custosbackend.onrender.com/agreement/agreement/update_by_access_token/?access_token=${accessToken}`,
         {
@@ -168,6 +171,8 @@ const AgreementSlug = ({ params }, agreementparam) => {
 
       if (response.ok) {
         const updatedAgreement = await response.json();
+        setLoading(false)
+        openNotification("success", "Agreement updated successfully")
         setAgreement(updatedAgreement);
         setIsEditing(false);
       } else {

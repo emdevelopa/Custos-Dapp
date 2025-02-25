@@ -5,7 +5,7 @@ import icon from "../../../../public/cameraicon.svg";
 import bg from "../../../../public/Rectangle.png";
 import { FaBars, FaTimes } from 'react-icons/fa'; // Import both hamburger and X icons
 import Link from "next/link";
-import ConnectButtoncomponent from "@/components/connect";
+import ConnectButtoncomponent from "../../../components/connect";
 
 export const Header = () => {
   const [menuOpen, setMenuOpen] = useState(false); // State to toggle menu visibility

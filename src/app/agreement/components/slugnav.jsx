@@ -1,12 +1,13 @@
-import React, { useEffect, useState } from 'react'
-import { FaArrowLeft } from 'react-icons/fa'
+import React, { useState } from 'react';
+import { FaArrowLeft } from 'react-icons/fa';
 import ValidateAgreementModal from './validateAgreement';
 import SignAgreementModal from './signagreementmodal';
-import { printAgreement, downloadAgreement } from '@/utils/pdfUtils';
+import { printAgreement, downloadAgreement } from '../../../utils/pdfUtils';
 
 const Slugnav = ({ agreement }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isSignModalOpen, setIsSignModalOpen] = useState(false);
+  const [showOptions, setShowOptions] = useState(false);
 
   const handleValidateClick = (e) => {
     console.log('handleValidateClick', isModalOpen);
@@ -20,18 +21,15 @@ const Slugnav = ({ agreement }) => {
     setIsSignModalOpen(true);
   };
 
-  const [showOptions, setShowOptions] = useState(false);
-
   return (
     <div className='rounded-2xl flex-col w-full flex gap-2 h-fit px-6 py-3 shadow-2xl bg-gradient-to-t from-[#04080C] to-[#09131A]'>
-      <button className="w-full text-[#EAFBFF] flex justify-start items-center  align-middle" onClick={() => window.history.back()}>
+      <button className="w-full text-[#EAFBFF] flex justify-start items-center align-middle" onClick={() => window.history.back()}>
         <FaArrowLeft className="mr-2 text-[#EAFBFF]" /> <p className="text-[#EAFBFF]">Back</p>
       </button>
 
       <div className="mt-4 flex justify-end items-center w-full m-auto">
         <div className="w-full flex text-[#EAFBFF] text-[1.3em] justify-start">Agreement</div>
         <div className="w-full md:flex justify-end items-center gap-4 hidden">
-          
           <div className="relative">
             <button
               onClick={() => setShowOptions(!showOptions)}
@@ -45,7 +43,9 @@ const Slugnav = ({ agreement }) => {
                 <div className="py-1">
                   <button
                     onClick={() => {
-                      printAgreement(agreement);
+                      if (agreement) {
+                        printAgreement(agreement);
+                      }
                       setShowOptions(false);
                     }}
                     className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 w-full text-left"
@@ -54,7 +54,9 @@ const Slugnav = ({ agreement }) => {
                   </button>
                   <button
                     onClick={() => {
-                      downloadAgreement(agreement);
+                      if (agreement) {
+                        downloadAgreement(agreement);
+                      }
                       setShowOptions(false);
                     }}
                     className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 w-full text-left"
@@ -66,7 +68,7 @@ const Slugnav = ({ agreement }) => {
             )}
           </div>
 
-          {agreement.access_token ? (
+          {agreement && agreement.access_token ? (
             <button
               onClick={handleValidateClick}
               disabled={!agreement.second_party_signature || agreement.validate_signature}
@@ -77,7 +79,7 @@ const Slugnav = ({ agreement }) => {
           ) : (
             <button
               onClick={handleSignClick}
-              disabled={agreement.second_party_signature || agreement.validate_signature}
+              disabled={agreement && (agreement.second_party_signature || agreement.validate_signature)}
               className="w-fit px-2 py-2 text-white rounded-[2em] shadow-lg transform hover:scale-105 transition-transform duration-300 border-gradient bg-[#0094FF] disabled:bg-transparent disabled:border disabled:text-gray-500 disabled:hover:scale-100 disabled:hover:cursor-none flex items-center justify-center relative text-[0.8em] cursor-pointer"
             >
               Sign Agreement
@@ -86,7 +88,7 @@ const Slugnav = ({ agreement }) => {
         </div>
       </div>
 
-      {isModalOpen && (
+      {isModalOpen && agreement && (
         <ValidateAgreementModal
           fullname={agreement.second_party_fullname}
           agreementId={agreement.id}
@@ -96,7 +98,7 @@ const Slugnav = ({ agreement }) => {
         />
       )}
 
-      {isSignModalOpen && (
+      {isSignModalOpen && agreement && (
         <SignAgreementModal
           fullname={agreement.second_party_fullname}
           agreementId={agreement.id}

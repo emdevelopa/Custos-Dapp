@@ -1,4 +1,4 @@
-import { GlobalStateContext } from "@/context/GlobalStateProvider";
+import { GlobalStateContext } from "../../../context/GlobalStateProvider";
 import React, { useContext } from "react";
 import { FaArrowLeft } from "react-icons/fa";
 import Page from "../[...slug]/page";
