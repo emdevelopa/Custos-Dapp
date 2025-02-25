@@ -159,27 +159,47 @@ const Navbar = () => {
                     <div className="collapse-title text-xl font-medium text-white p-4">
                       Launch Dapps
                     </div>
-                    <div className="collapse-content bg-[#ffffff0a] p-4">
-                      {/* Launch Dapps Content */}
-                      <div className="space-y-4">
-                        <a href="/agreement" className="block p-4 rounded-lg bg-[#ffffff0a] hover:bg-[#015A9B] transition-colors duration-200">
-                          <p className="flex items-center text-xl font-semibold text-white">
-                            <FaPlus className="mr-2" />
-                            Create Agreement
-                          </p>
-                          <p className="text-gray-300 text-sm mt-2 ml-7">
-                            Custos ensures that agreements are securely stored.
-                          </p>
-                        </a>
-                        <a href="/crimerecorder" className="block p-4 rounded-lg bg-[#ffffff0a] hover:bg-[#015A9B] transition-colors duration-200">
-                          <p className="flex items-center text-xl font-semibold text-white">
-                            <FaVideo className="mr-2" />
-                            Record Video
-                          </p>
-                          <p className="text-gray-300 text-sm mt-2 ml-7">
-                            Custos ensures that evidence is securely stored.
-                          </p>
-                        </a>
+                    <div className="collapse-content">
+                      <div className="inset-0 z-50 flex items-center justify-center bg-[#00000098] bg-opacity-90 ">
+                        <div className="relative rounded-lg shadow-lg w-full sm:flex md:flex-row h-full md:h-auto ">
+                          <div className="flex p-3 flex-col justify-between bg-opacity-90">
+                            <div>
+                              <p className="mt-4 text-gray-300">
+                                Decentralized apps help you leverage blockchain
+                                technology to secure your evidence and legal
+                                agreements.
+                              </p>
+                            </div>
+                          </div>
+                          <div className="flex flex-col gap-4 sm:gap-4  m-auto w-full sm:p-0 p-3 rounded-lg md:h-auto ">
+                            <a
+                              href="/agreement"
+                              className="text-white mb-4 z-[100] w-full hover:bg-[#015A9B] p-3 rounded-lg cursor-pointer "
+                            >
+                              <p className="flex items-center text-xl font-semibold">
+                                <FaPlus className="mr-2" />
+                                Create Agreement
+                              </p>
+                              <p className="text-gray-300 text-sm mt-1 ml-7">
+                                Custos ensures that agreements are securely
+                                stored.
+                              </p>
+                            </a>
+                            <a
+                              href="/crimerecorder"
+                              className="text-white mb-4 z-[100] hover:bg-[#015A9B] p-3 rounded-lg cursor-pointer "
+                            >
+                              <p className="flex items-center text-xl font-semibold text-white">
+                                <FaVideo className="mr-2" />
+                                Record Video
+                              </p>
+                              <p className="text-gray-300 text-sm mt-1 ml-7">
+                                Custos ensures that agreements are securely
+                                stored.
+                              </p>
+                            </a>
+                          </div>
+                        </div>
                       </div>
                     </div>
                   </li>
@@ -190,24 +210,102 @@ const Navbar = () => {
                     <div className="collapse-title text-xl font-medium text-white p-4">
                       Company
                     </div>
-                    <div className="collapse-content bg-[#ffffff0a] p-4">
-                      {/* Company Links */}
-                      <div className="space-y-4">
-                        <Link href="/about" className="block p-4 rounded-lg bg-[#ffffff0a] hover:bg-[#015A9B] transition-colors duration-200">
-                          <div className="flex items-center gap-4">
-                            <Image
-                              src="/about.svg"
-                              width={32}
-                              height={32}
-                              alt="about"
-                              className="rounded-lg p-1"
-                            />
+                    <div className="collapse-content">
+                      <div className="inset-0 z-50 flex items-center justify-center bg-[#00000098] bg-opacity-90 ">
+                        <div className="relative rounded-lg shadow-lg w-full sm:flex md:flex-row h-full md:h-auto ">  
+                          <div className="flex p-3 flex-col justify-between bg-opacity-90">
                             <div>
-                              <p className="text-white font-semibold">About Us</p>
-                              <p className="text-gray-300 text-sm">Get to know the team behind Custos</p>
+                              <p className="text-2xl text-white">
+                                Invulnerable
+                              </p>
+                              <p className="my-4 text-gray-300">
+                                Custos Diretriz is mastering the art of
+                                preservation and shielding on the blockchain.
+                              </p>
+                              <Link
+                                href="https://t.me/+x1zr5LaAMbdjZWZk"
+                                className="mt-4 z-[100] hover:bg-[#015A9B] flex items-center text-[#00bfff]"
+                              >
+                                Join the Community
+                                <FaArrowRight className="ml-1" />
+                              </Link>
+                              <Link
+                                href="https://t.me/+x1zr5LaAMbdjZWZk"
+                                className="mt-2 z-[100] hover:bg-[#015A9B] flex items-center text-[#00bfff]"
+                              >
+                                Learn More About Custos
+                                <FaArrowRight className="ml-1" />
+                              </Link>
                             </div>
                           </div>
-                        </Link>
+                          <div className="flex flex-col gap-4 sm:gap-4 m-auto w-full p-0 rounded-lg md:h-auto]">
+                            <Link
+                              href="/about"
+                              className="text-white z-[100] hover:bg-[#015A9B] rounded-lg w-full items-center p-2 bg-base-200"
+                            >
+                              <p className="flex sm:text-xl gap-4 sm:gap-6 h-full font-semibold text-white ">
+                                <Image
+                                  src="/about.svg"
+                                  width={32}
+                                  height={32}
+                                  alt="about"
+                                
+                                  className="rounded-lg h-fit p-1 w-[2em]"
+                            
+                                />
+                                <p className="flex flex-col ">
+                                  About Us
+                                  <p className="text-gray-300 text-[0.8em] mt-1 font-thin">
+                                    Get to know the team behind Custos
+                                  </p>
+                                </p>
+                              </p>
+                            </Link>
+                            <Link
+                              href="#"
+                              className="text-white z-[100] hover:bg-[#015A9B] rounded-lg w-full items-center p-2 bg-base-200"
+                            >
+                              <p className="flex sm:text-xl gap-4 sm:gap-6 h-full font-semibold text-white ">
+                                <Image
+                                  src="/careers.svg"
+                                  alt="careers"
+                                  width={50}
+                                  height={50}
+                                  className="rounded-lg h-fit w-[2em]"
+                              
+                                />
+                                <p className="flex flex-col ">
+                                  Careers
+                                  <p className="text-gray-300 text-[0.8em] mt-1 font-thin">
+                                    Find your dream role
+                                  </p>
+                                </p>
+                              </p>
+                            </Link>
+                            <Link
+                              href="#"
+                              className="text-white z-[100] hover:bg-[#015A9B] rounded-lg w-full items-center p-2"
+                            >
+                              <p className="flex sm:text-xl gap-4 sm:gap-6 h-full font-semibold text-white ">
+                                <Image
+                                  src="/call.svg"
+                                  alt="call"
+                                  width={50}
+                                  height={50}
+                                  className="rounded-lg h-fit w-[2em]"
+                                
+                                />
+                                <p className="flex flex-col ">
+                                  Contact Us
+                                  <p className="text-gray-300 text-[0.8em] mt-1 font-thin">
+                                    Reach out to us for questions and
+                                    clarifications
+                                  </p>
+                                </p>
+                              </p>
+                            </Link>
+                          </div>
+                        </div>
 
                         {/* Other company links... */}
                       </div>
