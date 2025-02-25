@@ -113,7 +113,7 @@ const   Navbar = () => {
                           <div className="flex flex-col gap-4 sm:gap-4  m-auto w-full sm:p-0 p-3 rounded-lg md:h-auto ">
                             <a
                               href="/agreement"
-                              className="text-white mb-4 z-[100] w-full hover:bg-[#015A9B] p-3 rounded-lg cursor-pointer bg-base-200"
+                              className="text-white mb-4 z-[100] w-full hover:bg-[#015A9B] p-3 rounded-lg cursor-pointer "
                             >
                               <p className="flex items-center text-xl font-semibold">
                                 <FaPlus className="mr-2" />
@@ -126,7 +126,7 @@ const   Navbar = () => {
                             </a>
                             <a
                               href="/crimerecorder"
-                              className="text-white mb-4 z-[100] hover:bg-[#015A9B] p-3 rounded-lg cursor-pointer bg-base-200"
+                              className="text-white mb-4 z-[100] hover:bg-[#015A9B] p-3 rounded-lg cursor-pointer "
                             >
                               <p className="flex items-center text-xl font-semibold text-white">
                                 <FaVideo className="mr-2" />
@@ -221,7 +221,7 @@ const   Navbar = () => {
                             </Link>
                             <Link
                               href="#"
-                              className="text-white z-[100] hover:bg-[#015A9B] rounded-lg w-full items-center p-2 bg-base-200"
+                              className="text-white z-[100] hover:bg-[#015A9B] rounded-lg w-full items-center p-2"
                             >
                               <p className="flex sm:text-xl gap-4 sm:gap-6 h-full font-semibold text-white ">
                                 <Image

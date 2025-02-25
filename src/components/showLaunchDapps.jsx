@@ -42,7 +42,7 @@ export default function ShowLaunchDapps({ closeModal }) {
           <div className="flex flex-col gap-4 sm:gap-4  m-auto w-full sm:p-0 p-4 rounded-lg md:h-auto bg-[#091219]">
             <a
               href="/agreement"
-              className="text-white mb-4 z-[100] w-full hover:bg-[#015A9B] sm:p-4 rounded-lg cursor-pointer"
+              className="text-white mb-4 z-[100] bg-[#091219] w-full hover:bg-[#015A9B] sm:p-4 rounded-lg cursor-pointer"
             >
               <p className="flex items-center text-xl font-semibold">
                 <FaPlus className="mr-2" />
@@ -55,7 +55,7 @@ export default function ShowLaunchDapps({ closeModal }) {
 
             <a
               href="/crimerecorder"
-              className="text-white mb-4 z-[100] hover:bg-[#015A9B] sm:p-4 rounded-lg cursor-pointer"
+              className="text-white mb-4 z-[100] hover:bg-[#015A9B] bg-[#091219] sm:p-4 rounded-lg cursor-pointer"
             >
               <p className="flex items-center text-xl font-semibold text-white">
                 <FaVideo className="mr-2" />
