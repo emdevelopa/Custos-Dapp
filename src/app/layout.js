@@ -14,6 +14,7 @@ import { Analytics } from "@vercel/analytics/react"
 // InstallPWA component to be loaded from the InstallPWA component.
 export const metadata = { ...Metadata, manifest: "/manifest.json" };
 
+
 export default function RootLayout({ children }) {
   //  const pathname = usePathname();
 
@@ -37,6 +38,16 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <head>
+      
+      <meta property="og:title" content="Custos Diretriz" />
+        <meta property="og:description" content="Custos will secure your Evidences and Agreements" />
+        <meta property="og:image" content="https://custosdiretriz.com/banner.png" />
+        <meta property="og:url" content="https://custosdiretriz.com" />
+        <meta property="og:type" content="website" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="Custos Diretriz" />
+        <meta name="twitter:description" content="Custos will secure your Evidences and Agreements" />
+        <meta name="twitter:image" content="https://custosdiretriz.com/banner.png" />
         <title>{Metadata.title}</title>
         {Metadata.link}
         <link rel="icon" href="/favicon.png" />
