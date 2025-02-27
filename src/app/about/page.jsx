@@ -121,6 +121,16 @@ const About = () => {
           </div>
         </section>
 
+          {/* Meet the Team Section */}
+        <section className="text-center bg-transparent rounded shadow-lg mt-20">
+          <p className="mb-2 bg-gradient-to-r from-[#0094FF] to-[#A02294] bg-clip-text text-transparent md:text-[50px] text-[30px] font-bold">
+            Meet the team
+          </p>
+          <p className="text-[20px] mb-4 bg-gradient-to-r from-[#EAF9FF] to-[#8E9A9A] bg-clip-text text-transparent">
+            We have an amazing developer team building Custos
+          </p>
+        </section>
+
         {/* Team Cards - Centered */}
         <section className="flex flex-wrap justify-center gap-6 mb-20">
           {[
