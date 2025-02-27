@@ -5,7 +5,7 @@ import { Contract, RpcProvider } from "starknet";
 import { useContext, useEffect, useState } from "react";
 import { WalletContext } from "@/components/walletprovider";
 import { useNotification } from "@/context/NotificationProvider";
-import { useAccount } from "@starknet-react/core";
+// import { useAccount } from "@starknet-react/core";
 
 export const provider = new RpcProvider({
   nodeUrl: process.env.NEXT_PUBLIC_BASE_URL,
@@ -73,13 +73,13 @@ export const UseReadContractData = () => {
 
 // Hook to write data to a contract
 export const UseWriteToContract = () => {
-  const {connector} = useContext(WalletContext);
+  const { connection: account, connectorData } = useContext(WalletContext);
   const { openNotification } = useNotification();
 
   
   const writeToContract = async (contractName, methodName, params = []) => {
     try {
-      if (!connector.account /*|| !account.account*/) {
+      if (!account /*|| !account.account*/) {
         openNotification("error", "", "Wallet not connected");
         throw new Error("Wallet not connected");
       }
@@ -99,7 +99,7 @@ export const UseWriteToContract = () => {
       const contract = new Contract(
         contractConfig.abi,
         contractConfig.address,
-        connector.account
+        account
       );
 
       const result =
@@ -120,17 +120,17 @@ export const UseWriteToContract = () => {
 
 // Hook to sign a message using the wallet extension
 export const UseSignMessage = () => {
-  const {connector} = useContext(WalletContext);
+  const { connection: account, connectorData } = useContext(WalletContext);
   const { openNotification } = useNotification();
 
   const signMessage = async (message) => {
     try {
-      if (!connector.account) {
+      if (!account) {
         openNotification("error", "", "Wallet not connected");
         throw new Error("Wallet not connected");
       }
 
-      const signature = await connector.account.signMessage(message);
+      const signature = await account.signMessage(message);
       console.log("Signature:", signature);
       return signature;
     } catch (err) {
@@ -141,4 +141,10 @@ export const UseSignMessage = () => {
   };
 
   return { signMessage };
+};
+
+
+export const useAccount = () => {
+  const { connection: account, connectorData } = useContext(WalletContext);
+  return account;
 };

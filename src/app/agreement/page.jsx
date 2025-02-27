@@ -8,12 +8,12 @@ import {
 import NoAgreementscreen from "./components/noAgreementscreen";
 import AgreementNav from "./components/AgreementNav";
 import SignAgreementModal from "./components/signagreementmodal";
-import { WalletContext } from "@/components/walletprovider";
+import { WalletContext } from "../../components/walletprovider";
 // import { UseReadContractData } from "@/utils/fetchcontract";
 import agreementAbi from "../../utils/agreementAbi.json";
-import { UseReadContractData } from "@/utils/fetchcontract";
+import { UseReadContractData } from "../../utils/fetchcontract";
 import Loading from "@/components/loading";
-import { useNotification } from "@/context/NotificationProvider";
+import { useNotification } from "../../context/NotificationProvider";
 
 function AgreementList() {
   const [loadingAgreements, setLoadingAgreements] = useState(false);

@@ -1,58 +1,95 @@
 "use client";
-import { useState, useEffect, useContext } from "react"; 
-import { FiX } from "react-icons/fi"; 
+import { useState, useEffect } from "react";
+import { FiX, FiMenu } from "react-icons/fi";
 import "../globals.css";
-import Footer from "@/components/footer";
-import Metadata from "../metadata";
-import BackgroundWrapper from "@/components/backgroundwrapper";
-
-import Sidepane from "@/components/dapps/sidepane";
 import Header from "@/components/dapps/header";
-import Image from 'next/image';
-import { WalletContext } from "@/components/walletprovider"; // Import WalletContext
+import Sidepane from "@/components/dapps/sidepane";
 
 export default function RootLayout({ children }) {
-  const [isSidepaneOpen, setSidepaneOpen] = useState(false); // State to toggle sidepane
+  const [isMobileOpen, setMobileOpen] = useState(false);
+  const [isCollapsed, setCollapsed] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
 
-  // Function to toggle sidepane visibility
-  const toggleSidepane = (e) => {
-    e.stopPropagation(); // Stop event propagation
-    setSidepaneOpen(!isSidepaneOpen);
+  useEffect(() => {
+    const checkMobile = () => {
+      const mobile = window.innerWidth < 768;
+      setIsMobile(mobile);
+      if (!mobile) setMobileOpen(false);
+    };
+
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
+
+  const toggleMenu = () => {
+    if (isMobile) {
+      setMobileOpen(!isMobileOpen);
+    } else {
+      setCollapsed(!isCollapsed);
+    }
   };
 
-  // Effect to disable scrolling when sidepane is open
   useEffect(() => {
-    if (isSidepaneOpen) {
+    if (isMobile && isMobileOpen) {
       document.body.style.overflow = "hidden";
     } else {
       document.body.style.overflow = "auto";
     }
-  }, [isSidepaneOpen]);
+  }, [isMobileOpen, isMobile]);
 
   return (
-    <div className="flex min-h-[100vh] w-full">
-      {/* Sidepane */}
-      <Sidepane 
-        isOpen={isSidepaneOpen} 
-        onClose={() => setSidepaneOpen(false)}
-      />
+    <div className="flex min-h-screen w-full">
+      {/* Mobile Overlay */}
+      {isMobile && (
+        <div
+          className={`fixed inset-0 bg-black/50 z-40 transition-opacity 
+            ${isMobileOpen ? "opacity-100" : "opacity-0 pointer-events-none"}`}
+          onClick={() => setMobileOpen(false)}
+        />
+      )}
 
-      {/* Main content area */}
-      <div className="flex flex-col w-full h-[100vh] overflow-y-scroll scrollbar-hide md:pl-0">
-        {/* Header */}
-        <div className="flex w-full sticky top-0 z-[400]">
+      <div
+        className={`
+        fixed md:relative h-full z-50
+        ${
+          isMobile
+            ? `transform transition-transform duration-300 w-64 
+           ${isMobileOpen ? "translate-x-0" : "-translate-x-full"}`
+            : `transition-all duration-300 
+           ${isCollapsed ? "w-20" : "w-64"}`
+        }`}
+      >
+        <Sidepane />
+      </div>
+
+      {/* Main Content */}
+      <div className={`flex flex-col w-full`}>
+        {/* Header with spacing for fixed button */}
+        <div className="fixed w-full right-0 top-0 z-30 p-2 flex">
           <Header />
-          <button className="md:hidden z-30" onClick={(e) => toggleSidepane(e)}>
-            {isSidepaneOpen ? (
-              <FiX size={40} className="text-[#afb9c0e1]" />
-            ) : (
-              <Image src="/hamburger.svg" alt="Menu" width={50} height={20} />
-            )}
-          </button>
+          {isMobile && (
+            <button
+              onClick={toggleMenu}
+              className="z-30 top-4 left-4 w-fit bg-inherit backdrop-blur"
+              aria-label={isMobile ? "Toggle menu" : "Collapse menu"}
+            >
+              {isMobile ? (
+                isMobileOpen ? (
+                  <FiX className="w-8 h-8 text-[#ffffff]" />
+                ) : (
+                  <FiMenu className="w-8 h-8 text-[#ffffff]" />
+                )
+              ) : (
+                ""
+              )}
+            </button>
+          )}
         </div>
 
-        {/* Children Content */}
-        <div className="flex flex-col p-3 w-full mb-10">{children}</div>
+        <div className="w-full items-center mt-20 flex justify-center m-auto">
+          {children}
+        </div>
       </div>
     </div>
   );

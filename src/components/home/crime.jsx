@@ -1,6 +1,6 @@
 import React from "react";
 
-import { Record } from "@/app/crimerecorder/components/Record";
+import { Record } from "../../../app/crimerecorder/components/Record";
 import icon1 from "../../../public/record2.png";
 import icon2 from "../../../public/picture.png";
 import icon3 from "../../../public/record.png";

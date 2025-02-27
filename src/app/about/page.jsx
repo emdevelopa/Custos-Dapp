@@ -1,7 +1,7 @@
 "use client";
 import React, { useState, useRef } from "react";
 import Image from "next/image";
-import Navbar from "@/components/navbar";
+import Navbar from "../../components/navbar";
 import ShowLaunchDapps from "../../components/showLaunchDapps";
 import { FaLongArrowAltRight } from "react-icons/fa";
 
@@ -26,10 +26,12 @@ const About = () => {
             className="relative br w-full text-white shadow-lg py-3 px-6 transform hover:scale-105 transition-transform duration-300 border-gradient bg-opacity-50 mt-20 mb-5 backdrop-filter backdrop-blur-lg flex items-center justify-center"
           >
             <span className="flex items-center">Launch Custos Dapp</span>
-            <img
+            <Image
               src="/star.png"
               className="absolute w-6 h-8 z-20 animate-star"
               alt="Star Icon"
+              width={24}
+              height={24}
             />
           </button>
         </div>

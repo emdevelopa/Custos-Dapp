@@ -3,7 +3,7 @@ import { IoCloseOutline } from "react-icons/io5";
 import { FaCheck } from "react-icons/fa6";
 import { FaInfo } from "react-icons/fa6";
 
-import { useNotification } from "@/context/NotificationProvider";
+import { useNotification } from "../context/NotificationProvider";
 
 const Notification = ({ type, headText, subText }) => {
   const { closeNotification } = useNotification();

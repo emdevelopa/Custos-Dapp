@@ -26,6 +26,9 @@ module.exports = {
         "max-md": { max: "768px" },
         "max-sm": { max: "640px" },
       },
+      borderImage: {
+        'gradient-radial': 'radial-gradient(13.75% 27.94% at 50% 50%, rgba(39, 73, 98, 0.7) 0%, rgba(45, 72, 92, 0.7) 100%)',
+      },
     },
   },
   plugins: [
@@ -34,7 +37,7 @@ module.exports = {
     addVariablesForColors
   ],
 };
-function addVariablesForColors({ addBase, theme }: any) {
+function addVariablesForColors({ addBase, theme }) {
   let allColors = flattenColorPalette(theme("colors"));
   let newVars = Object.fromEntries(
     Object.entries(allColors).map(([key, val]) => [`--${key}`, val])
