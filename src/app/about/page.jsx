@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 import Navbar from "@/components/navbar";
 import ShowLaunchDapps from "@/components/showLaunchDapps";
@@ -8,6 +8,7 @@ import { FaLongArrowAltRight } from "react-icons/fa";
 
 const About = () => {
   const [showLaunchDapps, setShowLaunchDapps] = useState(false);
+  const sectionsRef = useRef([]);
 
   const toggleLaunchDapps = () => {
     setShowLaunchDapps(!showLaunchDapps);
@@ -16,6 +17,36 @@ const About = () => {
   const closeModal = () => {
     setShowLaunchDapps(false);
   };
+
+  // Intersection Observer to handle scroll animations
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("fade-in");
+            entry.target.classList.remove("fade-out");
+          } else {
+            entry.target.classList.add("fade-out");
+            entry.target.classList.remove("fade-in");
+          }
+        });
+      },
+      {
+        threshold: 0.1, // Trigger when 10% of the section is visible
+      }
+    );
+
+    sectionsRef.current.forEach((section) => {
+      if (section) observer.observe(section);
+    });
+
+    return () => {
+      sectionsRef.current.forEach((section) => {
+        if (section) observer.unobserve(section);
+      });
+    };
+  }, []);
 
   return (
     <main className="relative min-h-screen text-white">
@@ -28,10 +59,10 @@ const About = () => {
 
       {/* Vertical Line */}
       <div
-        className="absolute hidden md:block" // Hide on mobile, show on medium screens and above
+        className="absolute hidden md:block"
         style={{
           top: "250px",
-          bottom: "20px",
+          bottom: "120px",
           right: "50px",
         }}
       >
@@ -42,13 +73,19 @@ const About = () => {
         {showLaunchDapps && <ShowLaunchDapps closeModal={closeModal} />}
 
         {/* Headline */}
-        <h1 className="mt-8 sm:mt-16 mb-20 text-center text-4xl font-bold leading-tight bg-gradient-to-r from-[#EAF9FF] to-[#8E9A9A] bg-clip-text text-transparent md:text-5xl lg:text-6xl">
+        <h1
+          ref={(el) => (sectionsRef.current[0] = el)}
+          className="mt-8 sm:mt-16 mb-24 text-center text-4xl font-bold leading-tight bg-gradient-to-r from-[#EAF9FF] to-[#8E9A9A] bg-clip-text text-transparent md:text-5xl lg:text-6xl opacity-0"
+        >
           We are building a safe on the <br />
           blockchain for your assets
         </h1>
 
         {/* About & Vision Cards - Centered */}
-        <section className="flex flex-col items-center gap-8 mb-16">
+        <section
+          ref={(el) => (sectionsRef.current[1] = el)}
+          className="flex flex-col items-center gap-16 mb-24 opacity-0"
+        >
           {/* About Card - Smaller */}
           <div className="relative max-w-[400px] sm:max-w-[550px] rounded-3xl overflow-hidden">
             <Image
@@ -121,8 +158,24 @@ const About = () => {
           </div>
         </section>
 
+        {/* Meet the Team Section */}
+        <section
+          ref={(el) => (sectionsRef.current[2] = el)}
+          className="text-center bg-transparent rounded shadow-lg mt-32 mb-16 opacity-0"
+        >
+          <p className="mb-6 bg-gradient-to-r from-[#0094FF] to-[#A02294] bg-clip-text text-transparent md:text-[50px] text-[30px] font-bold">
+            Meet the team
+          </p>
+          <p className="text-[20px] mb-8 bg-gradient-to-r from-[#EAF9FF] to-[#8E9A9A] bg-clip-text text-transparent">
+            We have an amazing developer team building Custos
+          </p>
+        </section>
+
         {/* Team Cards - Centered */}
-        <section className="flex flex-wrap justify-center gap-6 mb-20">
+        <section
+          ref={(el) => (sectionsRef.current[3] = el)}
+          className="flex flex-wrap justify-center gap-6 mb-32 opacity-0"
+        >
           {[
             {
               name: "Jeremiah D. Oyeniran",
@@ -171,7 +224,10 @@ const About = () => {
         </section>
 
         {/* Reach Out Section */}
-        <section className="mb-20 text-center">
+        <section
+          ref={(el) => (sectionsRef.current[4] = el)}
+          className="mb-32 text-center opacity-0"
+        >
           <div className="mb-8">
             <h2 className="text-[30px] md:text-[50px] font-bold bg-gradient-to-r from-[#0094FF] to-[#A02294] bg-clip-text text-transparent">
               Reach out to us
@@ -181,14 +237,17 @@ const About = () => {
             </p>
           </div>
           <button
-            className="inline-flex items-center gap-2 text-white text-sm py-4 px-8 rounded-full bg-[#84c2f513] backdrop-blur-[10px] hover:bg-[#209af1] transition-colors duration-300"
+            className="inline-flex items-center gap-2 text-[#0094FF] text-sm py-4 px-8 rounded-full bg-black/50 backdrop-blur-[10px] hover:bg-black/70 transition-colors duration-300 relative border border-transparent"
             style={{
-              borderImage:
-                "linear-gradient(to right, #0094FF, #5643F1, #A02294) 1",
+              background: `
+                linear-gradient(black, black) padding-box,
+                linear-gradient(to right, #0094FF, #5643F1, #A02294) border-box
+              `,
+              border: "1px solid transparent",
             }}
           >
             Send Us a Message
-            <FaLongArrowAltRight />
+            <FaLongArrowAltRight className="text-[#0094FF]" />
           </button>
         </section>
       </div>
