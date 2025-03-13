@@ -55,7 +55,7 @@ const AgreementNav = ({ activeTab, setActiveTab, text, mode}) => {
               onClick={() => setActiveTab("all")}
               className={`px-4  py-1 rounded-3xl ${
                 activeTab === "all"
-                  ? "text-white  underlined-border-gradien border-[#409ddb8b] rounded-lg"
+                  ? "text-white border-[0.2px] underlined-border-gradien border-[#409ddb8b] rounded-md"
                   : "text-transparent bg-clip-text bg-gradient-to-r from-[#BEBDBD] to-[#858585]"
               }`}
             >
@@ -75,7 +75,7 @@ const AgreementNav = ({ activeTab, setActiveTab, text, mode}) => {
               onClick={() => setActiveTab("signed")}
               className={`px-4  py-1 rounded-3xl  ${
                 activeTab === "signed"
-                  ? "text-white  underlined-border-gradien border-[#409ddb8b] rounded-lg"
+                  ? "text-white border-[0.2px] underlined-border-gradien border-[#409ddb8b] rounded-md"
                   : "text-transparent bg-clip-text bg-gradient-to-r from-[#BEBDBD] to-[#858585]"
               }`}
             >
@@ -85,7 +85,7 @@ const AgreementNav = ({ activeTab, setActiveTab, text, mode}) => {
               onClick={() => setActiveTab("validated")}
               className={`px-4  py-1 rounded-3xl ${
                 activeTab === "validated"
-                  ? "text-white border-[0.2px] underlined-border-gradient"
+                  ? "text-white border-[0.2px] underlined-border-gradien border-[#409ddb8b] rounded-md"
                   : "text-transparent bg-clip-text bg-gradient-to-r from-[#BEBDBD] to-[#858585]"
               }`}
             >
