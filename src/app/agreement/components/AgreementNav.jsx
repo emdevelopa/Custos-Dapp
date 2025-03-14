@@ -4,7 +4,7 @@ import { FaArrowLeft } from "react-icons/fa";
 import Page from "../[...slug]/page";
 import Image from "next/image";
 
-const AgreementNav = ({ activeTab, setActiveTab, text, mode}) => {
+const AgreementNav = ({ activeTab, setActiveTab, text, mode }) => {
   const { globalState } = useContext(GlobalStateContext);
   return (
     <div className="flex flex-col w-full p-4 gap-4 ">
@@ -50,10 +50,10 @@ const AgreementNav = ({ activeTab, setActiveTab, text, mode}) => {
       {/* Tab Navigation */}
       {!mode && (
         <div className="relative">
-          <div className="flex justify-around w-fit gap-16 text-lg  border-[0.1px] border-[#409ddb8b] rounded-lg p-2">
+          <div className="flex justify-around w-fit gap-16 text-lg  border-[0.1px] border-[#409ddb8b] rounded-lg p-2 bg-[#04080C]">
             <button
               onClick={() => setActiveTab("all")}
-              className={`px-4  py-1 rounded-3xl ${
+              className={`px-4  py-1  ${
                 activeTab === "all"
                   ? "text-white border-[0.2px] underlined-border-gradien border-[#409ddb8b] rounded-md"
                   : "text-transparent bg-clip-text bg-gradient-to-r from-[#BEBDBD] to-[#858585]"
@@ -61,19 +61,19 @@ const AgreementNav = ({ activeTab, setActiveTab, text, mode}) => {
             >
               All Agreements
             </button>
-            {/* <button
-            onClick={() => setActiveTab("pending")}
-            className={`px-4  py-1 ${
-              activeTab === "pending"
-                ? "text-white border-b-4 underlined-border-gradient"
-                : "text-transparent bg-clip-text bg-gradient-to-r from-[#BEBDBD] to-[#858585]"
-            }`}
-          > 
-            Pending
-          </button> */}
+            <button
+              onClick={() => setActiveTab("pending")}
+              className={`px-4  py-1  ${
+                activeTab === "pending"
+                  ? "text-white border-[0.2px] underlined-border-gradien border-[#409ddb8b] rounded-md"
+                  : "text-transparent bg-clip-text bg-gradient-to-r from-[#BEBDBD] to-[#858585]"
+              }`}
+            >
+              Pending Agreements
+            </button>
             <button
               onClick={() => setActiveTab("signed")}
-              className={`px-4  py-1 rounded-3xl  ${
+              className={`px-4  py-1   ${
                 activeTab === "signed"
                   ? "text-white border-[0.2px] underlined-border-gradien border-[#409ddb8b] rounded-md"
                   : "text-transparent bg-clip-text bg-gradient-to-r from-[#BEBDBD] to-[#858585]"
@@ -83,7 +83,7 @@ const AgreementNav = ({ activeTab, setActiveTab, text, mode}) => {
             </button>
             <button
               onClick={() => setActiveTab("validated")}
-              className={`px-4  py-1 rounded-3xl ${
+              className={`px-4  py-1  ${
                 activeTab === "validated"
                   ? "text-white border-[0.2px] underlined-border-gradien border-[#409ddb8b] rounded-md"
                   : "text-transparent bg-clip-text bg-gradient-to-r from-[#BEBDBD] to-[#858585]"
