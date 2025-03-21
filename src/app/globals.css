@@ -13,14 +13,28 @@
   background-color: #0c1215;
   font-optical-sizing: auto;
   font-style: normal;
+  height: -webkit-fill-available;
 }
-*{
-  outline:none;
+* {
+  outline: none;
   /* border:none; */
   /* border-width: none; */
-  -webkit-appearance:none;
+  -webkit-appearance: none;
 }
 
+#preload-banner {
+  padding: 10px 0; /* Padding for the banner */
+  text-align: center; /* Center the text */
+  z-index: 1000; /* Ensure it appears above other elements */
+  display: flex; /* Use flexbox for alignment */
+  align-items: center; /* Center items vertically */
+  justify-content: center; /* Center items horizontally */
+}
+
+#preload-banner img {
+  height: 48px; /* Adjust the height as needed */
+  margin-right: 10px; /* Space between image and text */
+}
 
 @layer utilities {
   .text-balance {
@@ -28,6 +42,7 @@
   }
   .gradient-text {
     @apply bg-gradient-to-r from-[#EAF9FF] to-[#8E9A9A] bg-clip-text text-transparent;
+    -webkit-background-clip: text;
   }
 }
 .border-gradient {
@@ -44,14 +59,15 @@
   left: 0;
   right: 0;
   bottom: 0;
-  border-radius: inherit; /* Match the border radius of the card */
-  padding: 0.47px; /* Adjust the width of the border */
+  border-radius: inherit;
+  padding: 0.47px;
+  background: -webkit-linear-gradient(90deg, #0094ff 0%, #a02294 100%);
   background: linear-gradient(90deg, #0094ff 0%, #a02294 100%);
-
-  -webkit-mask: linear-gradient(#0C1215 0 0) content-box, linear-gradient(#0C1215 0 0);
-  mask: linear-gradient(#0C1215 0 0) content-box, linear-gradient(#0C1215 0 0);
-
-  mask-composite: destination-out; /* For other browsers */
+  -webkit-mask: linear-gradient(#0c1215 0 0) content-box,
+    linear-gradient(#0c1215 0 0);
+  -webkit-mask-composite: xor;
+  mask: linear-gradient(#0c1215 0 0) content-box, linear-gradient(#0c1215 0 0);
+  mask-composite: exclude;
 }
 .border-gradient2 {
   position: relative;
@@ -103,12 +119,16 @@ button .text-transparent {
   border-image-source: linear-gradient(90deg, #0094ff 0%, #a02294 100%);
 }
 .content-div {
+  background: -webkit-linear-gradient(
+    90deg,
+    rgba(25, 177, 210, 0.03) 0%,
+    rgba(0, 148, 255, 0.03) 100%
+  );
   background: linear-gradient(
     90deg,
     rgba(25, 177, 210, 0.03) 0%,
     rgba(0, 148, 255, 0.03) 100%
   );
-
   border-radius: 4px;
 }
 
@@ -191,11 +211,12 @@ button .text-transparent {
   left: 0;
   border-top-color: #19b1d2; /* Primary color */
   border-bottom-color: #0094ff; /* Secondary color */
-  background: radial-gradient(
+  background: -webkit-radial-gradient(
     circle at center,
     transparent 80%,
     #00000000 80%
-  ); /* Center hollow effect */
+  );
+  background: radial-gradient(circle at center, transparent 80%, #00000000 80%);
   box-shadow: 24px 20px 44px 48px rgba(160, 34, 148, 0.23),
     0 4px 20px 24px rgba(25, 177, 210, 0.6);
   opacity: 0.6;
@@ -251,7 +272,8 @@ button .text-transparent {
 }
 
 .eclipse-container {
-  perspective: 1000px; /* Enable 3D perspective */
+  -webkit-perspective: 1000px;
+  perspective: 1000px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -259,9 +281,9 @@ button .text-transparent {
 }
 
 .eclipse {
-  animation: bounce 2s infinite ease-in-out; /* Infinite bouncing animation */
-
+  -webkit-transform-style: preserve-3d;
   transform-style: preserve-3d;
+  animation: bounce 2s infinite ease-in-out; /* Infinite bouncing animation */
 }
 
 @keyframes bounce {
@@ -275,12 +297,30 @@ button .text-transparent {
 }
 
 .fade-in-section {
-  opacity: 1;
+  opacity: 0; /* Start with opacity 0 */
+  -webkit-transform: translateY(20vh);
   transform: translateY(20vh);
-  visibility: 1;
-  transition: opacity 2s ease-out, transform 1s ease-out,
-  visibility 1200ms ease-out;
-  will-change: opacity, transform, visibility;
+  visibility: visible;
+  -webkit-transition: all 1s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: all 1s cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: opacity, transform;
+}
+
+.fade-in-section.is-visible {
+  opacity: 1;
+  -webkit-transform: none;
+  transform: none;
+  visibility: visible;
+}
+
+/* Add Safari-specific fixes for the fade animation */
+@supports (-webkit-touch-callout: none) {
+  .fade-in-section {
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    -webkit-perspective: 1000;
+    perspective: 1000;
+  }
 }
 
 @media not all and (min-resolution: 0.001dpcm) {
@@ -292,15 +332,10 @@ button .text-transparent {
   }
 }
 
-.fade-in-section.is-visible {
-  opacity: 1;
-  transform: none;
-  visibility: visible;
-
-}
 /* HTML: <div class="box"><sh></sh> </div> */
 .box {
   /* position: relative; */
+  -webkit-transform-style: preserve-3d;
   transform-style: preserve-3d;
   border-radius: 23px;
 }
@@ -312,6 +347,7 @@ button .text-transparent {
   border-radius: calc(0px + 1px + 0px + 23px);
   -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
   -webkit-mask-composite: xor;
+  mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
   mask-composite: exclude;
   transform: translateZ(-1px);
   pointer-events: none;
@@ -343,7 +379,7 @@ button .text-transparent {
   @supports (-webkit-appearance: none) {
     .box-btn .sh-btn {
       border: transparent;
-     border-style: calc(0px + 1px + 0px) solid #1f85ad;
+      border-style: calc(0px + 1px + 0px) solid #1f85ad;
       border-radius: 0px;
       border-top-width: 0px;
       border-bottom-width: 0px;
@@ -351,8 +387,7 @@ button .text-transparent {
       border-top-right-radius: 0px;
       border-bottom-right-radius: 0px;
       border-bottom-right-radius: 0px;
-      
-    } 
+    }
   }
 }
 .box-btn .sh-btn::before {
@@ -366,7 +401,6 @@ button .text-transparent {
   filter: blur(0px);
   transform: translate(0px, 0px);
 }
-
 
 .validate-gradient {
   background: rgb(4, 8, 12);
@@ -382,7 +416,7 @@ button .text-transparent {
   overflow-x: auto;
 }
 
-.agreement-content-wrapper * {
+.agreement-content-wrapper {
   max-width: 100%;
 }
 
@@ -400,63 +434,65 @@ button .text-transparent {
   scrollbar-width: none; /* for Firefox */
 }
 
-
-.add-safari-border-color{
+.add-safari-border-color {
   @supports (-webkit-appearance: none) {
-    border-width:0px;
+    border-width: 0px;
     /* border-color: transparent !important; */
     border-color: conic-gradient(from 90deg at 40% -25%, #a0229369, #0095ff60);
-  * {
-    border-radius: none !important; 
+    * {
+      border-radius: none !important;
+    }
   }
 }
+.remove-safari-border {
+  border-width: 0;
+  border-color: transparent;
 }
-.remove-safari-border{
-  border-width:0;
-  border-color: transparent ;
-}
-.remove-safari-border::-webkit-scrollbar{
-    border-width:0;
-    border-color: transparent;
+.remove-safari-border::-webkit-scrollbar {
+  border-width: 0;
+  border-color: transparent;
 }
 
-@media not all and (min-resolution: 0.001dpcm){
-  @supports(-webkit-appearance:none){
-    .box-btn, .sh-btn{
-      border:1px;
-      border-color:linear-gradient(90deg, #0094ff 0%, #a02294 100%);
+@media not all and (min-resolution: 0.001dpcm) {
+  @supports (-webkit-appearance: none) {
+    .box-btn,
+    .sh-btn {
+      border: 1px;
+      border-color: linear-gradient(90deg, #0094ff 0%, #a02294 100%);
     }
   }
 }
 
-
 @media not all and (min-resolution: 0.001dpcm) {
   @supports (-webkit-appearance: none) {
-  .box-btn .sh-btn {
-  content: "";
-  border-radius: none; /* Match the border radius of the card */
-  padding: 0px; /* Adjust the width of the border */
-  background: linear-gradient(90deg, #0094ff 0%, #a02294 100%);
-  -webkit-mask: linear-gradient(#0C1215 0 0) content-box, linear-gradient(#0C1215 0 0);
-  mask: linear-gradient(#0C1215 0 0) content-box, linear-gradient(#0C1215 0 0);
-  mask-composite: destination-out; /* For other browsers */
-    } 
+    .box-btn .sh-btn {
+      content: "";
+      border-radius: none; /* Match the border radius of the card */
+      padding: 0px; /* Adjust the width of the border */
+      background: linear-gradient(90deg, #0094ff 0%, #a02294 100%);
+      -webkit-mask: linear-gradient(#0c1215 0 0) content-box,
+        linear-gradient(#0c1215 0 0);
+      mask: linear-gradient(#0c1215 0 0) content-box,
+        linear-gradient(#0c1215 0 0);
+      mask-composite: destination-out; /* For other browsers */
+    }
   }
 }
 
-
 @media not all and (min-resolution: 0.001dpcm) {
   @supports (-webkit-appearance: none) {
-.sh-btn{
-  content: "";
-  border-radius: none; 
-  padding: 0px;
-  border-width: 1px !important;
-  border-color: linear-gradient(90deg, #0094ff 0%, #a02294 100%) !important;
-  -webkit-mask: linear-gradient(#0C1215 0 0) content-box, linear-gradient(#0C1215 0 0) !important;
-  mask: linear-gradient(#0C1215 0 0) content-box, linear-gradient(#0C1215 0 0) !important;
-  mask-composite: destination-out; /* For other browsers */
-    } 
+    .sh-btn {
+      content: "";
+      border-radius: none;
+      padding: 0px;
+      border-width: 1px !important;
+      border-color: linear-gradient(90deg, #0094ff 0%, #a02294 100%) !important;
+      -webkit-mask: linear-gradient(#0c1215 0 0) content-box,
+        linear-gradient(#0c1215 0 0) !important;
+      mask: linear-gradient(#0c1215 0 0) content-box,
+        linear-gradient(#0c1215 0 0) !important;
+      mask-composite: destination-out; /* For other browsers */
+    }
   }
 }
 .custom-editor {
@@ -482,5 +518,64 @@ button .text-transparent {
 }
 button[data-name="fullscreen"] {
   display: none !important;
+}
+/* styles/globals.css or your CSS file */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
 
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+}
+
+.fade-in {
+  animation: fadeIn 0.8s ease-out forwards;
+}
+
+.fade-out {
+  animation: fadeOut 0.8s ease-out forwards;
+}
+
+/* Safari-specific fixes */
+@supports (-webkit-touch-callout: none) {
+  .box-btn .sh-btn {
+    border: 1px solid transparent;
+    background-clip: padding-box;
+  }
+
+  .border-gradient::before {
+    -webkit-mask-composite: source-out;
+    mask-composite: subtract;
+  }
+
+  /* Fix for sticky positioning */
+  .sticky {
+    position: -webkit-sticky;
+    position: sticky;
+  }
+
+  /* Fix for flex issues */
+  .flex {
+    display: -webkit-flex;
+    display: flex;
+  }
+
+  /* Fix for height calculations */
+  :root {
+    height: -webkit-fill-available;
+  }
 }
