@@ -12,9 +12,7 @@ const AgreementNav = ({ activeTab, setActiveTab, text, mode}) => {
       {/* ${
           globalState !== "" ? "rounded-[1em] p-4 validate-gradient" : ""
         } */}
-      <div
-        className={`flex flex-col gap-6 `}
-      >
+      <div className={`flex flex-col gap-6 `}>
         <div className="flex items-center">
           <button
             className="w-fit text-[#EAFBFF] "
@@ -50,51 +48,51 @@ const AgreementNav = ({ activeTab, setActiveTab, text, mode}) => {
       </div>
 
       {/* Tab Navigation */}
-      {!mode &&
-      <div className="relative">
-        <div className="flex justify-around w-fit gap-16 text-lg">
-          <button
-            onClick={() => setActiveTab("all")}
-            className={`pb-2 ${
-              activeTab === "all"
-                ? "text-white border-b-4 underlined-border-gradient"
-                : "text-transparent bg-clip-text bg-gradient-to-r from-[#BEBDBD] to-[#858585]"
-            }`}
-          >
-            All
-          </button>
-          <button
+      {!mode && (
+        <div className="relative">
+          <div className="flex justify-around w-fit gap-16 text-lg  border-[0.1px] border-[#409ddb8b] rounded-lg p-2">
+            <button
+              onClick={() => setActiveTab("all")}
+              className={`px-4  py-1 rounded-3xl ${
+                activeTab === "all"
+                  ? "text-white  underlined-border-gradien border-[#409ddb8b] rounded-lg"
+                  : "text-transparent bg-clip-text bg-gradient-to-r from-[#BEBDBD] to-[#858585]"
+              }`}
+            >
+              All Agreements
+            </button>
+            {/* <button
             onClick={() => setActiveTab("pending")}
-            className={`pb-2 ${
+            className={`px-4  py-1 ${
               activeTab === "pending"
                 ? "text-white border-b-4 underlined-border-gradient"
                 : "text-transparent bg-clip-text bg-gradient-to-r from-[#BEBDBD] to-[#858585]"
             }`}
           > 
             Pending
-          </button>
-          <button
-            onClick={() => setActiveTab("signed")}
-            className={`pb-2 ${
-              activeTab === "signed"
-                ? "text-white border-b-4 underlined-border-gradient"
-                : "text-transparent bg-clip-text bg-gradient-to-r from-[#BEBDBD] to-[#858585]"
-            }`}
-          >
-            Signed
-          </button>
-          <button
-            onClick={() => setActiveTab("validated")}
-            className={`pb-2 ${
-              activeTab === "validated"
-                ? "text-white border-b-4 underlined-border-gradient"
-                : "text-transparent bg-clip-text bg-gradient-to-r from-[#BEBDBD] to-[#858585]"
-            }`}
-          >
-            Validated
-          </button>
-          {/* {finalValidate === "show" ? ( */}
-          {/* 
+          </button> */}
+            <button
+              onClick={() => setActiveTab("signed")}
+              className={`px-4  py-1 rounded-3xl  ${
+                activeTab === "signed"
+                  ? "text-white  underlined-border-gradien border-[#409ddb8b] rounded-lg"
+                  : "text-transparent bg-clip-text bg-gradient-to-r from-[#BEBDBD] to-[#858585]"
+              }`}
+            >
+              Signed Agreements
+            </button>
+            <button
+              onClick={() => setActiveTab("validated")}
+              className={`px-4  py-1 rounded-3xl ${
+                activeTab === "validated"
+                  ? "text-white border-[0.2px] underlined-border-gradient"
+                  : "text-transparent bg-clip-text bg-gradient-to-r from-[#BEBDBD] to-[#858585]"
+              }`}
+            >
+              Validated Agreements
+            </button>
+            {/* {finalValidate === "show" ? ( */}
+            {/* 
           <div
             className={`bg-black absolute z-20 left-0 right-0 h-[70vh] ${
               globalState !== "" ? "block" : "hidden"
@@ -104,17 +102,17 @@ const AgreementNav = ({ activeTab, setActiveTab, text, mode}) => {
             <div>
             </div>
           </div> */}
-          {/* {globalState === "" ? (
+            {/* {globalState === "" ? (
             ""
           ) : (
             <Page agreementAccessToken={globalState} />
           )} */}
-          {/* ) : (
+            {/* ) : (
             ""
           )} */}
+          </div>
         </div>
-      </div>
-}
+      )}
     </div>
   );
 };
