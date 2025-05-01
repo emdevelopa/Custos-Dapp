@@ -6,6 +6,7 @@ import { WalletContext } from "../../../components/walletprovider";
 import Image from "next/image";
 import { ClipboardIcon } from "@heroicons/react/outline";
 import { useNotification } from "../../../context/NotificationProvider";
+import Link from "next/link";
 
 const Uploads = () => {
   const { address, wallet } = useContext(WalletContext);
@@ -17,7 +18,7 @@ const Uploads = () => {
   const { openNotification } = useNotification();
   const { fetchData } = UseReadContractData();
   const [page, setPage] = useState(1);
-  const ITEMS_PER_PAGE = 20; // Pinata's maximum items per page
+  const ITEMS_PER_PAGE = 20;
 
   const Retrieve = async () => {
     if (!address) return;
@@ -66,7 +67,6 @@ const Uploads = () => {
           })
         );
 
-        // Fetch all pages until we have all the files
         let allPinataFiles = [];
         let currentPage = 0;
         let hasMore = true;
@@ -88,8 +88,6 @@ const Uploads = () => {
           console.log(`Pinata Metadata Page ${currentPage}:`, metadata);
 
           allPinataFiles = [...allPinataFiles, ...metadata.rows];
-          
-          // Check if we have more pages
           hasMore = metadata.rows.length === ITEMS_PER_PAGE;
           currentPage++;
         }
@@ -110,7 +108,6 @@ const Uploads = () => {
             return null;
           })
           .filter(Boolean)
-          // Sort files by timestamp in descending order (newest first)
           .sort((a, b) => b.timestamp - a.timestamp);
 
         console.log("Matched Files:", matchedFiles);
@@ -125,7 +122,6 @@ const Uploads = () => {
 
     if (uploadedFiles.length) userUploads();
   }, [uploadedFiles]);
-
 
   const isImageFile = (fileName) => /\.(jpg|jpeg|png|gif|bmp)$/i.test(fileName);
   const isVideoFile = (fileName) => /\.(mp4|webm|ogg|mov)$/i.test(fileName);
@@ -173,22 +169,26 @@ const Uploads = () => {
   };
 
   const handleShare = async (file) => {
+    // Construct the SharePage URL with all file details
+    const shareUrl = `${window.location.origin}/share?url=${encodeURIComponent(file.ipfsUrl)}&filename=${encodeURIComponent(file.filename)}&uri=${encodeURIComponent(file.uri)}&timestamp=${file.timestamp}`;
+
     if (navigator.share) {
       try {
         await navigator.share({
           title: file.filename,
           text: `Check out this file: ${file.filename}`,
-          url: file.ipfsUrl,
+          url: shareUrl,
         });
       } catch (error) {
         console.error("Error sharing the file:", error);
       }
     } else {
       try {
-        await navigator.clipboard.writeText(file.ipfsUrl);
-        openNotification("success", "", "Link copied to clipboard!");
+        await navigator.clipboard.writeText(shareUrl);
+        openNotification("success", "", "Share page link copied to clipboard!");
       } catch (error) {
         console.error("Failed to copy the link:", error);
+        openNotification("error", "", "Failed to copy the link");
       }
     }
   };
@@ -221,20 +221,29 @@ const Uploads = () => {
                   className="relative text-sm whitespace-nowrap mb-2 sm:mb-0 bg-transparent rounded-lg backdrop-blur-lg p-10 shadow-lg"
                 >
                   {isImageFile(file.filename) ? (
-                    <img
-                      src={file.ipfsUrl}
-                      alt={file.filename}
-                      className="w-full h-auto rounded"
-                    />
+                    <Link href={`/share?url=${encodeURIComponent(file.ipfsUrl)}&filename=${encodeURIComponent(file.filename)}&uri=${encodeURIComponent(file.uri)}&timestamp=${file.timestamp}`}>
+                      <img
+                        src={file.ipfsUrl}
+                        alt={file.filename}
+                        className="w-full h-auto rounded cursor-pointer hover:opacity-80 transition-opacity"
+                      />
+                    </Link>
                   ) : isVideoFile(file.filename) ? (
-                    <video
-                      src={file.ipfsUrl}
-                      className="w-full h-auto rounded"
-                    />
+                    <Link href={`/share?url=${encodeURIComponent(file.ipfsUrl)}&filename=${encodeURIComponent(file.filename)}&uri=${encodeURIComponent(file.uri)}&timestamp=${file.timestamp}`}>
+                      <video
+                        src={file.ipfsUrl}
+                        className="w-full h-auto rounded cursor-pointer hover:opacity-80 transition-opacity"
+                      />
+                    </Link>
                   ) : (
                     <div className="p-4 bg-gray-800 rounded">
-                      <p className="text-xs break-all">IPFS URI: {file.uri}</p>
-                      <p className="text-xs break-all mt-2">Gateway URL: {file.ipfsUrl}</p>
+                      <p className="text-center text-lg">Unsupported File</p>
+                      <p className="text-center text-sm">
+                        {file.filename} is not supported for preview.
+                      </p>
+                      <p className="text-center text-sm">
+                        Please download to view.
+                      </p>
                     </div>
                   )}
 
