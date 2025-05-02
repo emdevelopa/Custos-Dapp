@@ -171,7 +171,7 @@ const Uploads = () => {
   const handleShare = async (file) => {
     // Construct the SharePage URL with all file details
     const shareUrl = `${window.location.origin}/share?url=${encodeURIComponent(file.ipfsUrl)}&filename=${encodeURIComponent(file.filename)}&uri=${encodeURIComponent(file.uri)}&timestamp=${file.timestamp}`;
-
+  
     if (navigator.share) {
       try {
         await navigator.share({

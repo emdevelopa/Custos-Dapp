@@ -1,9 +1,9 @@
 'use client'
-import React from "react";
+import React, { Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { FaArrowLeft } from "react-icons/fa";
 
-const SharePage = () => {
+const SharePageContent = () => {
   const searchParams = useSearchParams();
   const router = useRouter();
   const url = searchParams.get("url");
@@ -79,7 +79,6 @@ const SharePage = () => {
         <div className="mt-6 text-white">
           <p className="text-lg text-center font-semibold">{filename}</p>
           <div className="mt-4 space-y-2">
-            
             <p className="text-sm">
               <span className="text-[#EAFBFF]">Timestamp: </span>
               <span className="text-[#19B1D2]">{formatDate(timestamp)}</span>
@@ -88,6 +87,14 @@ const SharePage = () => {
         </div>
       </div>
     </div>
+  );
+};
+
+const SharePage = () => {
+  return (
+    <Suspense fallback={<div className="min-h-screen flex items-center justify-center bg-black"><p className="text-white text-lg">Loading...</p></div>}>
+      <SharePageContent />
+    </Suspense>
   );
 };
 
