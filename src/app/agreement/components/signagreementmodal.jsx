@@ -87,7 +87,7 @@ const SignAgreementModal = ({
       }
   
       const response = await fetch(
-        `https://custosbackend.onrender.com/agreement/agreement/${agreementId}/sign/`,
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/agreement/agreement/${agreementId}/sign/`,
         {
           method: "POST",
           body: formData,
@@ -111,7 +111,7 @@ const SignAgreementModal = ({
     const fetchTermsAndConditions = async () => {
       try {
         const response = await fetch(
-          `https://custosbackend.onrender.com/agreement/terms_and_condition/`
+          `${process.env.NEXT_PUBLIC_BACKEND_URL}/agreement/terms_and_condition/`
         );
         if (!response.ok) {
           throw new Error(`HTTP Error: ${response.status}`);

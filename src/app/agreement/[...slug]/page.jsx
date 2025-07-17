@@ -51,7 +51,7 @@ const AgreementSlug = ({ params }, agreementparam) => {
   const fetchAgreementById = async (agreementId) => {
     try {
       const response = await fetch(
-        `https://custosbackend.onrender.com/agreement/agreement/${agreementId}/`
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/agreement/agreement/${agreementId}/`
       );
       if (response.ok) {
         const data = await response.json();
@@ -72,7 +72,7 @@ const AgreementSlug = ({ params }, agreementparam) => {
   const fetchAgreementByAccessToken = async (token) => {
     try {
       const response = await fetch(
-        `https://custosbackend.onrender.com/agreement/agreement/access_token/?access_token=${token}`
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/agreement/agreement/access_token/?access_token=${token}`
       );
       if (response.ok) {
         const data = await response.json();
@@ -162,7 +162,7 @@ const AgreementSlug = ({ params }, agreementparam) => {
         }
       });
       const response = await fetch(
-        `https://custosbackend.onrender.com/agreement/agreement/update_by_access_token/?access_token=${accessToken}`,
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/agreement/agreement/update_by_access_token/?access_token=${accessToken}`,
         {
           method: "PUT",
           body: formData,
