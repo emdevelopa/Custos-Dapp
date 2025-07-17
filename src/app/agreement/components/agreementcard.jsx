@@ -101,7 +101,7 @@ export const AgreementCard = ({
         // formData.append("agreement_id", agreement_id);
 
         // Construct the URL with the access_token as a query parameter
-        // const url = `https://custosbackend.onrender.com/agreement/agreement/update_by_access_token/?access_token=${encodeURIComponent(
+        // const url = `${process.env.NEXT_PUBLIC_BACKEND_URL}/agreement/agreement/update_by_access_token/?access_token=${encodeURIComponent(
         //   agreement.access_token
         // )}`;
 
