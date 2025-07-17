@@ -18,6 +18,7 @@ import dynamic from "next/dynamic";
 const MDEditor = dynamic(() => import("@uiw/react-md-editor"), { ssr: false });
 import Image from "next/image";
 import AgreementTemplate from "../agreementTemplate/page";
+import { Input } from "@/components/ui/input";
 
 // Arrays for select options
 const agreementTypeOptions = [
@@ -758,6 +759,40 @@ const AgreementModal = ({ initialStep, ttitle, tcontent, agreement }) => {
                   </button>
                 </div>
               </form>
+            </div>
+          </>
+        )}
+
+        {selectedAgreement === "C" && (
+          <>
+            <div className="p-8 flex items-center justify-center flex-col gap-4">
+              <div className="text-center flex flex-col ">
+               
+                <h1 className="text-[28px] text-[#8E9A9A] font-bold">
+                  Let’s create something official.
+                </h1>
+                <p>
+                  You can trust us. The blockchain literally won’t let us lie.
+                </p>
+              </div>
+              <div className="rounded-2xl box border-gradien w-full p-6">
+                <div className="sh"></div>
+                <div className="flex flex-col gap-8">
+                  <div>
+                    <label htmlFor="name">What is your name</label>
+                    {/* <input type="text" /> */}
+                    <Input
+                      placeholder="e.g John Doe"
+                      className="border border-[#88d1de"
+                    />
+                  </div>
+                  <div>
+                    <label htmlFor="name">What is your email</label>
+                    {/* <input type="text" /> */}
+                    <Input placeholder="example@gmail.com" />
+                  </div>
+                </div>
+              </div>
             </div>
           </>
         )}
