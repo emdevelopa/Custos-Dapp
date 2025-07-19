@@ -589,18 +589,21 @@ const AgreementModal = ({ initialStep, ttitle, tcontent, agreement }) => {
   };
 
   return (
-    <div className="w-full h-full sm:flex-row flex flex-col items-center justify-center">
-      {/* <div className=""> */}
-      <button
-        className="sm:w-fit w-full sm:flex hidden absolute top-[10%] left-[10%] z-20 items-start text-[#EAFBFF] px-4 sm:px-0"
-        onClick={() => window.history.back()}
-      >
-        <div className="sm:w-fit w-full  flex justify-start items-centr">
-          <FaArrowLeft className="mr-2 mt-[3px] text-[#EAFBFF]" />
-          <p className="text-[#EAFBFF] font-bold">Back</p>
-        </div>
-      </button>
-      {/* </div> */}
+    <div className="w-full h-full sm:flex-ro flex flex-col items-center justify-center">
+      {/* <div className="flex justify-between "> */}
+      <div className="flex justify-between  w-full mt-[1%]">
+        <button
+          className="sm:w-fit w-full sm:flex justify-between  hidden   z-20 items-start text-[#EAFBFF] px-4 sm:px-0"
+          onClick={() => window.history.back()}
+        >
+          <div className="sm:w-fit w-full  flex justify-start items-centr">
+            <FaArrowLeft className="mr-2 mt-[3px] text-[#EAFBFF]" />
+            <p className="text-[#EAFBFF] font-bold">Back</p>
+          </div>
+        </button>
+       <div className="flex items-center gap-2"> <div className="w-[1em] h-[1em] bg-blue-500 rounded-full"></div>
+       <p> step 1 of 8</p></div>
+      </div>
       <div className="w-full px-4 flex flex-col gap-8 overflow-clip  justify-center items-center h-auto">
         {/* Agreement Selection Section */}
         {!selectedAgreement && (
@@ -766,7 +769,7 @@ const AgreementModal = ({ initialStep, ttitle, tcontent, agreement }) => {
 
         {selectedAgreement === "C" && (
           <>
-            <CreateAgreementWithAi/>
+            <CreateAgreementWithAi />
           </>
         )}
         <Modal
