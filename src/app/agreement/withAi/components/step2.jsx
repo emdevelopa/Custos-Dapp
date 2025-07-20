@@ -18,20 +18,37 @@ export default function StepTwo() {
           <div className="sh"></div>
           <div className="flex flex-col gap-8">
             <div>
-              <label htmlFor="name" className="mb-6">Enter verification code</label>
+              <label htmlFor="name">Enter verification code</label>
               {/* <input type="text" /> */}
-              <div className="flex gap-2">
-                <Input placeholder="" className="w-[4em]" name="name" />
-                <Input placeholder="" className="w-[4em]" name="name" />
-                <Input placeholder="" className="w-[4em]" name="name" />
-                <Input placeholder="" className="w-[4em]" name="name" />
+              <div className="flex gap-2 mt-[1em]">
+                <Input
+                  placeholder=""
+                  className="w-[4em] h-[4em] text-center"
+                  name="name"
+                  maxLength={1}
+                />
+                <Input
+                  placeholder=""
+                  className="w-[4em] h-[4em] text-center"
+                  name="name"
+                  maxLength={1}
+                />
+                <Input
+                  placeholder=""
+                  className="w-[4em] h-[4em] text-center"
+                  name="name"
+                  maxLength={1}
+                />
+                <Input
+                  placeholder=""
+                  className="w-[4em] h-[4em] text-center"
+                  name="name"
+                  maxLength={1}
+                />
               </div>
             </div>
           </div>
- 
         </div>
-
- 
       </div>
     </>
   );
