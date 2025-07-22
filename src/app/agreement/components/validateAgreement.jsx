@@ -77,7 +77,7 @@ const ValidateAgreementModal = ({
         const formData = new FormData();
         formData.append("agreement_id", agreement_id);
 
-        const url = `https://custosbackend.onrender.com/agreement/agreement/update_by_access_token/?access_token=${encodeURIComponent(
+        const url = `${process.env.NEXT_PUBLIC_BACKEND_URL}/agreement/agreement/update_by_access_token/?access_token=${encodeURIComponent(
           agreement?.access_token || ""
         )}`;
 
@@ -119,7 +119,7 @@ const ValidateAgreementModal = ({
     const fetchTermsAndConditions = async () => {
       try {
         const response = await fetch(
-          `https://custosbackend.onrender.com/agreement/terms_and_condition/`
+          `${process.env.NEXT_PUBLIC_BACKEND_URL}/agreement/terms_and_condition/`
         );
         if (!response.ok) throw new Error(`HTTP Error: ${response.status}`);
         const data = await response.json();

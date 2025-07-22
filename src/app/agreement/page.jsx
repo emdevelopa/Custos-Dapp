@@ -71,7 +71,7 @@ function AgreementList() {
       setLoadingPendingAgreements(true);
       try {
         const res = await fetch(
-          `https://custosbackend.onrender.com/agreement/agreement/by_party/?address=${address}`
+          `${process.env.NEXT_PUBLIC_BACKEND_URL}/agreement/agreement/by_party/?address=${address}`
         );
         const data = await res.json();
         console.log("response::", data);

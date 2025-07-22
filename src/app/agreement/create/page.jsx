@@ -281,7 +281,7 @@ const AgreementModal = ({ initialStep, ttitle, tcontent, agreement }) => {
     try {
       setInitCreationLoad(true);
       const res = await fetch(
-        "https://custosbackend.onrender.com/agreement/agreement/",
+        "${process.env.NEXT_PUBLIC_BACKEND_URL}/agreement/agreement/",
         {
           method: "POST",
           headers: {
