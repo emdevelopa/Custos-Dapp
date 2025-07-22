@@ -1,6 +1,8 @@
+"use client"
 import { useState } from "react";
 import StepOne from "./components/step1";
 import StepTwo from "./components/step2";
+import StepThree from "./components/step3";
 
 export default function CreateAgreementWithAi() {
   const [step, setStep] = useState(1);
@@ -8,9 +10,10 @@ export default function CreateAgreementWithAi() {
   console.log("Current Step:", step);
   return (
     <>
-      {step === 1 && <StepOne setStep={setStep} />}
+      <StepThree setStep={setStep} />
+      {/* {step === 1 && <StepOne setStep={setStep} />}
       {step === 2 && <StepTwo setStep={setStep} />}
-      {/* {step === 3 && <StepThree setStep={setStep} />  }  */}
+      {step === 3 && <StepThree setStep={setStep} />  }  */}
     </>
   );
 }
