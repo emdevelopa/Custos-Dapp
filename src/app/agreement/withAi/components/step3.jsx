@@ -10,7 +10,7 @@ const suggestions = [
   "Consulting Agreement",
 ];
 
-export default function StepThree() {
+export default function StepThree({ setStep }) {
   return (
     <>
       {" "}
