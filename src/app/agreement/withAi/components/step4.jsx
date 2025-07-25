@@ -26,7 +26,7 @@ export default function Step4() {
 
           <div className="flex flex-col gap-8">
             <div>
-              <label htmlFor="date">Agreement start date</label>
+              <label htmlFor="date" className="mb-2">Agreement start date</label>
               {/* <input type="text" /> */}
               <Input name="date" type="date"/>
             </div>
@@ -34,7 +34,7 @@ export default function Step4() {
             <div
               className="w-full backdrop-blur-[10px] border-gradient2 cursor-pointer p-[2px] rounded-[100px]"
               // onClick={handleConnect}
-              onClick={() => setStep(5)}
+            //   onClick={() => setStep(5)}
             >
               <div className="bg-[#121212] rounded-[100px]">
                 <button className="flex items-center   w-full text-white justify-center text-center text-sm py-3 px-6 rounded-[100px] hover:bg-gradient-to-r from-[#19B1D2] to-[#0094FF] hover:bg-[#209af1] transition-colors duration-300 ease-in-out">
