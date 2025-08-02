@@ -7,7 +7,7 @@ const suggestions = [
   "This agreement is governed by the laws of [Your Jurisdiction].",
   "Either party may terminate this agreement with 30 days written notice.",
   "Any disputes will be resolved through binding arbitration.",
-//   "Consulting Agreement",
+  //   "Consulting Agreement",
 ];
 
 export default function StepSix({ setStep }) {
@@ -17,11 +17,11 @@ export default function StepSix({ setStep }) {
       <div className="p-8 flex items-center justify-center flex-col gap-4">
         <div className="text-center flex flex-col ">
           <h1 className="text-[28px] text-[#8E9A9A] font-bold">
-            What type of agreement do you want to create?
+            What are the terms of this agreement?
           </h1>
           <p>
-            Give your agreement a clear, descriptive title that both parties
-            will understand.
+            Outline the key terms, conditions, and obligations for all parties
+            involved.
           </p>
         </div>
         <div className="rounded-2xl box border-gradien w-full p-6">
@@ -29,7 +29,7 @@ export default function StepSix({ setStep }) {
 
           <div className="flex flex-col gap-8">
             <div>
-              <label htmlFor="name">Enter agreement title</label>
+              <label htmlFor="name">Terms of agreement</label>
               {/* <input type="text" /> */}
               <Input name="name" />
             </div>
@@ -63,7 +63,7 @@ export default function StepSix({ setStep }) {
             >
               <div className="bg-[#121212] rounded-[100px]">
                 <button className="flex items-center   w-full text-white justify-center text-center text-sm py-3 px-6 rounded-[100px] hover:bg-gradient-to-r from-[#19B1D2] to-[#0094FF] hover:bg-[#209af1] transition-colors duration-300 ease-in-out">
-                  <span>Continue</span>
+                  <span>Create My Agreement</span>
                   {/* <FaLongArrowAltRight className="ml-2" /> */}
                 </button>
               </div>
