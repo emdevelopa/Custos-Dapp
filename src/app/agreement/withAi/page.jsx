@@ -6,6 +6,7 @@ import StepThree from "./components/step3";
 import Step4 from "./components/step4";
 import StepFive from "./components/step5";
 import StepSix from "./components/step6";
+import StepSeven from "./components/step7";
 
 export default function CreateAgreementWithAi() {
   const [step, setStep] = useState(1);
@@ -21,7 +22,7 @@ export default function CreateAgreementWithAi() {
       {step === 4 && <Step4 setStep={setStep} />}
       {step === 5 && <StepFive setStep={setStep} />}
       {step === 6 && <StepSix setStep={setStep} />}
-      {step === 7 && <StepSix setStep={setStep} />}
+      {step === 7 && <StepSeven setStep={setStep} />}
     </>
   );
 }
