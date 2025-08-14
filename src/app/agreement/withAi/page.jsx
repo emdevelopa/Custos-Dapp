@@ -21,6 +21,7 @@ export default function CreateAgreementWithAi() {
       {step === 4 && <Step4 setStep={setStep} />}
       {step === 5 && <StepFive setStep={setStep} />}
       {step === 6 && <StepSix setStep={setStep} />}
+      {step === 7 && <StepSix setStep={setStep} />}
     </>
   );
 }
