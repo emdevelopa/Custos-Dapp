@@ -1,79 +1,96 @@
-import { Input } from "@/components/ui/input";
+"use client";
+import { useEffect, useState } from "react";
 import Image from "next/image";
 
-const suggestions = [
-  "Both parties agree to maintain confidentiality of all shared information.",
-  "Payment terms are net 30 days from invoice date.",
-  "This agreement is governed by the laws of [Your Jurisdiction].",
-  "Either party may terminate this agreement with 30 days written notice.",
-  "Any disputes will be resolved through binding arbitration.",
-  //   "Consulting Agreement",
-];
-
 export default function StepSeven({ setStep }) {
-  return (
-    <>
-      {" "}
-      <div className="p-8 flex items-center justify-center flex-col gap-4">
-        <div className="text-center flex flex-col ">
-          <h1 className="text-[28px] text-[#8E9A9A] font-bold">
-            Done! Your agreement is ready.
-          </h1>
-          <p>
-            You can edit or add anything to your agreement. See the preview
-            below.
-          </p>
-        </div>
-        <div className="rounded-2xl box border-gradien w-full p-6">
-          <div className="sh"></div>
+  const steps = [
+    "Employment contract",
+    "Effective from...",
+    "Identifying second party",
+    "Terms of agreement",
+    "Creating agreement",
+    "Adding extra spices",
+  ];
 
-          <div className="flex flex-col gap-8">
-            <script type="module" src=""></script>{" "}
-            <div>
-              <label htmlFor="name">Agreement summary</label>
-              {/* <input type="text" /> */}
-              <Input
-                name="name"
-                placeholder="Either party may terminate this agreement with 30 days written notice."
-              />
-            </div>
-            <div>
-              <div className="flex items-center gap-2 mb-4">
-                <Image
-                  src="/AI-stars.svg"
-                  alt="Crime Recorder Image"
-                  width={400}
-                  height={100}
-                  className="w-[2em] h-[2em] fade-in-image"
-                />
-                <p className=" font-bold text-[20px]">Suggestions</p>
-              </div>
-              <div className="grid grid-cols-1   gap-2">
-                {suggestions.map((suggestion, index) => (
-                  <p
-                    key={index}
-                    className="rounded-md  px-[1em] py-2 bg-[rgba(45,72,92,0.5)] backdrop-blur border border-[#2D485C] text-[#EAFBFF] w-fit shadow-md"
-                  >
-                    {suggestion}
-                  </p>
-                ))}
-              </div>
-            </div>
-            <div
-              className="w-full backdrop-blur-[10px] border-gradient2 cursor-pointer p-[2px] rounded-[100px]"
-              // onClick={handleConnect}
-              onClick={() => setStep(7)}
-            >
-              <div className="bg-[#121212] rounded-[100px]">
-                <button className="flex items-center   w-full text-white justify-center text-center text-sm py-3 px-6 rounded-[100px] hover:bg-gradient-to-r from-[#19B1D2] to-[#0094FF] hover:bg-[#209af1] transition-colors duration-300 ease-in-out">
-                  <span>Create My Agreement</span>
-                  {/* <FaLongArrowAltRight className="ml-2" /> */}
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
+  const [currentStep, setCurrentStep] = useState(0);
+
+  useEffect(() => {
+    if (currentStep < steps.length) {
+      const timer = setTimeout(() => {
+        setCurrentStep((prev) => prev + 1);
+      }, 3000); // move every 3 seconds
+      return () => clearTimeout(timer);
+    }
+
+    if (currentStep === steps.length) {
+      // When all steps are done → move to step 7
+      const finalTimer = setTimeout(() => {
+        setStep(8);
+      }, 1000); // slight delay so last animation finishes
+      return () => clearTimeout(finalTimer);
+    }
+  }, [currentStep, steps.length, setStep]);
+
+  return (
+    <div className="p-8 flex items-center justify-center flex-col gap-14">
+      <div className="text-center flex flex-col">
+        <h1 className="text-[28px] text-[#8E9A9A] font-bold">
+          A moment, Custos Lawyer is cooking!
+        </h1>
+        <p>We are creating your agreement. It will be ready in a moment.</p>
       </div>
-    </>
+
+      <div className="flex flex-col gap-4 items-start">
+        {steps.map((step, index) => {
+          let status = "waiting"; // default
+          if (index < currentStep) status = "completed";
+          if (index === currentStep) status = "pending";
+
+          const icons = {
+            completed: "/checkmark-circle-completed.svg",
+            pending: "/checkmark-circle-pending.svg",
+            waiting: "/checkmark-circle-waiting.svg",
+          };
+
+          const textColors = {
+            completed: "text-[#0094FF]",
+            pending: "text-white animate-pulse",
+            waiting: "text-gray-400",
+          };
+
+          return (
+            <div
+              key={index}
+              className={`flex items-center justify-center gap-2 transition-all duration-500 ease-in-out`}
+            >
+              <Image
+                src={icons[status]}
+                alt={step}
+                width={24}
+                height={24}
+                className={`fade-in-image`}
+              />
+              <p className={`${textColors[status]} transition-all`}>{step}</p>
+            </div>
+          );
+        })}
+      </div>
+
+      <style jsx>{`
+        .fade-in-image {
+          animation: fadeIn 0.5s ease-in-out;
+        }
+        @keyframes fadeIn {
+          from {
+            opacity: 0;
+            transform: translateY(-5px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+      `}</style>
+    </div>
   );
 }
