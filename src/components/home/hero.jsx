@@ -83,22 +83,36 @@ const Hero = () => {
       <div className="text-white py-20 mx-auto flex flex-col justify-center items-center w-full px-4">
         <div
           onClick={() => toggleLaunchDapps()}
+          className="flex items-center w-fit h-fit bg-[#2749629b] py-2 px-4 rounded-full cursor-pointer z-20
+             transition-transform duration-300 ease-out hover:scale-105 hover:shadow-lg hover:bg-[#274962d0] group"
+        >
+          <div className="sh"></div>
+          <span
+            className="flex items-center text-white transition-transform duration-300 ease-out 
+               group-hover:translate-x-1 group-hover:scale-105"
+          >
+            Launch Custos Dapp
+          </span>
+        </div>
+
+        {/* <div
+          onClick={() => toggleLaunchDapps()}
           className="flex box w-fit h-fit bg-[#2749629b] py-2 cursor-pointer z-20 px-4 rounded-full"
         >
           <div className="sh"></div>
-          {/* <HoverBorderGradient
+          <HoverBorderGradient
             containerClassName="rounded-full"
             className="relative w-full text-white py-4 px-8 transform hover:scale-110 transition-all duration-300 bg-opacity-50 backdrop-filter backdrop-blur-lg flex items-center justify-center"
             duration={3}
-          > */}
+          >
           <span className="flex items-center">Launch Custos Dapp</span>
-          {/* <img
+          <img
               src="/star.png"
               className="absolute w-6 h-8 z-20 animate-star"
               alt="Star Icon"
             />
-          </HoverBorderGradient> */}
-        </div>
+          </HoverBorderGradient>
+        </div> */}
         {showLaunchDapps && <ShowLaunchDapps closeModal={closeModal} />}
         <p className="text-6xl sm:text-5xl font-semibold my-6 bg-gradient-to-r from-[#EAF9FF] to-[#8E9A9A] bg-clip-text text-transparent text-center w-full p-3">
           The New Blockchain Safe
@@ -107,13 +121,18 @@ const Hero = () => {
           Custos will secure your evidence and legal agreements
         </p>
         <HoverBorderGradient
-          containerClassName="rounded-full "
+          containerClassName="rounded-full group"
           as="button"
-          className="dark:bg-black bg-[#0495F8] px-8 py-3 text-[white] dark:text-white flex items-center space-x-2"
+          className="dark:bg-black bg-[#0495F8] px-8 py-3 text-white dark:text-white flex items-center space-x-2
+             transition-transform duration-300 ease-out hover:scale-105 hover:shadow-lg"
         >
           <span>Get Started</span>
-          <FaArrowRight className="ml-1 rotate-[-35deg]" />
+          <FaArrowRight
+            className="ml-1 rotate-[-35deg] transition-transform duration-300 ease-out
+               group-hover:translate-x-1 group-hover:rotate-0 group-hover:scale-110"
+          />
         </HoverBorderGradient>
+
         {/* <div className="flex flex-col items-center gap-[1rem] mt-[2rem]"> */}
         {/* <TracingBeam> */}
         {/* <div className="flex flex-wrap md:flex-row w-full gap-6 justify-center"> */}

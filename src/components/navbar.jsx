@@ -109,20 +109,20 @@ const Navbar = () => {
             <div className="hidden lg:flex items-center">
               <ul className="flex gap-12 items-center">
                 <li>
-                  <button
-                    onClick={toggleCompany}
+                  <a
+                    href="/agreement"
                     className="text-white hover:text-[#c92eff] transition-colors duration-200"
                   >
                     Create Agreement
-                  </button>
+                  </a>
                 </li>{" "}
                 <li>
-                  <button
-                    onClick={toggleCompany}
+                  <a
+                    href="/crimerecorder"
                     className="text-white hover:text-[#c92eff] transition-colors duration-200"
                   >
                     Crime Recorder
-                  </button>
+                  </a>
                 </li>
                 <li>
                   <button
@@ -145,13 +145,15 @@ const Navbar = () => {
             </div>
 
             <HoverBorderGradient
-              containerClassName="rounded-full"
+              containerClassName="rounded-full group"
               as="button"
-              className="dark:bg-black bg-[#0495F8] text-[white] dark:text-white flex items-center space-x-2"
+              className="dark:bg-black bg-[#0495F8] px-8 py-3 text-[white] dark:text-white flex items-center space-x-2 
+             transition-transform duration-300 ease-out hover:scale-105 hover:shadow-lg"
             >
               <span>Get Started</span>
-              <FaArrowRight className="ml-1 rotate-[-35deg]" />
+              <FaArrowRight className="ml-1 rotate-[-35deg] transition-transform duration-300 ease-out group-hover:translate-x-1 group-hover:rotate-0" />
             </HoverBorderGradient>
+
             {/* <div className="flex items-center space-x-4">
               <div className="lg:hidden">
                 <button
