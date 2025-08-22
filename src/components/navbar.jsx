@@ -5,6 +5,7 @@ import Link from "next/link";
 import { FaChevronDown, FaArrowRight, FaPlus, FaVideo } from "react-icons/fa";
 import { AiOutlineMenu, AiOutlineClose } from "react-icons/ai";
 import ConnectButtoncomponent from "./connect";
+import { HoverBorderGradient } from "./ui/hover-border-gradient";
 
 const Navbar = () => {
   const [showLaunchDapps, setShowLaunchDapps] = useState(false);
@@ -88,13 +89,14 @@ const Navbar = () => {
         }
       `}</style>
 
-      <nav className="py-4 z-50 backdrop-blur fixed top-0 w-full bg-[#84c2f513] shadow-md">
+      {/* <nav className="py-4 z-50 backdrop-blur fixed top-0 w-full bg-[#84c2f513] shadow-md "> */}
+      <nav className="mx-8 my-4 glass-b bg-[#2749626b] rounded-full border-[0.5px] border-[#ffffff44] py-4 nav-shadow">
         <div className="w-full mx-auto px-4">
           <div className="flex justify-around items-center">
             <div className="flex-shrink-0">
               <Link href="/" className="block">
                 <Image
-                  src="/logo.png"
+                  src="/logo-new.svg"
                   alt="Logo"
                   width={250}
                   height={50}
@@ -108,6 +110,22 @@ const Navbar = () => {
               <ul className="flex gap-12 items-center">
                 <li>
                   <button
+                    onClick={toggleCompany}
+                    className="text-white hover:text-[#c92eff] transition-colors duration-200"
+                  >
+                    Create Agreement
+                  </button>
+                </li>{" "}
+                <li>
+                  <button
+                    onClick={toggleCompany}
+                    className="text-white hover:text-[#c92eff] transition-colors duration-200"
+                  >
+                    Crime Recorder
+                  </button>
+                </li>
+                <li>
+                  <button
                     onClick={toggleLaunchDapps}
                     className="text-white hover:text-[#c92eff] flex items-center transition-colors duration-200"
                   >
@@ -115,7 +133,6 @@ const Navbar = () => {
                     <FaChevronDown className="w-5 h-5 ml-1" />
                   </button>
                 </li>
-
                 <li>
                   <button
                     onClick={toggleCompany}
@@ -127,7 +144,15 @@ const Navbar = () => {
               </ul>
             </div>
 
-            <div className="flex items-center space-x-4">
+            <HoverBorderGradient
+              containerClassName="rounded-full"
+              as="button"
+              className="dark:bg-black bg-[#0495F8] text-[white] dark:text-white flex items-center space-x-2"
+            >
+              <span>Get Started</span>
+              <FaArrowRight className="ml-1 rotate-[-35deg]" />
+            </HoverBorderGradient>
+            {/* <div className="flex items-center space-x-4">
               <div className="lg:hidden">
                 <button
                   onClick={toggleMenu}
@@ -143,7 +168,7 @@ const Navbar = () => {
               <div className="hidden lg:block">
                 <ConnectButtoncomponent />
               </div>
-            </div>
+            </div> */}
           </div>
 
           {/* Mobile Menu */}

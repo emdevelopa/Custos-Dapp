@@ -4,6 +4,7 @@ import Image from "next/image";
 import { TracingBeam } from "./tracingBeam";
 import ShowLaunchDapps from "../showLaunchDapps";
 import { HoverBorderGradient } from "./hoverButton";
+import { BackgroundBeams } from "../ui/background-beams";
 
 const Hero = () => {
   const [showLaunchDapps, setShowLaunchDapps] = useState(false);
@@ -69,15 +70,15 @@ const Hero = () => {
   return (
     <main
       className="flex items-center justify-center min-h-screen"
-      style={{
-        backgroundImage: 'url("./patterns.png")',
-        backgroundSize: "cover",
-        backgroundPosition: "center",
-        backgroundAttachment: "fixed",
-      }}
+      // style={{
+      //   backgroundImage: 'url("./patterns.png")',
+      //   backgroundSize: "cover",
+      //   backgroundPosition: "center",
+      //   backgroundAttachment: "fixed",
+      // }}
     >
       <div className="text-white py-20 mx-auto flex flex-col justify-center items-center w-full px-4">
-        <div onClick={toggleLaunchDapps} className="flex w-fit h-fit">
+        {/* <div onClick={toggleLaunchDapps} className="flex w-fit h-fit">
           <HoverBorderGradient
             containerClassName="rounded-full"
             className="relative w-full text-white py-4 px-8 transform hover:scale-110 transition-all duration-300 bg-opacity-50 backdrop-filter backdrop-blur-lg flex items-center justify-center"
@@ -90,7 +91,7 @@ const Hero = () => {
               alt="Star Icon"
             />
           </HoverBorderGradient>
-        </div>
+        </div> */}
         {showLaunchDapps && <ShowLaunchDapps closeModal={closeModal} />}
         <p className="text-6xl sm:text-5xl font-semibold my-6 bg-gradient-to-r from-[#EAF9FF] to-[#8E9A9A] bg-clip-text text-transparent text-center w-full p-3">
           The New Blockchain Safe
@@ -99,11 +100,11 @@ const Hero = () => {
           Custos will secure your evidence and legal agreements
         </p>
 
-        <div className="flex flex-col items-center gap-[1rem] mt-[2rem]">
-          <TracingBeam>
-            <div className="flex flex-wrap md:flex-row w-full gap-6 justify-center">
-              {/* First and Second Cards */}
-              {["/hero-card1.png", "/hero-card2.png"].map((src, index) => (
+        {/* <div className="flex flex-col items-center gap-[1rem] mt-[2rem]"> */}
+        {/* <TracingBeam> */}
+        {/* <div className="flex flex-wrap md:flex-row w-full gap-6 justify-center"> */}
+        {/* First and Second Cards */}
+        {/* {["/hero-card1.png", "/hero-card2.png"].map((src, index) => (
                 <div
                   key={index}
                   className="transform transition-transform duration-300 hover:scale-110 hover:z-10 backdrop-filter backdrop-blur-[10px] bg-[#030D1B] shadow-lg rounded-lg"
@@ -139,10 +140,10 @@ const Hero = () => {
                     </div>
                   </div>
                 </div>
-              ))}
+              ))} */}
 
-              {/* Third Card */}
-              <div className="flex justify-center w-full mt-6">
+        {/* Third Card */}
+        {/* <div className="flex justify-center w-full mt-6">
                 {cardsData.map((card, index) => (
                   <Card
                     key={index}
@@ -154,11 +155,12 @@ const Hero = () => {
                 cardMaxWidth="350px" // Set a maximum width for responsiveness
                   />
                 ))}
-              </div>
-            </div>
-          </TracingBeam>
-        </div>
+              </div> */}
+        {/* </div> */}
+        {/* </TracingBeam> */}
+        {/* </div> */}
       </div>
+      <BackgroundBeams />
     </main>
   );
 };

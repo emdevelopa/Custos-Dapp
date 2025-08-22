@@ -15,7 +15,7 @@ export default function Home() {
     <div className="min-h-screen kanit">
       {isBrowser() && <InstallPWA />}
       <main className="kanit">
-        <div className="mb-10">
+        <div className="">
           <Navbar />
         </div>
         <FadeInSection>
