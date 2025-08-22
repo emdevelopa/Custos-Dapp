@@ -3,13 +3,17 @@ import React, { useState } from "react";
 import Image from "next/image";
 import { TracingBeam } from "./tracingBeam";
 import ShowLaunchDapps from "../showLaunchDapps";
-import { HoverBorderGradient } from "./hoverButton";
+// import { HoverBorderGradient } from "./hoverButton";
 import { BackgroundBeams } from "../ui/background-beams";
+import { FaArrowRight } from "react-icons/fa";
+import { HoverBorderGradient } from "../ui/hover-border-gradient";
 
 const Hero = () => {
   const [showLaunchDapps, setShowLaunchDapps] = useState(false);
 
   const toggleLaunchDapps = () => {
+    console.log("yooo");
+
     setShowLaunchDapps(!showLaunchDapps);
   };
 
@@ -22,7 +26,8 @@ const Hero = () => {
     {
       src: "/hero-card3.png",
       title: "Agreement documentation",
-      description: "Custos’ smart agreement management will secure your signed documents transparently.",
+      description:
+        "Custos’ smart agreement management will secure your signed documents transparently.",
     },
   ];
 
@@ -32,7 +37,7 @@ const Hero = () => {
       style={{
         borderRadius: "20px",
         border: "0.5px solid rgba(255, 255, 255, 0.1)",
-        margin: '0 auto',
+        margin: "0 auto",
         // This controls the width of the card. You can adjust it for different breakpoints below.
       }}
     >
@@ -46,10 +51,9 @@ const Hero = () => {
             height={380}
             objectFit="cover"
             className="will-change-auto rounded-t-[20px] sm:rounded-l-[20px] sm:rounded-tr-none sm:rounded-b-none w-full h-full"
-
           />
         </div>
-  
+
         {/* Text Section */}
         <div className="flex flex-col justify-center items-center sm:items-start p-6 w-full sm:w-[45%] h-auto sm:h-full">
           <div className="w-12 h-12 flex items-center justify-center bg-[#A02294] rounded-full mb-4 mx-auto sm:mx-0">
@@ -65,7 +69,6 @@ const Hero = () => {
       </div>
     </div>
   );
-  
 
   return (
     <main
@@ -78,20 +81,24 @@ const Hero = () => {
       // }}
     >
       <div className="text-white py-20 mx-auto flex flex-col justify-center items-center w-full px-4">
-        {/* <div onClick={toggleLaunchDapps} className="flex w-fit h-fit">
-          <HoverBorderGradient
+        <div
+          onClick={() => toggleLaunchDapps()}
+          className="flex box w-fit h-fit bg-[#2749629b] py-2 cursor-pointer z-20 px-4 rounded-full"
+        >
+          <div className="sh"></div>
+          {/* <HoverBorderGradient
             containerClassName="rounded-full"
             className="relative w-full text-white py-4 px-8 transform hover:scale-110 transition-all duration-300 bg-opacity-50 backdrop-filter backdrop-blur-lg flex items-center justify-center"
             duration={3}
-          >
-            <span className="flex items-center">Launch Custos Dapp</span>
-            <img
+          > */}
+          <span className="flex items-center">Launch Custos Dapp</span>
+          {/* <img
               src="/star.png"
               className="absolute w-6 h-8 z-20 animate-star"
               alt="Star Icon"
             />
-          </HoverBorderGradient>
-        </div> */}
+          </HoverBorderGradient> */}
+        </div>
         {showLaunchDapps && <ShowLaunchDapps closeModal={closeModal} />}
         <p className="text-6xl sm:text-5xl font-semibold my-6 bg-gradient-to-r from-[#EAF9FF] to-[#8E9A9A] bg-clip-text text-transparent text-center w-full p-3">
           The New Blockchain Safe
@@ -99,7 +106,14 @@ const Hero = () => {
         <p className="max-w-[16rem] sm:max-w-[18rem] md:max-w-lg mb-10 bg-gradient-to-r from-[#EAF9FF] to-[#8E9A9A] bg-clip-text text-transparent text-center">
           Custos will secure your evidence and legal agreements
         </p>
-
+        <HoverBorderGradient
+          containerClassName="rounded-full "
+          as="button"
+          className="dark:bg-black bg-[#0495F8] px-8 py-3 text-[white] dark:text-white flex items-center space-x-2"
+        >
+          <span>Get Started</span>
+          <FaArrowRight className="ml-1 rotate-[-35deg]" />
+        </HoverBorderGradient>
         {/* <div className="flex flex-col items-center gap-[1rem] mt-[2rem]"> */}
         {/* <TracingBeam> */}
         {/* <div className="flex flex-wrap md:flex-row w-full gap-6 justify-center"> */}
