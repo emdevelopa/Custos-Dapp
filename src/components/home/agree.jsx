@@ -57,9 +57,9 @@ const Agree = () => {
           <div className="w-full max-w-4xl p-4">
             <a href="/agreement">
               <Image
-                src="/hero.png"
+                src="/macbook_screen.svg"
                 alt="Card Image"
-                width={1000}
+                width={100}
                 height={800}
                 className="w-full h-auto fade-in-image"
               />
@@ -164,7 +164,7 @@ const Agree = () => {
           <div className="w-full max-w-4xl p-4">
             <a href="/crimerecorder">
               <Image
-                src="/crime-recorder.png"
+                src="/mackbook_crimerecorder.svg"
                 alt="Crime Recorder Image"
                 width={1000}
                 height={800}
