@@ -9,6 +9,7 @@ import InstallPWA from "../components/InstallPWA";
 import { useEffect } from "react";
 import Image from "next/image";
 const isBrowser = () => typeof window !== "undefined"; 
+import "./globals.css";
 export default function Home() {
   // useEffect(() => { }, [isBrowser()]);
 
@@ -32,7 +33,7 @@ export default function Home() {
               height={100}
               className="will-change-auto object-cover rounded-lg"
             />
-            <p>Secure</p>
+            <p className="londrina-outline-regular">Secure</p>
           </div>
           <div className="flex flex-col items-center justify-center space-y-4">
             <Image

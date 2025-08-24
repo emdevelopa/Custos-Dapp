@@ -33,6 +33,10 @@ module.exports = {
         "gradient-radial":
           "radial-gradient(13.75% 27.94% at 50% 50%, rgba(39, 73, 98, 0.7) 0%, rgba(45, 72, 92, 0.7) 100%)",
       },
+      fontFamily: {
+        londrina: ['"Londrina Outline"', "sans-serif"],
+        comic: ['"Comic Neue"', "cursive"], 
+      },
     },
   },
   plugins: [
