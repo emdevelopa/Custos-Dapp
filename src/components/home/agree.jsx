@@ -11,6 +11,8 @@ import Footer from "../footer";
 import FadeInSection from "../fadeInSection";
 import ShowLaunchDapps from "../showLaunchDapps";
 import { HoverBorderGradient } from "../ui/hover-border-gradient";
+import FAQAccordion from "./faq";
+ 
 // const printAgreement = (agreement) => {
 //   const printContent = `
 //     <h1>${agreement.title}</h1>
@@ -55,14 +57,14 @@ const Agree = () => {
           </TextFade> */}
         </div>
         <div className="flex justify-center items-center">
-          <div className="w-full max-w-4xl p-4">
+          <div className="w-full  p-4">
             <a href="/agreement">
               <Image
                 src="/macbook_screen.svg"
                 alt="Card Image"
                 width={100}
                 height={800}
-                className="w-full h-auto fade-in-image"
+                className="w-full h-full fade-in-image"
               />
             </a>
           </div>
@@ -165,39 +167,81 @@ const Agree = () => {
           </p>
         </div>
         <div className="flex justify-center items-center">
-          <div className="w-full max-w-4xl p-4">
+          <div className="w-full p-4">
             <a href="/crimerecorder">
               <Image
                 src="/mackbook_crimerecorder.svg"
                 alt="Crime Recorder Image"
                 width={1000}
                 height={800}
-                className="w-full h-auto fade-in-image"
+                className="w-full h-full fade-in-image"
               />
             </a>
           </div>
         </div>
       </Section>
 
-      <Section id="our-pledge" headerText="AI LAWYER">
+      <Section id="ai-lawyer" headerText="AI LAWYER">
+        <div className="flex justify-center">
+          <div
+            // onClick={() => toggleLaunchDapps()}
+            className="flex items-center w-fit h-fit bg-[#2749629b] py-2 px-4 rounded-full cursor-pointer z-20
+             transition-transform duration-300 ease-out hover:scale-105 hover:shadow-lg hover:bg-[#274962d0] group"
+          >
+            <div className="sh"></div>
+            <span
+              className="flex items-center text-white transition-transform duration-300 ease-out 
+               group-hover:translate-x-1 group-hover:scale-105"
+            >
+              Coming Soon
+            </span>
+          </div>
+        </div>
         <div className="text-center p-8 bg-transparent rounded shadow-lg text-white">
           <p className="text-[1em] mb-4 max-w-md mx-auto">
             An AI lawyer in your pocket. Draft agreements from scratch,
             summarize long legal docs, and catch hidden loopholes before they
             catch you.
           </p>
-          <div className="flex justify-center">
+          <div className="flex justify-center mb-4">
             <HoverBorderGradient
-            containerClassName="rounded-full group"
-            as="button"
-            className="dark:bg-black bg-[#0495F8] px-8 py-3 text-[white] dark:text-white flex items-center space-x-2 
+              containerClassName="rounded-full group"
+              as="button"
+              className="dark:bg-black bg-[#0495F8] px-8 py-3 text-[white] dark:text-white flex items-center space-x-2 
                        transition-transform duration-300 ease-out hover:scale-105 hover:shadow-lg"
-          >
-            <span>Notify Me</span>
-            <FaBell className="ml-1 rotate-[-35deg] transition-transform duration-300 ease-out group-hover:translate-x-1 group-hover:rotate-0" />
-          </HoverBorderGradient>
+            >
+              <span>Notify Me</span>
+              <FaBell className="ml-1 rotate-[-35deg] transition-transform duration-300 ease-out group-hover:translate-x-1 group-hover:rotate-0" />
+            </HoverBorderGradient>
+          </div>
+          <div className="w-full max-w-3xl mx-auto">
+            <video
+              // controls
+              autoPlay={true}
+              loop={true}
+              muted={false}
+              className="w-full rounded-lg shadow-lg"
+            >
+              <source src="./ai-lawyer.mp4" type="video/mp4" />
+              Your browser does not support the video tag.
+            </video>
           </div>
         </div>
+      </Section>
+
+      <Section id="faqs" headerText="FAQS">
+        <div className="text-center p-8 bg-transparent rounded shadow-lg text-white">
+          <p
+            className="text-[1em] mb-4 max-w-md mx-auto"
+            style={{ fontFamily: `"Londrina Outline", sans-serif` }}
+          >
+            See frequently asked questions.
+          </p>
+        </div>
+        <FAQAccordion />
+        {/* <div className="flex justify-center items-center">
+           
+        </div> */}
       </Section>
 
       {/* Section 5: Shape Component */}
