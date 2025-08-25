@@ -219,7 +219,7 @@ const Agree = () => {
               // controls
               autoPlay={true}
               loop={true}
-              muted={false}
+              muted={true}
               className="w-full rounded-lg shadow-lg"
             >
               <source src="./ai-lawyer.mp4" type="video/mp4" />
