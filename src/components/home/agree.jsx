@@ -1,18 +1,12 @@
 "use client";
-import Link from "next/link";
 import React, { useState } from "react";
 import Image from "next/image";
-import { FaBell, FaLongArrowAltRight, FaPlus, FaVideo } from "react-icons/fa";
+import { FaBell } from "react-icons/fa";
 import Section from "./macbookScroll"; // Section component with animations
-import ConnectButtoncomponent from "../connect";
-import Shape from "./eclipse";
-import Footer from "../footer";
 // import "./stimport { TextFade } from "./textFade";
-import FadeInSection from "../fadeInSection";
-import ShowLaunchDapps from "../showLaunchDapps";
 import { HoverBorderGradient } from "../ui/hover-border-gradient";
 import FAQAccordion from "./faq";
-import TestimonialSlider from "./testimonial";
+import TestimonialSlider, { InfiniteMovingCardsDemo } from "./testimonial";
 
 // const printAgreement = (agreement) => {
 //   const printContent = `
@@ -238,9 +232,10 @@ const Agree = () => {
            
         </div> */}
       </Section>
-      <Section>
-        <TestimonialSlider />
-      </Section>
+      {/* <div> */}
+      <InfiniteMovingCardsDemo />
+      {/* <TestimonialSlider /> */}
+      {/* </d>/ */}
 
       {/* Section 5: Shape Component */}
       {/* <Section id="elipse" headerText="">
