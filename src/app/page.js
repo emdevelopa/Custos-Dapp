@@ -33,7 +33,7 @@ export default function Home() {
               height={100}
               className="will-change-auto object-cover rounded-lg"
             />
-            <p className="londrina-outline-regular">Secure</p>
+            <p>Secure</p>
           </div>
           <div className="flex flex-col items-center justify-center space-y-4">
             <Image

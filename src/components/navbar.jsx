@@ -124,7 +124,7 @@ const Navbar = () => {
                     Crime Recorder
                   </a>
                 </li>
-                <li>
+                {/* <li>
                   <button
                     onClick={toggleLaunchDapps}
                     className="text-white hover:text-[#c92eff] flex items-center transition-colors duration-200"
@@ -132,13 +132,21 @@ const Navbar = () => {
                     Launch Dapps
                     <FaChevronDown className="w-5 h-5 ml-1" />
                   </button>
-                </li>
+                </li> */}
                 <li>
                   <button
                     onClick={toggleCompany}
                     className="text-white hover:text-[#c92eff] transition-colors duration-200"
                   >
                     Company
+                  </button>
+                </li>
+                <li>
+                  <button
+                    // onClick={toggleCompany}
+                    className="text-white hover:text-[#c92eff] transition-colors duration-200"
+                  >
+                    Services
                   </button>
                 </li>
               </ul>

@@ -159,7 +159,7 @@ const Agree = () => {
         <div className="text-center p-8 bg-transparent rounded shadow-lg text-white">
           <p
             className="text-[1em] mb-4 max-w-md mx-auto"
-            style={{ fontFamily: `"Londrina Outline", sans-serif` }}
+            
           >
             The Crime Recording App transforms the way individuals contribute to
             societal safety by providing an advanced platform for documenting
@@ -233,7 +233,7 @@ const Agree = () => {
         <div className="text-center p-8 bg-transparent rounded shadow-lg text-white">
           <p
             className="text-[1em] mb-4 max-w-md mx-auto"
-            style={{ fontFamily: `"Londrina Outline", sans-serif` }}
+         
           >
             See frequently asked questions.
           </p>

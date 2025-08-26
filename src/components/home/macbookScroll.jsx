@@ -40,7 +40,7 @@ const Section = ({ children, id, headerText }) => {
     >
       {headerText && (
         <>
-          <TextHoverEffect text={headerText} fontSize="text-7xl" />
+          <TextHoverEffect text={headerText} fontSize="text-8xl" />
           {/* <h1 className="gradient-stroke">CREATE AGREEMENTS</h1> */}
         </>
         // <h2 className="text-3xl font-bold mb-12 text-center header-animation">

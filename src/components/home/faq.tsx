@@ -13,33 +13,33 @@ const faqs: FAQItem[] = [
   {
     question: "What is Custos Diretriz?",
     answer:
-      "Custos Diretriz is a blockchain-powered platform designed to protect trust between people and organizations. It helps with agreement signing and crime recording securely on the blockchain."
+      "Custos Diretriz is a blockchain-powered platform designed to protect trust between people and organizations. Right now, it does two powerful things: ",
   },
   {
     question: "How does the agreement creation work?",
     answer:
-      "You can create legally sound agreements, sign them digitally, and store them securely on the blockchain with AI assistance."
+      "You can create legally sound agreements, sign them digitally, and store them securely on the blockchain with AI assistance.",
   },
   {
     question: "Why should I record a crime on Custos?",
     answer:
-      "Recording crimes creates tamper-proof evidence on the blockchain that can be trusted in future investigations or legal processes."
+      "Recording crimes creates tamper-proof evidence on the blockchain that can be trusted in future investigations or legal processes.",
   },
   {
     question: "Is Custos legally recognized?",
     answer:
-      "Yes, agreements and records stored on the blockchain can be used as legally binding evidence in many jurisdictions."
+      "Yes, agreements and records stored on the blockchain can be used as legally binding evidence in many jurisdictions.",
   },
   {
     question: "What makes Custos different from other tools?",
     answer:
-      "Custos combines agreement signing, AI summarization, and blockchain crime recording into one secure platform."
+      "Custos combines agreement signing, AI summarization, and blockchain crime recording into one secure platform.",
   },
   {
     question: "Who can use Custos?",
     answer:
-      "Anyone who needs fairness, transparency, and accountability—whether individuals or organizations."
-  }
+      "Anyone who needs fairness, transparency, and accountability—whether individuals or organizations.",
+  },
 ];
 
 export default function FAQAccordion() {
@@ -50,10 +50,13 @@ export default function FAQAccordion() {
   };
 
   return (
-    <div className="bg-red-600">
-      <div className="max-w-3xl mx-auto space-y-4 mb-12 border-l-[0.5px] p-10 border-[#8080805e]">
+    <div className=" border-t-[0.2px] border-[#8080805e]">
+      <div className="max-w-3xl mx-auto space-y-4 mb-12 border-l-[0.2px] py-10 border-[#8080805e]">
         {faqs.map((faq, index) => (
-          <div key={index} className="border-b border-gray-700 pb-3">
+          <div
+            key={index}
+            className="border-b-[0.2px] px-10 border-[#8080805e] pb-3"
+          >
             <button
               className="flex items-center gap-8 w-full text-left text-lg font-medium text-gray-200 focus:outline-none"
               onClick={() => toggle(index)}
