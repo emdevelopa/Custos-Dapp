@@ -32,7 +32,7 @@ export default function TestimonialSlider() {
   ]);
 
   return (
-    <div className="w-full overflow-hidden" ref={emblaRef}>
+    <div className="w-full overflow-hidden  pb-20" ref={emblaRef}>
       <div className="flex">
         {testimonials.map((t, i) => (
           <div

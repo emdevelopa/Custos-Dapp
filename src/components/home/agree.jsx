@@ -12,7 +12,8 @@ import FadeInSection from "../fadeInSection";
 import ShowLaunchDapps from "../showLaunchDapps";
 import { HoverBorderGradient } from "../ui/hover-border-gradient";
 import FAQAccordion from "./faq";
- 
+import TestimonialSlider from "./testimonial";
+
 // const printAgreement = (agreement) => {
 //   const printContent = `
 //     <h1>${agreement.title}</h1>
@@ -157,10 +158,7 @@ const Agree = () => {
       {/* Section 4: Crime Recorder */}
       <Section id="crime-recorder" headerText="CRIME RECORDER">
         <div className="text-center p-8 bg-transparent rounded shadow-lg text-white">
-          <p
-            className="text-[1em] mb-4 max-w-md mx-auto"
-            
-          >
+          <p className="text-[1em] mb-4 max-w-md mx-auto">
             The Crime Recording App transforms the way individuals contribute to
             societal safety by providing an advanced platform for documenting
             and sharing crime events securely and transparently.
@@ -231,10 +229,7 @@ const Agree = () => {
 
       <Section id="faqs" headerText="FAQS">
         <div className="text-center p-8 bg-transparent rounded shadow-lg text-white">
-          <p
-            className="text-[1em] mb-4 max-w-md mx-auto"
-         
-          >
+          <p className="text-[1em] mb-4 max-w-md mx-auto">
             See frequently asked questions.
           </p>
         </div>
@@ -242,6 +237,9 @@ const Agree = () => {
         {/* <div className="flex justify-center items-center">
            
         </div> */}
+      </Section>
+      <Section>
+        <TestimonialSlider />
       </Section>
 
       {/* Section 5: Shape Component */}
