@@ -1,4 +1,4 @@
-import { Input } from "@/components/ui/input";
+import { Input } from "../../../../components/ui/input";
 import Image from "next/image";
 
 export default function StepFive({ setStep }) {
@@ -11,7 +11,7 @@ export default function StepFive({ setStep }) {
             Who should sign this agreement?
           </h1>
           <p>
-            We'll send the agreement to this person for their review and
+            We&apos;ll send the agreement to this person for their review and
             signature.
           </p>
         </div>

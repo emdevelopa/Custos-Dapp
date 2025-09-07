@@ -1,4 +1,4 @@
-import { Input } from "@/components/ui/input";
+import { Input } from "../../../../components/ui/input";
 import { useRef, useState } from "react";
 
 export default function StepTwo({ setStep }) {

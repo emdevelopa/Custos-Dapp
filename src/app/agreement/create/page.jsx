@@ -1,6 +1,6 @@
 /* eslint-disable react/no-unescaped-entities */
 "use client";
-import { UseWriteToContract } from "@/utils/fetchcontract";
+import { UseWriteToContract } from "../../../utils/fetchcontract";
 import { useState, useContext, useRef, useEffect } from "react";
 import { FaArrowLeft, FaLongArrowAltRight } from "react-icons/fa";
 import { Header } from "../components/AgreementNav";
@@ -18,7 +18,7 @@ import dynamic from "next/dynamic";
 const MDEditor = dynamic(() => import("@uiw/react-md-editor"), { ssr: false });
 import Image from "next/image";
 import AgreementTemplate from "../agreementTemplate/page";
-import { Input } from "@/components/ui/input";
+// import { Input } from "../../components/ui/input";
 import CreateAgreementWithAi from "../withAi/page";
 
 // Arrays for select options
