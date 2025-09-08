@@ -601,8 +601,11 @@ const AgreementModal = ({ initialStep, ttitle, tcontent, agreement }) => {
             <p className="text-[#EAFBFF] font-bold">Back</p>
           </div>
         </button>
-       <div className="flex items-center gap-2"> <div className="w-[1em] h-[1em] bg-blue-500 rounded-full"></div>
-       <p> step 1 of 8</p></div>
+        <div className="flex items-center gap-2">
+          {" "}
+          <div className="w-[1em] h-[1em] bg-blue-500 rounded-full"></div>
+          <p> step 1 of 8</p>
+        </div>
       </div>
       <div className="w-full px-4 flex flex-col gap-8 overflow-clip  justify-center items-center h-auto">
         {/* Agreement Selection Section */}
@@ -789,4 +792,7 @@ const AgreementModal = ({ initialStep, ttitle, tcontent, agreement }) => {
   );
 };
 
-export default AgreementModal;
+// Replace default export to provide a no-prop page component required by Next.js
+export default function Page() {
+  return <AgreementModal />;
+}
