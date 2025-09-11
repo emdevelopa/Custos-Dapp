@@ -23,15 +23,15 @@ export default function Home() {
         <FadeInSection>
           <Hero />
         </FadeInSection>
-        <div className="bg-black py-8 flex items-center justify-center gap-40">
-          <div className="flex flex-col items-center justify-center space-y-4">
+        <div className="bg-black py-8 flex md:flex-ro items-center justify-center gap-8 md:gap-40">
+          <div className="flex flex-col items-center justify-center space-y-4 md:flex">
             <Image
               src={"./seccure.svg"}
               alt="Card Image"
               // layout="responsive"
-              width={100}
-              height={100}
-              className="will-change-auto object-cover rounded-lg"
+              width={70}
+              height={70}
+              className="will-change-auto md:w-[100%] object-cover rounded-lg"
             />
             <p>Secure</p>
           </div>
@@ -40,9 +40,9 @@ export default function Home() {
               src={"./tamper-proof.svg"}
               alt="Card Image"
               // layout="responsive"
-              width={100}
-              height={100}
-              className="will-change-auto object-cover rounded-lg"
+              width={70}
+              height={70}
+              className="will-change-auto md:w-[100%] object-cover rounded-lg"
             />
             <p>Tamper Proof</p>
           </div>
@@ -51,9 +51,9 @@ export default function Home() {
               src={"./immutable.svg"}
               alt="Card Image"
               // layout="responsive"
-              width={100}
-              height={100}
-              className="will-change-auto object-cover rounded-lg"
+              width={70}
+              height={70}
+              className="will-change-auto md:w-[100%] object-cover rounded-lg"
             />
             <p>Immutable</p>
           </div>
