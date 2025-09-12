@@ -31,7 +31,7 @@ export default function Home() {
               // layout="responsive"
               width={70}
               height={70}
-              className="will-change-auto md:w-[100%] object-cover rounded-lg"
+              className="will-change-auto md:w-[100%]  object-cover rounded-lg"
             />
             <p>Secure</p>
           </div>
